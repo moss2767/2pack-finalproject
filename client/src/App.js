@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
+import Question from './components/Question'
+import { useDispatch, useSelector } from 'react-redux'
+import { setQuestions } from './actions/actions'
 
-const questions = {"response_code":0,"results":[{"category":"Entertainment: Film","type":"multiple","difficulty":"easy","question":"Who directed the 2015 movie &quot;The Revenant&quot;?","correct_answer":"Alejandro G. I&ntilde;&aacute;rritu","incorrect_answers":["Christopher Nolan","David Fincher","Wes Anderson"]},{"category":"General Knowledge","type":"boolean","difficulty":"medium","question":"There are 86400 seconds in a day.","correct_answer":"True","incorrect_answers":["False"]},{"category":"General Knowledge","type":"multiple","difficulty":"medium","question":"What is the Italian word for &quot;tomato&quot;?","correct_answer":"Pomodoro","incorrect_answers":["Aglio","Cipolla","Peperoncino"]},{"category":"Entertainment: Music","type":"multiple","difficulty":"easy","question":"The &quot;K&quot; in &quot;K-Pop&quot; stands for which word?","correct_answer":"Korean","incorrect_answers":["Kenyan","Kazakhstan","Kuwaiti"]},{"category":"Sports","type":"multiple","difficulty":"medium","question":"What national team won the 2016 edition of UEFA European Championship?","correct_answer":"Portugal","incorrect_answers":["France","Germany","England"]},{"category":"Entertainment: Music","type":"multiple","difficulty":"medium","question":"Which alternative rock band released the critically-acclaimed album &quot;OK Computer&quot;?","correct_answer":"Radiohead","incorrect_answers":["R.E.M.","Nirvana","Coldplay"]},{"category":"Entertainment: Music","type":"multiple","difficulty":"easy","question":"&quot;Doctor Jones&quot;, &quot;Turn Back Time&quot; and &quot;Barbie Girl&quot; were UK number ones for which Eurodance group?","correct_answer":"Aqua","incorrect_answers":["Vengaboys","Eiffel 65","Sash!"]},{"category":"History","type":"multiple","difficulty":"easy","question":"On what street did the 1666 Great Fire of London start?","correct_answer":"Pudding Lane","incorrect_answers":["Baker Street","Houses of Parliament","St Paul&#039;s Cathedral"]},{"category":"Animals","type":"multiple","difficulty":"medium","question":"What is the name for a male bee that comes from an unfertilized egg?","correct_answer":"Drone","incorrect_answers":["Soldier","Worker","Male"]},{"category":"Entertainment: Video Games","type":"multiple","difficulty":"easy","question":"In Counter-Strike: Global Offensive, what&#039;s the rarity of discontinued skins called?","correct_answer":"Contraband","incorrect_answers":["Discontinued","Diminshed","Limited"]}]}
+const apiQuestions = {"response_code":0,"results":[{"category":"Science & Nature","type":"boolean","difficulty":"medium","question":"The Neanderthals were a direct ancestor of modern humans.","correct_answer":"False","incorrect_answers":["True"]},{"category":"Entertainment: Music","type":"multiple","difficulty":"hard","question":"Which of these songs was released in 1996?","correct_answer":"The Smashing Pumpkins - &quot;1979&quot;","incorrect_answers":["Prince - &quot;1999&quot;","James Blunt - &quot;1973&quot;","David Bowie - &quot;1984&quot;"]},{"category":"General Knowledge","type":"boolean","difficulty":"medium","question":"Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.","correct_answer":"True","incorrect_answers":["False"]},{"category":"Entertainment: Video Games","type":"boolean","difficulty":"medium","question":"In Rocket League, you can play Basketball.","correct_answer":"True","incorrect_answers":["False"]},{"category":"Entertainment: Video Games","type":"multiple","difficulty":"medium","question":"How many regular Sunken Sea Scrolls are there in &quot;Splatoon&quot;?","correct_answer":"27","incorrect_answers":["32","30","5"]},{"category":"Entertainment: Video Games","type":"multiple","difficulty":"medium","question":"Toby Fox&#039;s &quot;Megalovania&quot; was first used where?","correct_answer":"Radiation&#039;s Earthbound Halloween Hack","incorrect_answers":["Homestuck: [S] Wake","Undertale","Mother: Cognitive Dissonance"]},{"category":"Entertainment: Japanese Anime & Manga","type":"multiple","difficulty":"medium","question":"In the &quot;To Love-Ru&quot; series, how many Trans-weapons were created?","correct_answer":"3","incorrect_answers":["1","2","4"]},{"category":"Entertainment: Cartoon & Animations","type":"multiple","difficulty":"medium","question":"What was the number on Gerald&#039;s shirt in &quot;Hey Arnold!&quot;?","correct_answer":"33","incorrect_answers":["88","38","83"]},{"category":"Entertainment: Video Games","type":"multiple","difficulty":"medium","question":"Which stage was planned to be a part of &quot;Sonic the Hedgehog 2&quot;, but was scrapped during development?","correct_answer":"Genocide City Zone","incorrect_answers":["Stardust Speedway Zone","Sky High Zone ","Clockwork Zone"]},{"category":"General Knowledge","type":"multiple","difficulty":"easy","question":"What nuts are used in the production of marzipan?","correct_answer":"Almonds","incorrect_answers":["Peanuts","Walnuts","Pistachios"]}]}
 
 function App() {
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(setQuestions(apiQuestions.results))
+  }, [dispatch])
+
+  const questions = useSelector((state) => {
+    return state.questions
+  })
+ console.log(questions)
+
+
   return (
     <div className="App">
-      Hello!
+      <Question/>
     </div>
   );
 }
