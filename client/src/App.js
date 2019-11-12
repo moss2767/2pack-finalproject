@@ -8,6 +8,9 @@ const apiQuestions = {"response_code":0,"results":[{"category":"Science & Nature
 
 function App() {
   const dispatch = useDispatch()
+
+  const currentQuestion = useSelector((state) => state.session.current)
+  const points = useSelector((state) => state.session.points)
   
   useEffect(() => {
     dispatch(setQuestions(apiQuestions.results))
@@ -16,12 +19,14 @@ function App() {
   const questions = useSelector((state) => {
     return state.questions
   })
- console.log(questions)
-
-
+ 
   return (
     <div className="App">
-      <Question/>
+      <h1> this quiz is ten questions then it will show you your points </h1>
+      { currentQuestion !== questions.length && 
+        <Question question={questions[currentQuestion]}/>
+      }
+      <p>Points: {points}</p>
     </div>
   );
 }
