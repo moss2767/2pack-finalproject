@@ -1,15 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { AppBar, Container, TextField, Toolbar, Typography, Button, IconButton, makeStyles } from '@material-ui/core'
+import { Container, TextField, Button, makeStyles } from '@material-ui/core'
+import NavBar from '../../components/NavBar/NavBar'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
     flexGrow: 1,
   },
   container: {
@@ -40,19 +35,8 @@ const Home = () => {
   
   return (
     <div>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-             {/* <MenuIcon /> */}
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            2Pack Quiz 
-          </Typography>
-          <Button color="inherit">Sign Up</Button>
-        </Toolbar>
-    </AppBar>
-    <Container maxWidth="sm">
-        
+      <NavBar />
+      <Container maxWidth="sm">
         <form className={classes.container} noValidate autoComplete="off" onSubmit={play}>
           <TextField
             id="outlined-basic"
@@ -69,15 +53,12 @@ const Home = () => {
             margin="normal"
             variant="outlined"
           />
-           <Button type="submit" variant="contained" className={classes.button}>
-             Play!
+          <Button type="submit" variant="contained" className={classes.button}>
+            Play!
           </Button>
         </form>
-    </Container>
-  
-
-  
-  </div>
+      </Container>  
+    </div>
   );
 }
 
