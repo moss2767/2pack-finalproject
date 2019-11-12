@@ -1,42 +1,87 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setQuestions } from '../../actions/actions'
-import io from 'socket.io-client'
-import Question from '../../components/Question'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { AppBar, Container, TextField, Toolbar, Typography, Button, IconButton, makeStyles } from '@material-ui/core'
 
-const apiQuestions = {"response_code":0,"results":[{"category":"Science & Nature","type":"boolean","difficulty":"medium","question":"The Neanderthals were a direct ancestor of modern humans.","correct_answer":"False","incorrect_answers":["True"]},{"category":"Entertainment: Music","type":"multiple","difficulty":"hard","question":"Which of these songs was released in 1996?","correct_answer":"The Smashing Pumpkins - &quot;1979&quot;","incorrect_answers":["Prince - &quot;1999&quot;","James Blunt - &quot;1973&quot;","David Bowie - &quot;1984&quot;"]},{"category":"General Knowledge","type":"boolean","difficulty":"medium","question":"Sitting for more than three hours a day can cut two years off a person&#039;s life expectancy.","correct_answer":"True","incorrect_answers":["False"]},{"category":"Entertainment: Video Games","type":"boolean","difficulty":"medium","question":"In Rocket League, you can play Basketball.","correct_answer":"True","incorrect_answers":["False"]},{"category":"Entertainment: Video Games","type":"multiple","difficulty":"medium","question":"How many regular Sunken Sea Scrolls are there in &quot;Splatoon&quot;?","correct_answer":"27","incorrect_answers":["32","30","5"]},{"category":"Entertainment: Video Games","type":"multiple","difficulty":"medium","question":"Toby Fox&#039;s &quot;Megalovania&quot; was first used where?","correct_answer":"Radiation&#039;s Earthbound Halloween Hack","incorrect_answers":["Homestuck: [S] Wake","Undertale","Mother: Cognitive Dissonance"]},{"category":"Entertainment: Japanese Anime & Manga","type":"multiple","difficulty":"medium","question":"In the &quot;To Love-Ru&quot; series, how many Trans-weapons were created?","correct_answer":"3","incorrect_answers":["1","2","4"]},{"category":"Entertainment: Cartoon & Animations","type":"multiple","difficulty":"medium","question":"What was the number on Gerald&#039;s shirt in &quot;Hey Arnold!&quot;?","correct_answer":"33","incorrect_answers":["88","38","83"]},{"category":"Entertainment: Video Games","type":"multiple","difficulty":"medium","question":"Which stage was planned to be a part of &quot;Sonic the Hedgehog 2&quot;, but was scrapped during development?","correct_answer":"Genocide City Zone","incorrect_answers":["Stardust Speedway Zone","Sky High Zone ","Clockwork Zone"]},{"category":"General Knowledge","type":"multiple","difficulty":"easy","question":"What nuts are used in the production of marzipan?","correct_answer":"Almonds","incorrect_answers":["Peanuts","Walnuts","Pistachios"]}]}
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+  input: {
+    display: 'none',
+  },
+}));
 
 const Home = () => {
+  let history = useHistory()
+  const classes = useStyles()
 
-  const dispatch = useDispatch()
-
-  const socket = io('http://localhost:8000')
-
-  socket.on('test', data => {
-    console.log(data, 'it works')
-  })
-
-  const currentQuestion = useSelector((state) => state.session.current)
-  const points = useSelector((state) => state.session.points)
-  
-  useEffect(() => {
-    dispatch(setQuestions(apiQuestions.results))
-  }, [dispatch])
-
-  const questions = useSelector((state) => {
-    return state.questions
-  })
+  const play = (event) => {
+    event.preventDefault()
+    history.push('/play')
+  }
   
   return (
-    <div className="App">
-      <h1>Home!</h1>
-      <h1> this quiz is ten questions then it will show you your points </h1>
-      { currentQuestion !== questions.length && 
-        <Question question={questions[currentQuestion]}/>
-      }
-      <p>Points: {points}</p>
+    <div>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+             {/* <MenuIcon /> */}
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            2Pack Quiz 
+          </Typography>
+          <Button color="inherit">Sign Up</Button>
+        </Toolbar>
+    </AppBar>
+    <Container maxWidth="sm">
+        
+        <form className={classes.container} noValidate autoComplete="off" onSubmit={play}>
+          <TextField
+            id="outlined-basic"
+            className={classes.textField}
+            label="Name"
+            margin="normal"
+            variant="outlined"
+          />
+
+          <TextField
+            id="outlined-basic"
+            className={classes.textField}
+            label="Code"
+            margin="normal"
+            variant="outlined"
+          />
+           <Button type="submit" variant="contained" className={classes.button}>
+             Play!
+          </Button>
+        </form>
+    </Container>
+  
+
+  
   </div>
   );
 }
- 
+
+
+
+
 export default Home;
