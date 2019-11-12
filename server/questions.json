@@ -1,0 +1,119 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "category": "Entertainment: Music",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Who had a 1973 hit with the song &#039;Hocus Pocus&#039;?",
+      "correct_answer": "Focus",
+      "incorrect_answers": [
+        "Pilot",
+        "Rush",
+        "AC\/DC"
+      ]
+    },
+    {
+      "category": "Entertainment: Music",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "Which artist released the 2012 single &quot;Harlem Shake&quot;, which was used in numerous YouTube videos in 2013?",
+      "correct_answer": "Baauer",
+      "incorrect_answers": [
+        "RL Grime",
+        "NGHTMRE",
+        "Flosstradamus"
+      ]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "TF2: What code does Soldier put into the door keypad in &quot;Meet the Spy&quot;?",
+      "correct_answer": "1111",
+      "incorrect_answers": [
+        "1432",
+        "1337",
+        "No code"
+      ]
+    },
+    {
+      "category": "Sports",
+      "type": "boolean",
+      "difficulty": "medium",
+      "question": "The Olympics tennis court is a giant green screen.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+        "False"
+      ]
+    },
+    {
+      "category": "History",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "When Christopher Columbus sailed to America, what was the first region he arrived in?",
+      "correct_answer": "The Bahamas Archipelago",
+      "incorrect_answers": [
+        "Florida",
+        "Isthmus of Panama",
+        "Nicaragua"
+      ]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "boolean",
+      "difficulty": "medium",
+      "question": "The ADAM collecters in the Bioshock series are known as Little Sisters.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+        "False"
+      ]
+    },
+    {
+      "category": "Entertainment: Cartoon & Animations",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Which Hanna-Barbera cartoon character travelled with a canine companion named Beegle Beagle?",
+      "correct_answer": "Grape Ape",
+      "incorrect_answers": [
+        "Boss Gator",
+        "Wally Gator",
+        "Yogi Bear"
+      ]
+    },
+    {
+      "category": "Science & Nature",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Approximately how long is a year on Uranus?",
+      "correct_answer": "84 Earth years",
+      "incorrect_answers": [
+        "47 Earth years",
+        "62 Earth years",
+        "109 Earth years"
+      ]
+    },
+    {
+      "category": "Sports",
+      "type": "boolean",
+      "difficulty": "medium",
+      "question": "During Wimbledon, spectators in the grounds can buy the tennis balls that have been used in matches.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+        "False"
+      ]
+    },
+    {
+      "category": "Entertainment: Cartoon & Animations",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "Benny, Brain, Fancy-Fancy, Spook and Choo-Choo were known associates of what Hanna Barbera cartoon character?",
+      "correct_answer": "Top Cat",
+      "incorrect_answers": [
+        "Yogi Bear",
+        "Snagglepuss",
+        "Scooby-Doo"
+      ]
+    }
+  ]
+}
