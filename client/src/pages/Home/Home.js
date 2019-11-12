@@ -57,6 +57,7 @@ const Home = () => {
             Play!
           </Button>
         </form>
+        <button onClick={() => history.push('/create-game')}>Host a game?</button>
       </Container>  
     </div>
   );
