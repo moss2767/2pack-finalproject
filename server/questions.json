@@ -1,0 +1,123 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "category": "Entertainment: Music",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "The song &quot;Twin Size Mattress&quot; was written by which band?",
+      "correct_answer": "The Front Bottoms",
+      "incorrect_answers": [
+        "Twenty One Pilots",
+        "The Wonder Years",
+        "The Smith Street Band"
+      ]
+    },
+    {
+      "category": "History",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "In what year was the last natural case of smallpox documented?",
+      "correct_answer": "1977",
+      "incorrect_answers": [
+        "1982",
+        "1980",
+        "1990"
+      ]
+    },
+    {
+      "category": "Science & Nature",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "Human cells typically have how many copies of each gene?",
+      "correct_answer": "2",
+      "incorrect_answers": [
+        "1",
+        "4",
+        "3"
+      ]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "In the game Battleblock Theater, what was the name of the voice actor who voiced the narrator?",
+      "correct_answer": "Will Stamper",
+      "incorrect_answers": [
+        "Steve Blum",
+        "Richard Epcar",
+        "Yuri Lowenthal"
+      ]
+    },
+    {
+      "category": "Science: Computers",
+      "type": "boolean",
+      "difficulty": "easy",
+      "question": "&quot;HTML&quot; stands for Hypertext Markup Language.",
+      "correct_answer": "True",
+      "incorrect_answers": [
+        "False"
+      ]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "What does Solid Snake use to hide himself with?",
+      "correct_answer": "Cardboard Box",
+      "incorrect_answers": [
+        "Cloaking Device",
+        "Metal Crate",
+        "Cardboard cut-out"
+      ]
+    },
+    {
+      "category": "General Knowledge",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "What does the Latin phrase &quot;Veni, vidi, vici&quot; translate into English?",
+      "correct_answer": "I came, I saw, I conquered",
+      "incorrect_answers": [
+        "See no evil, hear no evil, speak no evil",
+        "Life, liberty, and happiness",
+        "Past, present, and future"
+      ]
+    },
+    {
+      "category": "History",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "Which day did World War I begin?",
+      "correct_answer": "July 28",
+      "incorrect_answers": [
+        "January 28",
+        "June 28",
+        "April 28"
+      ]
+    },
+    {
+      "category": "Entertainment: Video Games",
+      "type": "multiple",
+      "difficulty": "easy",
+      "question": "What is the hardest possible difficulty in &quot;Deus Ex: Mankind Divided&quot;?",
+      "correct_answer": "I Never Asked For This",
+      "incorrect_answers": [
+        "Nightmare",
+        "Extreme",
+        "Guru"
+      ]
+    },
+    {
+      "category": "Geography",
+      "type": "multiple",
+      "difficulty": "hard",
+      "question": "What national museum will you find in Cooperstown, New York?",
+      "correct_answer": "National Baseball Hall of Fame",
+      "incorrect_answers": [
+        "Metropolitan Museum of Art",
+        "National Toy Hall of Fame",
+        "Museum of Modern Art"
+      ]
+    }
+  ]
+}
