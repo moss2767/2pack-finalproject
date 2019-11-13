@@ -1,8 +1,10 @@
 const initialState = [
   {
     question: null,
-    incorrect_answers: [],
-    correct_answer: null 
+    options: {
+      incorrect_answers: [],
+      correct_answer: null
+    }
   }
 ]
 

@@ -21,7 +21,9 @@ const Game = () => {
   const points = useSelector((state) => state.session.points)
   
   useEffect(() => {
-    dispatch(setQuestions(apiQuestions.results))
+    fetch('http://localhost:8000/questions')
+      .then(res => res.json())
+      .then(data => dispatch(setQuestions(data)))
   }, [dispatch])
 
   const questions = useSelector((state) => {

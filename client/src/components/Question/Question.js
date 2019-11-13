@@ -3,17 +3,18 @@ import { useDispatch } from 'react-redux'
 import { correctAnswer, incorrectAnswer } from '../../actions/actions'
 
 const Question = ({question}) => {
+  console.log(question)
   const dispatch = useDispatch()
-  const options = question.incorrect_answers
-  options.push(question.correct_answer)
+  const options = question.options.incorrect_answers
+  options.push(question.options.correct_answer)
   shuffle(options)
   
 const handleAnswer = (answer) => {
-  if (answer === question.correct_answer) {
+  if (answer === question.options.correct_answer) {
     alert("You were right!")
     dispatch(correctAnswer())
   } else {
-    alert(`You were wrong! The correct answer was ${question.correct_answer}`)
+    alert(`You were wrong! The correct answer was ${question.options.correct_answer}`)
     dispatch(incorrectAnswer())
   }
 }
