@@ -1,9 +1,9 @@
 import express from 'express'
-import questions from '../questions.json'
+import { getQuiz } from '../database/queries'
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  res.status(200).json(questions)
+  getQuiz(req, res)
 })
 
 export default router
