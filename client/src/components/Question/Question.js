@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux'
-import { correctAnswer, incorrectAnswer } from '../actions/actions'
+import { correctAnswer, incorrectAnswer } from '../../actions/actions'
 
 const Question = ({question}) => {
   const dispatch = useDispatch()
