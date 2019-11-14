@@ -2,11 +2,9 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Container, TextField, Button, makeStyles } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
+import './Home.css'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -14,15 +12,11 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200,
   },
   button: {
     margin: theme.spacing(1),
   },
-  input: {
-    display: 'none',
-  },
-}));
+}))
 
 const Home = () => {
   let history = useHistory()
@@ -36,34 +30,35 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-      <Container maxWidth="sm">
-        <form className={classes.container} noValidate autoComplete="off" onSubmit={play}>
+      <Container>
+        <form className="form" noValidate autoComplete="off" onSubmit={play}>
+          
           <TextField
-            id="outlined-basic"
+            id="Name"
             className={classes.textField}
             label="Name"
             margin="normal"
-            variant="outlined"
-          />
+            variant="outlined"/>
 
           <TextField
-            id="outlined-basic"
+            id="Code"
             className={classes.textField}
             label="Code"
             margin="normal"
-            variant="outlined"
-          />
-          <Button type="submit" variant="contained" className={classes.button}>
+            variant="outlined"/>
+
+          <Button type="submit" color="primary" variant="contained" className={classes.button}>
             Play!
           </Button>
         </form>
-        <button onClick={() => history.push('/quizzes')}>Host a game?</button>
+
+        <button onClick={() => history.push('/quizzes')}>
+          Host a game?
+        </button>
+
       </Container>  
     </div>
-  );
+  )
 }
-
-
-
 
 export default Home;
