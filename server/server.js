@@ -6,6 +6,7 @@ import socket from 'socket.io'
 import leaderboard from './routes/leaderboard'
 import questions from './routes/questions'
 import createGame from './routes/createGame'
+import login from './routes/login'
 
 const app = express()
 const server = http.Server(app)
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 app.use('/leaderboard', leaderboard)
 app.use('/questions', questions)
 app.use('/create-game', createGame)
+app.use('/login', login)
 
 io.on('connection', socket => {
   io.emit('test', 'Hello World!')

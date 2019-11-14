@@ -29,9 +29,11 @@ const SignUp = () => {
   const classes = useStyles()
   let history = useHistory()
   
-  const logIn = async () => {
+  const logIn = async (event) => {
+    event.preventDefault()
     const res = await fetch('http://localhost:8000/login')
-    const data = res.json()
+    const data = await res.json()
+    console.log(data)
     if(data.approved) {
       history.push('/quizzes')
     }
