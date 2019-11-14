@@ -6,6 +6,7 @@ import Game from './pages/Game/Game'
 import Quizzes from './pages/Quizzes/Quizzes'
 import Leaderboard from './pages/Leaderboard/Leaderboard'
 import SignUp from './pages/SignUp/SignUp'
+import About from './pages/About/About'
 
 function App() {
  
@@ -28,6 +29,10 @@ function App() {
 
         <Route path="/leaderboard">
           <Leaderboard/>
+        </Route>
+
+        <Route path="/about">
+          <About/>
         </Route>
 
         <Route path="/">
