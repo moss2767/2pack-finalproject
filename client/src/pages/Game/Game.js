@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setQuestions } from '../../actions/actions'
 import io from 'socket.io-client'
 import Question from '../../components/Question/Question'
+import NavBar from '../../components/NavBar/NavBar'
 
 const Game = () => {
 
@@ -30,6 +31,7 @@ const Game = () => {
 
   return (
     <div className="App">
+      <NavBar />
       <h1>Home!</h1>
       <h1> this quiz is ten questions then it will show you your points </h1>
       { currentQuestion !== questions.length && 
