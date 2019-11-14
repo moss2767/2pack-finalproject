@@ -8,23 +8,22 @@ import questions from './routes/questions'
 import createGame from './routes/createGame'
 import login from './routes/login'
 import quizzes from './routes/quizzes'
+import joinGame from './routes/joinGame'
 
 const app = express()
 const server = http.Server(app)
 const io = socket(server)
+app.set('io', io)
 const port = process.env.PORT || 8000
 
 app.use(cors())
-
-app.get('/', (req, res) => {
-  res.send('hello')
-})
 
 app.use('/leaderboard', leaderboard)
 app.use('/questions', questions)
 app.use('/create-game', createGame)
 app.use('/login', login)
 app.use('/quizzes', quizzes)
+app.use('/join-game', joinGame)
 
 io.on('connection', socket => {
   io.emit('test', 'Hello World!')
