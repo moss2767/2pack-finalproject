@@ -5,6 +5,7 @@ import Home from './pages/Home/Home'
 import Game from './pages/Game/Game'
 import CreateGame from './pages/CreateGame/CreateGame'
 import Leaderboard from './pages/Leaderboard/Leaderboard'
+import SignUp from './pages/SignUp/SignUp'
 
 function App() {
  
@@ -15,6 +16,10 @@ function App() {
 
         <Route path="/create-game">
           <CreateGame/>
+        </Route>
+
+        <Route path="/signup">
+          <SignUp/>
         </Route>
 
         <Route path="/play">
