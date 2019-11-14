@@ -5,16 +5,15 @@ import { correctAnswer, incorrectAnswer } from '../../actions/actions'
 const Question = ({question}) => {
   console.log(question)
   const dispatch = useDispatch()
-  const options = question.options.incorrect_answers
-  options.push(question.options.correct_answer)
-  shuffle(options)
+  const correctAnswerlol = question.answers.find(answer => answer.correct ==='true')
+  shuffle(question.answers)
   
 const handleAnswer = (answer) => {
-  if (answer === question.options.correct_answer) {
+  if (answer === correctAnswerlol.option) {
     alert("You were right!")
     dispatch(correctAnswer())
   } else {
-    alert(`You were wrong! The correct answer was ${question.options.correct_answer}`)
+    alert(`You were wrong! The correct answer was ${correctAnswerlol.option}`)
     dispatch(incorrectAnswer())
   }
 }
@@ -22,7 +21,7 @@ const handleAnswer = (answer) => {
   return (
     <div>
       <h1>{question.question}</h1>
-      {options.map(answer => (<button onClick={()=>handleAnswer(answer)}>{answer}</button>))}
+      {question.answers.map(answer => (<button onClick={()=>handleAnswer(answer.option)}>{answer.option}</button>))}
     </div>
   );
 }
