@@ -1,13 +1,14 @@
 import React from 'react'
 import NavBar from '../../components/NavBar/NavBar'
-import { Typography, makeStyles } from '@material-ui/core'
+import { Typography, makeStyles, Container } from '@material-ui/core'
 import QuizCard from '../../components/QuizCard/QuizCard'
 import { useHistory } from 'react-router-dom'
+import './Quizzes.css'
 
 const useStyles = makeStyles(() => ({
   header: {
     fontWeight: "lighter",
-    margin: "1rem"
+    margin: "1rem 0"
   },
   connectedPlayersHeader: {
     marginBottom: "0"
@@ -22,10 +23,10 @@ const Quizzes = () => {
   return (
     <div>
       <NavBar />
-      <div>
-          <Typography className={classes.header} variant="h4">
-            Salt Course quizzes
-          </Typography>   
+      <Container maxWidth="lg">
+        <Typography className={classes.header} variant="h4">
+          Salt Course quizzes
+        </Typography>
         <div className="games-container">
           <QuizCard {...{
             header: "Week 1 Day 1",
@@ -38,7 +39,7 @@ const Quizzes = () => {
             startGame: () => { history.push('/play') }
           }}/>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }
