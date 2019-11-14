@@ -16,3 +16,11 @@ export const incorrectAnswer = () => {
     type: 'INCORRECT_ANSWER'
   }
 }
+
+export const actionSetName = name => {
+  console.log(name)
+  return {
+    type: 'SET_NAME',
+    name
+  }
+}

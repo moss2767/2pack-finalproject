@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Container, TextField, Button, makeStyles } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
 import './Home.css'
+import { actionSetName } from '../../actions/actions'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -19,10 +21,13 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Home = () => {
+  const dispatch = useDispatch()
   let history = useHistory()
   const classes = useStyles()
+  const [name, setName] = useState('')
 
   const play = (event) => {
+    dispatch(actionSetName(name))
     event.preventDefault()
     history.push('/play')
   }
@@ -38,6 +43,7 @@ const Home = () => {
             className={classes.textField}
             label="Name"
             margin="normal"
+            onChange={(event) => setName(event.target.value)}
             variant="outlined"/>
 
           <TextField

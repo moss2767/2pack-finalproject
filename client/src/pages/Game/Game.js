@@ -24,7 +24,10 @@ const Game = () => {
   useEffect(() => {
     fetch(`http://localhost:8000/quizzes/${quizId}`)
       .then(res => res.json())
-      .then(data => dispatch(setQuestions(data)))
+      .then(data => {
+        console.log(data)
+        dispatch(setQuestions(data))
+      })
   }, [dispatch, quizId])
 
   const questions = useSelector((state) => {
