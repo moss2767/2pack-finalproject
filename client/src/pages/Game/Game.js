@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-
+import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setQuestions } from '../../actions/actions'
 import io from 'socket.io-client'
@@ -7,6 +7,8 @@ import Question from '../../components/Question/Question'
 
 const Game = () => {
 
+  const query = new URLSearchParams(useLocation().search)
+  const quizId = query.get('id')
   const dispatch = useDispatch()
 
   const socket = io('http://localhost:8000')
@@ -19,7 +21,7 @@ const Game = () => {
   const points = useSelector((state) => state.session.points)
   
   useEffect(() => {
-    fetch('http://localhost:8000/questions')
+    fetch(`http://localhost:8000/quizzes/${quizId}`)
       .then(res => res.json())
       .then(data => dispatch(setQuestions(data)))
   }, [dispatch])

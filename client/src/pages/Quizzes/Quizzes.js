@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import { Typography, makeStyles } from '@material-ui/core'
 import QuizCard from '../../components/QuizCard/QuizCard'
@@ -16,6 +16,19 @@ const useStyles = makeStyles(() => ({
 
 const Quizzes = () => {
   
+  const [quizzes, setQuizzes] = useState([])
+
+  useEffect( () => {
+    const test = async () => {
+      const res = await fetch('http://localhost:8000/quizzes')
+      const data = await res.json()
+      setQuizzes(data)
+    }
+    test()
+
+    console.log(test)
+  }, [])
+  
   let history = useHistory()
   const classes = useStyles()
 
@@ -27,16 +40,15 @@ const Quizzes = () => {
             Salt Course quizzes
           </Typography>   
         <div className="games-container">
-          <QuizCard {...{
-            header: "Week 1 Day 1",
-            text: "Questions about callbacks",
-            startGame: () => { history.push('/play') }
-          }}/>
-          <QuizCard {...{
-            header: "Week 1 Day 2",
-            text: "Questions about promises",
-            startGame: () => { history.push('/play') }
-          }}/>
+          {quizzes.map(quiz => (
+            <QuizCard {...{
+              header: quiz.name,
+              text: "Questions about callbacks",
+              startGame: () => { history.push(`/play?id=${quiz.id}`) }
+            }}/>
+          ))}
+          
+         
         </div>
       </div>
     </div>
