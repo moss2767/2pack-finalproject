@@ -26,7 +26,12 @@ app.use('/quizzes', quizzes)
 app.use('/join-game', joinGame)
 
 io.on('connection', socket => {
+  console.log('Someone connected!')
   io.emit('test', 'Hello World!')
+
+  socket.on('disconnect', () => {
+    console.log('Disconnected!')
+  })
 })
 
 server.listen(port, () => {
