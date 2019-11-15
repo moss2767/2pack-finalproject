@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setQuestions } from '../../actions/actions'
-import io from 'socket.io-client'
+import { setQuestions, testSocket } from '../../actions/actions'
 import Question from '../../components/Question/Question'
 import NavBar from '../../components/NavBar/NavBar'
 import { Typography, Button } from '@material-ui/core'
@@ -19,11 +18,13 @@ const Game = () => {
   const [ countdown, setCountdown ] = useState(5)
   const [ countdownStarted, setCountdownStarted ] = useState(false)
 
-  const socket = io('http://localhost:8000')
+  // const socket = io('http://localhost:8000')
 
-  socket.on('test', data => {
-    console.log(data, 'it works')
-  })
+  // socket.on('test', data => {
+  //   console.log(data, 'it works')
+  // })
+
+  dispatch(testSocket())
 
   useEffect(() => {
     if(!countdown) {
