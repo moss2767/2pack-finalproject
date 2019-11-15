@@ -17,10 +17,16 @@ const socketMiddleware = (url) => {
     switch(action.type) {
       case "JOIN_GAME": {
         socket = io('http://localhost:8000')
+        break
       }
+
       case "TEST_SOCKET": {
         socket.emit('test', 'Hello World!')
+        break
       }
+
+      default:
+        break
     }
 
     // Call the next dispatch method in the middleware chain.
