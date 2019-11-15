@@ -5,19 +5,8 @@ import { setQuestions } from '../../actions/actions'
 import io from 'socket.io-client'
 import Question from '../../components/Question/Question'
 import NavBar from '../../components/NavBar/NavBar'
-import { Typography, makeStyles, Button } from '@material-ui/core'
-
-const useStyles = makeStyles(() => ({
-  header: {
-    fontWeight: "lighter",
-    margin: "1rem 0"
-  },
-  button: {
-    margin: "1rem",
-    padding: "1rem",
-    fontSize: "2rem",
-  }
-}))
+import { Typography, Button } from '@material-ui/core'
+import { useStyles } from './GameStyle'
 
 const Game = () => {
 
@@ -66,12 +55,15 @@ const Game = () => {
   const points = useSelector((state) => state.session.points)
   
   useEffect(() => {
-    fetch(`http://localhost:8000/quizzes/${quizId}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        dispatch(setQuestions(data))
-      })
+
+    const fetchQuiz = async () => {
+      const res = await fetch(`http://localhost:8000/quizzes/${quizId}`)
+      const data = await res.json()
+      dispatch(setQuestions(data))
+    }
+
+    fetchQuiz()
+
   }, [dispatch, quizId])
 
   const questions = useSelector((state) => {
@@ -81,6 +73,7 @@ const Game = () => {
   return (
     <div className="App">
       <NavBar />
+
       { !gameStarted && !showCancel && (
         <div>
           <Typography className={classes.header} variant="h4">
@@ -111,6 +104,7 @@ const Game = () => {
           </div>
         ) 
       )}
+
     </div>
   );
 }
