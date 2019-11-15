@@ -6,29 +6,38 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from './reducers/rootReducer'
+import io from 'socket.io-client'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const testMiddleware = ({ getState }) => {
+const socketMiddleware = (url) => {
+  let socket
   return next => action => {
-    console.log('will dispatch', action)
+
+    switch(action.type) {
+      case "JOIN_GAME": {
+        socket = io('http://localhost:8000')
+      }
+      case "TEST_SOCKET": {
+        socket.emit('test', 'Hello World!')
+      }
+    }
 
     // Call the next dispatch method in the middleware chain.
     const returnValue = next(action)
 
-    console.log('state after dispatch', getState())
 
     // This will likely be the action itself, unless
     // a middleware further in chain changed it.
     return returnValue
   }
-} 
+}
 
 const store = createStore(
   rootReducer,
   {},
   composeEnhancers(
-    applyMiddleware(testMiddleware)
+    applyMiddleware(socketMiddleware)
   )
 )
 
