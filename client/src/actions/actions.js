@@ -18,9 +18,26 @@ export const incorrectAnswer = () => {
 }
 
 export const actionSetName = name => {
-  console.log(name)
   return {
     type: 'SET_NAME',
     name
+  }
+}
+
+export const joinGame = () => {
+  return {
+    type: 'JOIN_GAME'
+  }
+}
+
+export const leaveGame = () => {
+  return {
+    type: 'LEAVE_GAME'
+  }
+}
+
+export const testSocket = () => {
+  return {
+    type:'TEST_SOCKET'
   }
 }
