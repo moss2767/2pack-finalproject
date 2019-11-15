@@ -29,6 +29,9 @@ io.on('connection', socket => {
   console.log('Someone connected!')
   io.emit('test', 'Hello World!')
 
+  socket.on('test', data =>  {
+    console.log(data)
+  })
   socket.on('disconnect', () => {
     console.log('Disconnected!')
   })
