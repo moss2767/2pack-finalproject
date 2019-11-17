@@ -1,26 +1,21 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-
+import React from 'react'
+import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import { makeStyles, Typography } from '@material-ui/core'
 import beach from '../../assets/beach.jpg'
 
 const useStyles = makeStyles({
-  card: {
-  },
   media: {
     height: "25vh",
   },
-});
+})
 
-export default function QuizCard(props) {
-  const classes = useStyles();
-
+const QuizCard = (props) => {
+  const classes = useStyles()
   return (
-    <Card className={classes.card}>
+    <Card>
       <CardActionArea onClick={props.startGame}>
         <CardMedia
           className={classes.media}
@@ -37,5 +32,7 @@ export default function QuizCard(props) {
         </CardContent>
       </CardActionArea>
     </Card>
-  );
+  )
 }
+
+export default QuizCard
