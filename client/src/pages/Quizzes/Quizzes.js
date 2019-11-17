@@ -4,6 +4,8 @@ import { Typography, makeStyles, Container } from '@material-ui/core'
 import QuizCard from '../../components/QuizCard/QuizCard'
 import { useHistory } from 'react-router-dom'
 import './Quizzes.css'
+import { useDispatch } from 'react-redux'
+import { createGame, joinGame } from '../../actions/actions'
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -16,7 +18,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Quizzes = () => {
-  
+  const dispatch = useDispatch()  
   const [quizzes, setQuizzes] = useState([])
 
   useEffect( () => {
@@ -26,9 +28,13 @@ const Quizzes = () => {
       setQuizzes(data)
     }
     test()
-
-    console.log(test)
   }, [])
+
+  const startGame = (id) => {
+    dispatch(joinGame("1337"))
+    dispatch(createGame("1337"))
+    history.push(`/play?id=${id}`)
+  }
   
   let history = useHistory()
   const classes = useStyles()
@@ -45,7 +51,7 @@ const Quizzes = () => {
             <QuizCard {...{
               header: quiz.name,
               text: "Questions about callbacks",
-              startGame: () => { history.push(`/play?id=${quiz.id}`) }
+              startGame: () => { startGame(quiz.id) }
             }}/>
           ))}
           
