@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Home from './pages/Home/Home'
-import Game from './pages/Game/Game'
+import GameHost from './pages/GameHost/GameHost'
+import GamePlayer from './pages/GamePlayer/GamePlayer'
 import Quizzes from './pages/Quizzes/Quizzes'
 import Leaderboard from './pages/Leaderboard/Leaderboard'
 import SignUp from './pages/SignUp/SignUp'
@@ -24,7 +25,11 @@ function App() {
         </Route>
 
         <Route path="/play">
-          <Game/>
+          <GameHost/>
+        </Route>
+        
+        <Route path="/player">
+          <GamePlayer/>
         </Route>
 
         <Route path="/leaderboard">

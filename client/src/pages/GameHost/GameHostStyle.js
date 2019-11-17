@@ -9,5 +9,8 @@ export const useStyles = makeStyles(() => ({
     margin: "1rem",
     padding: "1rem",
     fontSize: "2rem",
+  },
+  connectedPlayersHeader: {
+    marginBottom: "0"
   }
 }))

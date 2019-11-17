@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setQuestions, testSocket } from '../../actions/actions'
+import { setQuestions } from '../../actions/actions'
 import Question from '../../components/Question/Question'
 import NavBar from '../../components/NavBar/NavBar'
 import { Typography, Button } from '@material-ui/core'
-import { useStyles } from './GameStyle'
+import { useStyles } from './GameHostStyle'
+import Scoreboard from '../../components/Scoreboard/Scoreboard'
 
-const Game = () => {
+const GameHost = () => {
+
+  const users = useSelector((state) => state.users)
 
   const classes = useStyles()
   const query = new URLSearchParams(useLocation().search)
@@ -15,16 +18,12 @@ const Game = () => {
   const dispatch = useDispatch()
   const [ gameStarted, setGameStarted ] = useState(false)
   const [ showCancel, setShowCancel ] = useState(false)
-  const [ countdown, setCountdown ] = useState(5)
+  const [ countdown, setCountdown ] = useState(3)
   const [ countdownStarted, setCountdownStarted ] = useState(false)
 
-  // const socket = io('http://localhost:8000')
-
-  // socket.on('test', data => {
-  //   console.log(data, 'it works')
-  // })
-
-  dispatch(testSocket())
+  useEffect(() => {
+    console.log("SetPlayers")
+  }, [])
 
   useEffect(() => {
     if(!countdown) {
@@ -54,6 +53,7 @@ const Game = () => {
 
   const currentQuestion = useSelector((state) => state.session.current)
   const points = useSelector((state) => state.session.points)
+  const code = useSelector((state) => state.session.room)
   
   useEffect(() => {
 
@@ -80,9 +80,21 @@ const Game = () => {
           <Typography className={classes.header} variant="h4">
             Waiting for players to join...
           </Typography>
+          <Typography className={classes.header} variant="h4">
+            Room code: {code}
+          </Typography>
           <Button type="button" onClick={startGame} color="primary" variant="contained" className={classes.button}>
             Start Game
           </Button>
+          
+          <Typography className={classes.header} variant="h4">
+          Connected Players
+          </Typography>
+
+          <Scoreboard {...{
+            players: users
+          }}/>
+
         </div>
       )}
 
@@ -110,4 +122,4 @@ const Game = () => {
   );
 }
  
-export default Game;
+export default GameHost;
