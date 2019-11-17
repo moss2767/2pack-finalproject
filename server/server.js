@@ -25,13 +25,35 @@ app.use('/login', login)
 app.use('/quizzes', quizzes)
 app.use('/join-game', joinGame)
 
+const getUsers = () => {
+  const clients = io.sockets.clients().connected
+  const sockets = Object.values(clients)
+  const users = sockets.map(socket => socket.user)
+  return users
+}
+
+const emitUsers = () => {
+  io.emit('users', getUsers())
+}
+
 io.on('connection', socket => {
   console.log('Someone connected!')
-  io.emit('test', 'Hello World!')
 
-  socket.on('test', data =>  {
-    console.log(data)
+  socket.on('new_user', user => {
+    socket.user = user
+    emitUsers()
   })
+
+  socket.on('create_game', room => {
+    socket.room = room
+    socket.join(room)
+  })
+
+  socket.on('join_room', room => {
+    socket.user.room = room
+    socket.join(room)
+  })
+
   socket.on('disconnect', () => {
     console.log('Disconnected!')
   })
