@@ -13,7 +13,6 @@ import joinGame from './routes/joinGame'
 const app = express()
 const server = http.Server(app)
 const io = socket(server)
-app.set('io', io)
 const port = process.env.PORT || 8000
 
 app.use(cors())
@@ -32,6 +31,8 @@ const getUsers = () => {
   return users
 }
 
+const rooms = []
+
 const emitUsers = () => {
   io.emit('users', getUsers())
 }
@@ -45,6 +46,7 @@ io.on('connection', socket => {
   })
 
   socket.on('create_game', room => {
+    rooms.push(room)
     socket.room = room
     socket.join(room)
   })
