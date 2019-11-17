@@ -1,39 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
-import { Container, TextField, Button, makeStyles } from '@material-ui/core'
+import { Container, TextField, Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-  input: {
-    display: 'none',
-  },
-}));
+import { useStyles } from './SignUpStyle'
 
 const SignUp = () => {
 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const classes = useStyles()
   let history = useHistory()
   
   const logIn = async (event) => {
     event.preventDefault()
+    if(password !== "2pack") {
+      return alert("Wrong password!")
+    }
     const res = await fetch('http://localhost:8000/login')
     const data = await res.json()
-    console.log(data)
     if(data.approved) {
       history.push('/quizzes')
     }
@@ -53,6 +37,7 @@ const SignUp = () => {
             label="Username"
             margin="normal"
             variant="outlined"
+            onChange={(event) => setUsername(event.target.value)}
           />
 
           <TextField
@@ -61,6 +46,7 @@ const SignUp = () => {
             label="Password"
             margin="normal"
             variant="outlined"
+            onChange={(event) => setPassword(event.target.value)}
           />
           <Button type="submit" variant="contained" className={classes.button}>
             Log In
