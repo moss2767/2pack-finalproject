@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Container, TextField, Button, makeStyles } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
 import './Home.css'
-import { actionSetName, joinGame } from '../../actions/actions'
+import { setName as setNameAction, joinGame, newUser } from '../../actions/actions'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -27,10 +27,13 @@ const Home = () => {
   const [name, setName] = useState('')
 
   const play = (event) => {
-    dispatch(actionSetName(name))
+    dispatch(setNameAction(name))
     dispatch(joinGame())
+    dispatch(newUser({
+      name: name
+    }))
     event.preventDefault()
-    history.push('/play')
+    history.push('/player')
   }
   
   return (
