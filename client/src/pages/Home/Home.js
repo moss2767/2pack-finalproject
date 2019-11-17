@@ -25,15 +25,22 @@ const Home = () => {
   let history = useHistory()
   const classes = useStyles()
   const [name, setName] = useState('')
+  const [code, setCode] = useState('')
 
-  const play = (event) => {
-    dispatch(setNameAction(name))
-    dispatch(joinGame())
-    dispatch(newUser({
-      name: name
-    }))
+  const play = async (event) => {
     event.preventDefault()
-    history.push('/player')
+    const res = await fetch('http://localhost:8000/list-of-rooms')
+    const data = await res.json()
+    if(data.rooms.includes(code)) {
+      dispatch(setNameAction(name))
+      dispatch(joinGame(code))
+      dispatch(newUser({
+        name: name
+      }))
+      history.push('/player')
+    } else {
+      alert("ROOM DOESN'T EXIST")
+    }
   }
   
   return (
@@ -55,6 +62,7 @@ const Home = () => {
             className={classes.textField}
             label="Code"
             margin="normal"
+            onChange={(event) => setCode(event.target.value)}
             variant="outlined"/>
 
           <Button type="submit" color="primary" variant="contained" className={classes.button}>

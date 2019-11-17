@@ -17,3 +17,9 @@ export const leaveGame = () => {
     type: 'LEAVE_GAME'
   }
 }
+
+export const wrongCode = () => {
+  return {
+    type: 'WRONG_CODE'
+  }
+}

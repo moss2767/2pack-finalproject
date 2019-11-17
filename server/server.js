@@ -9,6 +9,7 @@ import createGame from './routes/createGame'
 import login from './routes/login'
 import quizzes from './routes/quizzes'
 import joinGame from './routes/joinGame'
+import listOfRooms from './routes/listOfRooms'
 
 const app = express()
 const server = http.Server(app)
@@ -23,6 +24,7 @@ app.use('/create-game', createGame)
 app.use('/login', login)
 app.use('/quizzes', quizzes)
 app.use('/join-game', joinGame)
+app.use('/list-of-rooms', listOfRooms)
 
 const getUsers = () => {
   const clients = io.sockets.clients().connected
@@ -32,6 +34,7 @@ const getUsers = () => {
 }
 
 const rooms = []
+app.set('rooms', rooms)
 
 const emitUsers = () => {
   io.emit('users', getUsers())
@@ -51,9 +54,14 @@ io.on('connection', socket => {
     socket.join(room)
   })
 
-  socket.on('join_room', room => {
-    socket.user.room = room
-    socket.join(room)
+  socket.on('join room', room => {
+    if (rooms.includes(room)) {
+      socket.room = room
+      socket.join(room)
+    } else {
+      socket.emit('wrong code')
+    }
+    console.log(rooms)
   })
 
   socket.on('disconnect', () => {
