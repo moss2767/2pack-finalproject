@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { setUsers, wrongCode } from '../actions/actions'
+import { setUsers } from '../actions/actions'
 
 const socketMiddleware = state => {  
   let socket
@@ -11,25 +11,21 @@ const socketMiddleware = state => {
     socket.on('users', data => {
       state.dispatch(setUsers(data))
     })
-    
-    socket.on('wrong code', () => {
-      state.dispatch(wrongCode())
-    })
 
     switch(action.type) {
       
       case "NEW_USER": {
-        socket.emit('new_user', action.user)
+        socket.emit('new user', action.user)
         break
       }
 
       case "CREATE_GAME": {
-        socket.emit('create_game', action.room)
+        socket.emit('join game as host', action.room)
         break
       }
 
       case "JOIN_GAME": {
-        socket.emit('join room', action.room)
+        socket.emit('join game', action)
         break
       }
 
