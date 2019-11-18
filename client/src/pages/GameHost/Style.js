@@ -12,5 +12,8 @@ export const useStyles = makeStyles(() => ({
   },
   connectedPlayersHeader: {
     marginBottom: "0"
+  },
+  nextQuestion: {
+    margin: "2rem"
   }
 }))

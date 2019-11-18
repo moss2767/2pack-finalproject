@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { correctAnswer, incorrectAnswer } from '../../actions/actions'
 
 const Question = ({question}) => {
-  console.log(question)
   const dispatch = useDispatch()
   const correctAnswerlol = question.answers.find(answer => answer.correct ==='true')
   shuffle(question.answers)

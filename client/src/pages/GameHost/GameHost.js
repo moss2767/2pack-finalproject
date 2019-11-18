@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { nextQuestion, startGame as startGameAction } from '../../actions/actions'
-import Question from '../../components/Question/Question'
+import Question from './Question/Question'
 import NavBar from '../../components/NavBar/NavBar'
 import { Typography, Button } from '@material-ui/core'
 import { useStyles } from './Style'
@@ -108,11 +108,11 @@ const GameHost = () => {
       { gameStarted && (
         currentQuestion !== questions.length + 1 && (
           <div>
-          <Question question={questions[currentQuestion - 1]}/>
-        <Typography variant="h4"> Players that have answered: 10/{users.length}</Typography>
-          <button onClick={nextQuestionButton}>
-              Next question
-          </button> 
+            <Question question={questions[currentQuestion - 1]}/>
+            <Typography variant="h4">0 / {users.length} have answered</Typography>
+            <Button onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
+              Next Question
+            </Button>
           </div>
         ) 
       )}
