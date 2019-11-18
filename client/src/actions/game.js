@@ -25,12 +25,6 @@ export const joinGame = data => {
   }
 }
 
-export const leaveGame = () => {
-  return {
-    type: 'LEAVE_GAME'
-  }
-}
-
 export const nextQuestion = question => {
   return {
     type: 'NEXT_QUESTION',

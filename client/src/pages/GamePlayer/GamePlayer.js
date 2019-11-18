@@ -8,10 +8,7 @@ import NavBar from '../../components/NavBar/NavBar'
 const GamePlayer = () => {
   const classes = useStyles()
 
-  const { gameStarted } = useSelector(state => state.session)
-
-  const question = useSelector((state) => state.user.question)
-  console.log('question', question)
+  const { gameStarted, question } = useSelector(state => state.game)
 
   return (
     <div>
