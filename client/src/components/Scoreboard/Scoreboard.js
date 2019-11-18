@@ -6,6 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 const Scoreboard = (props) => {
+  console.log('props', props)
   return (
     <Table aria-label="simple table">
       <TableHead>
@@ -16,9 +17,8 @@ const Scoreboard = (props) => {
       </TableHead>
       <TableBody>
         {props.players.map(player => (
-          <TableRow key={player.id}>
+          <TableRow key={player.name}>
             <TableCell component="th" scope="row">{player.name}</TableCell>
-            <TableCell align="right">{player.points}</TableCell>
           </TableRow>
         ))}
       </TableBody>

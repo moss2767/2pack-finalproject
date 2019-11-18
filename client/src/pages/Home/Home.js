@@ -32,14 +32,15 @@ const Home = () => {
     const res = await fetch('http://localhost:8000/list-of-rooms')
     const data = await res.json()
     if(data.rooms.includes(code)) {
-      dispatch(setNameAction(name))
-      dispatch(joinGame(code))
-      dispatch(newUser({
-        name: name
-      }))
+      dispatch(joinGame({name, code}))
+      // dispatch(setNameAction(name))
+      // dispatch(joinGame(code))
+      // dispatch(newUser({
+      //   name: name
+      // }))
       history.push('/player')
     } else {
-      alert("ROOM DOESN'T EXIST")
+      alert("Room doesn't exist!")
     }
   }
   
@@ -54,6 +55,7 @@ const Home = () => {
             className={classes.textField}
             label="Name"
             margin="normal"
+            required
             onChange={(event) => setName(event.target.value)}
             variant="outlined"/>
 
@@ -62,6 +64,7 @@ const Home = () => {
             className={classes.textField}
             label="Code"
             margin="normal"
+            required
             onChange={(event) => setCode(event.target.value)}
             variant="outlined"/>
 

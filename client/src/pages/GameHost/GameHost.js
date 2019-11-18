@@ -10,7 +10,7 @@ import Scoreboard from '../../components/Scoreboard/Scoreboard'
 
 const GameHost = () => {
 
-  const users = useSelector((state) => state.users)
+  const users = useSelector((state) => state.host.users)
 
   const classes = useStyles()
   const query = new URLSearchParams(useLocation().search)
@@ -53,7 +53,7 @@ const GameHost = () => {
 
   const currentQuestion = useSelector((state) => state.session.current)
   const points = useSelector((state) => state.session.points)
-  const code = useSelector((state) => state.session.room)
+  const code = useSelector((state) => state.host.room)
   
   useEffect(() => {
 
