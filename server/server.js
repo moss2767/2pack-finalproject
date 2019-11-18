@@ -1,4 +1,5 @@
 import cors from 'cors'
+import bodyParser from 'body-parser'
 import express from 'express'
 import http from 'http'
 import socket from 'socket.io'
@@ -17,6 +18,7 @@ const io = socket(server)
 const port = process.env.PORT || 8000
 
 app.use(cors())
+app.use(bodyParser.json())
 
 app.use('/leaderboard', leaderboard)
 app.use('/questions', questions)
@@ -29,7 +31,7 @@ app.use('/list-of-rooms', listOfRooms)
 const getUsers = () => {
   const clients = io.sockets.clients().connected
   const sockets = Object.values(clients)
-  const users = sockets.map(socket => socket.user)
+  const users = sockets.filter(socket => socket.user).map(socket => socket.user)
   return users
 }
 
@@ -37,35 +39,33 @@ const rooms = []
 app.set('rooms', rooms)
 
 const emitUsers = () => {
+  console.log('getUsers', getUsers())
   io.emit('users', getUsers())
 }
 
 io.on('connection', socket => {
   console.log('Someone connected!')
 
-  socket.on('new_user', user => {
-    socket.user = user
+  socket.on('join game as host', room => {
+    socket.room = room
+    socket.admin = true
+    socket.join(room)
+    socket.on('disconnect', () => {
+      const roomIndex = rooms.indexOf(room)
+      rooms.splice(roomIndex, 1)
+      socket.emit('game over')
+    })
+  })
+
+  socket.on('join game', action => {
+    socket.room = action.room
+    socket.join(action.room)
+    socket.user = { name: action.name, points: 0 }
     emitUsers()
   })
 
-  socket.on('create_game', room => {
-    rooms.push(room)
-    socket.room = room
-    socket.join(room)
-  })
-
-  socket.on('join room', room => {
-    if (rooms.includes(room)) {
-      socket.room = room
-      socket.join(room)
-    } else {
-      socket.emit('wrong code')
-    }
-    console.log(rooms)
-  })
-
   socket.on('disconnect', () => {
-    console.log('Disconnected!')
+    console.log('User disconnected!')
   })
 })
 
