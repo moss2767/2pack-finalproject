@@ -28,28 +28,43 @@ app.use('/quizzes', quizzes)
 app.use('/join-game', joinGame)
 app.use('/list-of-rooms', listOfRooms)
 
-const getUsers = () => {
-  const clients = io.sockets.clients().connected
-  const sockets = Object.values(clients)
+const getUsersInRoom = room => {
+  const clients = Object.keys(io.sockets.adapter.rooms[room].sockets)
+  const sockets = clients.map(client => io.sockets.connected[client])
   const users = sockets.filter(socket => socket.user).map(socket => socket.user)
   return users
 }
 
+// user: {
+//   id: 123456
+//   name: "Test",
+//   score: 0,
+//   answered: false
+// }
+
 const rooms = []
 app.set('rooms', rooms)
 
-const emitUsers = () => {
-  console.log('getUsers', getUsers())
-  io.emit('users', getUsers())
+const emitUsers = room => {
+  io.to(room).emit('users', getUsersInRoom(room))
 }
 
 io.on('connection', socket => {
   console.log('Someone connected!')
 
   socket.on('join game as host', room => {
-    socket.room = room
     socket.admin = true
     socket.join(room)
+
+    socket.on('question', question => {
+      console.log(question)
+      socket.to(room).emit('new question', question)
+    })
+
+    socket.on('start game', () => {
+      socket.to(room).emit('game started')
+    })
+
     socket.on('disconnect', () => {
       const roomIndex = rooms.indexOf(room)
       rooms.splice(roomIndex, 1)
@@ -58,10 +73,9 @@ io.on('connection', socket => {
   })
 
   socket.on('join game', action => {
-    socket.room = action.room
     socket.join(action.room)
-    socket.user = { name: action.name, points: 0 }
-    emitUsers()
+    socket.user = { id: socket.id, name: action.name, points: 0, answered: false }
+    emitUsers(action.room)
   })
 
   socket.on('disconnect', () => {

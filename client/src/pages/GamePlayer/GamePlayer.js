@@ -1,38 +1,41 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Typography } from '@material-ui/core'
 import Question from '../../components/Question/Question'
 import { useStyles } from './GamePlayerStyle'
+import NavBar from '../../components/NavBar/NavBar'
 
 const GamePlayer = () => {
   const classes = useStyles()
-  const [ gameStarted, setGameStarted ] = useState(false)
-  const [ showCancel, setShowCancel ] = useState(false)
-  const [ countdown, setCountdown ] = useState(3)
+
+  const { gameStarted } = useSelector(state => state.session)
+
+  const question = useSelector((state) => state.user.question)
+  console.log('question', question)
 
   return (
     <div>
-      <Typography className={classes.header} variant="h4">
-        Waiting for host...
+      <NavBar />
+      {!gameStarted && (
+        <Typography className={classes.header} variant="h4">
+          Waiting for host...
         </Typography> 
+      )}
 
+      { gameStarted && (
+          <div>
+          <Question question={question}/>
+          </div>
+        ) 
+      }
 
-    { !gameStarted && showCancel && (
+      {/* { !gameStarted && showCancel && (
         <div>
           <Typography className={classes.header} variant="h4">
            {countdown}...
           </Typography>
         </div>
-      )}
-{/* 
-      { gameStarted && (
-        currentQuestion !== questions.length && (
-          <div>
-          <Question question={questions[currentQuestion]}/>
-          <p>Points: {points}</p>
-          </div>
-        ) 
       )} */}
-
     </div>
   )
 }

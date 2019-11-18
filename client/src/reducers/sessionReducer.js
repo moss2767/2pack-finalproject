@@ -1,26 +1,29 @@
 const initialState = {
   points: 0,
-  current: 0, 
   isInGame: false, 
   room: null, 
   error: null,
-  name: null
+  name: null,
+  gameStarted: false
 }
 
 const sessionReducer = (session = initialState, action) => {
   switch (action.type) {
     
     case 'CORRECT_ANSWER':
-      return {...session, points: session.points + 1, current: session.current + 1}
+      return { ...session, points: session.points + 1 }
 
     case 'INCORRECT_ANSWER':
-      return {...session, current: session.current + 1}
+      return { ...session }
 
     case 'JOIN_GAME':
       return {...session, isInGame: true, room: action.room, name: action.name}
     
     case 'LEAVE_GAME':
       return {...session, isInGame: false}
+
+    case 'GAME_STARTED':
+      return {...session, gameStarted: true}
     
     case 'WRONG_CODE':
       return {...session, error: "Wrong code"}
