@@ -1,5 +1,14 @@
 const initialState = {
-  name: "No Name"
+  name: "No Name",
+  question: {
+    question: null,
+    answers: [
+      {
+        option: null,
+        correct: null
+      }
+    ]
+  }
 }
 
 const userReducer = (state = initialState, action) => {
@@ -10,7 +19,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         name: action.name
       }
-    
+    case 'SET_QUESTION':
+      return {
+        ...state, 
+        question: action.question
+      }
     default:
       return state
   }

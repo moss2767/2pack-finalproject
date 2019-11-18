@@ -5,6 +5,14 @@ export const setQuestions = questions => {
   }
 }
 
+//REFACTOR THIS 
+export const setQuestion = question => {
+  return {
+    type: 'SET_QUESTION',
+    question
+  }
+}
+
 export const correctAnswer = () => {
   return {
     type: 'CORRECT_ANSWER'
