@@ -13,6 +13,7 @@ const SignUp = () => {
   
   const logIn = async (event) => {
     event.preventDefault()
+    console.log(username)
     if(password !== "2pack") {
       return alert("Wrong password!")
     }

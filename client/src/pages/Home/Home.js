@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Container, TextField, Button, makeStyles } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
 import './Home.css'
-import { setName as setNameAction, joinGame, newUser } from '../../actions/actions'
+import { joinGame } from '../../actions/actions'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -33,11 +33,6 @@ const Home = () => {
     const data = await res.json()
     if(data.rooms.includes(code)) {
       dispatch(joinGame({name, code}))
-      // dispatch(setNameAction(name))
-      // dispatch(joinGame(code))
-      // dispatch(newUser({
-      //   name: name
-      // }))
       history.push('/player')
     } else {
       alert("Room doesn't exist!")

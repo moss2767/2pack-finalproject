@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux'
-import questionsReducer from './questionsReducer'
 import sessionReducer from './sessionReducer'
 import userReducer from './userReducer'
-import hostReducer from './hostReducer'
+import hostReducer from './gameReducer'
 
 const rootReducer = combineReducers({
-  questions: questionsReducer,
   session: sessionReducer,
   user: userReducer,
-  host: hostReducer
+  game: hostReducer
 })
 
 

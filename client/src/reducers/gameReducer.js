@@ -15,6 +15,9 @@ const hostReducer = (state = initialState, action) => {
 
     case 'NEXT_QUESTION':
       return {...state, currentQuestion: state.currentQuestion + 1}
+
+    case 'JOIN_GAME':
+        return {...state, room: action.room}    
     
     default:
       return state

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, makeStyles, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
 import GamesIcon from '@material-ui/icons/Games'

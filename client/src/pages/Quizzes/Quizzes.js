@@ -5,7 +5,7 @@ import QuizCard from '../../components/QuizCard/QuizCard'
 import { useHistory } from 'react-router-dom'
 import './Quizzes.css'
 import { useDispatch } from 'react-redux'
-import { createGame, joinGame } from '../../actions/actions'
+import { createGame } from '../../actions/actions'
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -44,10 +44,8 @@ const Quizzes = () => {
       dispatch(createGame(data.room))
       history.push(`/play?id=${id}`)
     } else {
-      alert('Room already exists, You are unlucky :(')
+      alert('Room already exists. Try again!')
     }
-    // dispatch(joinGame("1337"))
-    // dispatch(createGame("1337"))
   }
   
   let history = useHistory()
@@ -62,7 +60,8 @@ const Quizzes = () => {
         </Typography>
         <div className="games-container">
           {quizzes.map(quiz => (
-            <QuizCard {...{
+            <QuizCard key={quiz.id}
+              {...{
               header: quiz.name,
               text: "Questions about callbacks",
               startGame: () => { startGame(quiz.id) }

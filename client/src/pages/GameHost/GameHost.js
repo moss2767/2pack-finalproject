@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setQuestions, nextQuestion, startGame as startGameAction } from '../../actions/actions'
+import { nextQuestion, startGame as startGameAction } from '../../actions/actions'
 import Question from '../../components/Question/Question'
 import NavBar from '../../components/NavBar/NavBar'
 import { Typography, Button } from '@material-ui/core'
-import { useStyles } from './GameHostStyle'
+import { useStyles } from './Style'
 import Scoreboard from '../../components/Scoreboard/Scoreboard'
 
 const GameHost = () => {
 
-  const users = useSelector((state) => state.host.users)
+  const [questions, setQuestions] = useState('')
+  const { currentQuestion, room, users } = useSelector(state => state.game)
 
   const classes = useStyles()
   const query = new URLSearchParams(useLocation().search)
@@ -53,25 +54,18 @@ const GameHost = () => {
     console.log('hey there lol')
     dispatch(nextQuestion(questions[currentQuestion]))
   }
-
-  const currentQuestion = useSelector((state) => state.host.currentQuestion)
-  const code = useSelector((state) => state.host.room)
   
   useEffect(() => {
 
     const fetchQuiz = async () => {
       const res = await fetch(`http://localhost:8000/quizzes/${quizId}`)
       const data = await res.json()
-      dispatch(setQuestions(data))
+      setQuestions(data)
     }
 
     fetchQuiz()
 
   }, [dispatch, quizId])
-
-  const questions = useSelector((state) => {
-    return state.questions
-  })
 
   return (
     <div className="App">
@@ -83,7 +77,7 @@ const GameHost = () => {
             Waiting for players to join...
           </Typography>
           <Typography className={classes.header} variant="h4">
-            Room code: {code}
+            Room code: {room}
           </Typography>
           <Button type="button" onClick={startGame} color="primary" variant="contained" className={classes.button}>
             Start Game

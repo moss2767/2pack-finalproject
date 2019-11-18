@@ -1,11 +1,3 @@
-export const setQuestions = questions => {
-  return {
-    type: 'SET_QUESTIONS',
-    questions
-  }
-}
-
-//REFACTOR THIS 
 export const setQuestion = question => {
   return {
     type: 'SET_QUESTION',

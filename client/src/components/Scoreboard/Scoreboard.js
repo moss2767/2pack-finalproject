@@ -6,7 +6,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 const Scoreboard = (props) => {
-  console.log('props', props)
   return (
     <Table aria-label="simple table">
       <TableHead>
