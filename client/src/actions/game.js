@@ -5,21 +5,16 @@ export const createGame = room => {
   }
 }
 
-export const joinGame = room => {
+export const joinGame = (data) => {
   return {
     type: 'JOIN_GAME',
-    room: room
+    room: data.code,
+    name: data.name
   }
 }
 
 export const leaveGame = () => {
   return {
     type: 'LEAVE_GAME'
-  }
-}
-
-export const wrongCode = () => {
-  return {
-    type: 'WRONG_CODE'
   }
 }
