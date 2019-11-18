@@ -30,10 +30,24 @@ const Quizzes = () => {
     test()
   }, [])
 
-  const startGame = (id) => {
-    dispatch(joinGame("1337"))
-    dispatch(createGame("1337"))
-    history.push(`/play?id=${id}`)
+  const startGame = async (id) => {
+    const code = Math.floor(1000 + Math.random() * 9000).toString()
+    const res = await fetch('http://localhost:8000/create-game', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({room: code}) })
+    const data = await res.json()
+    if (data.room) {
+      dispatch(createGame(data.room))
+      history.push(`/play?id=${id}`)
+    } else {
+      alert('Room already exists, You are unlucky :(')
+    }
+    // dispatch(joinGame("1337"))
+    // dispatch(createGame("1337"))
   }
   
   let history = useHistory()
