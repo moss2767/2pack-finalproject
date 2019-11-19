@@ -35,12 +35,13 @@ const getUsersInRoom = room => {
   return users
 }
 
-// user: {
-//   id: 123456
-//   name: "Test",
-//   score: 0,
-//   answered: false
-// }
+const resetToNotAnswered = room => {
+  const clients = Object.keys(io.sockets.adapter.rooms[room].sockets)
+  const sockets = clients.map(client => io.sockets.connected[client])
+  sockets.filter(socket => socket.user).forEach(socket => {
+    socket.user.answered = false
+  })
+}
 
 const rooms = []
 app.set('rooms', rooms)
@@ -57,7 +58,8 @@ io.on('connection', socket => {
     socket.join(room)
 
     socket.on('question', question => {
-      console.log(question)
+      resetToNotAnswered(room)
+      getUsersInRoom(room)
       socket.to(room).emit('new question', question)
     })
 
@@ -70,12 +72,29 @@ io.on('connection', socket => {
       rooms.splice(roomIndex, 1)
       socket.emit('game over')
     })
+
+    socket.on('reveal answer', answer => {
+      console.log('asdasdas', answer)
+      socket.to(room).emit('answer', answer)
+    })
   })
 
   socket.on('join game', action => {
+    socket.room = action.room
     socket.join(action.room)
     socket.user = { id: socket.id, name: action.name, points: 0, answered: false }
     emitUsers(action.room)
+
+    socket.on('correct answer', () => {
+      socket.user.points = socket.user.points += 1
+      socket.user.answered = true
+      emitUsers(socket.room)
+    })
+
+    socket.on('incorrect answer', () => {
+      socket.user.answered = true
+      emitUsers(socket.room)
+    })
   })
 
   socket.on('disconnect', () => {

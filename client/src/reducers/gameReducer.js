@@ -11,7 +11,8 @@ const initialState = {
       }
     ]
   },
-  gameStarted: false
+  gameStarted: false,
+  answer: null
 }
 
 const hostReducer = (state = initialState, action) => {
@@ -31,6 +32,9 @@ const hostReducer = (state = initialState, action) => {
 
     case 'GAME_STARTED':
         return {...state, gameStarted: true}
+      
+    case 'GIVE_ANSWER':
+        return {...state, answer: action.answer}
         
     case 'SET_QUESTION':
       return {

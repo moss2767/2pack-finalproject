@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { correctAnswer, incorrectAnswer } from '../../../actions/actions'
 import useStyles from './Style'
 import { Button, Typography } from '@material-ui/core'
 
 const Question = ({question}) => {
+  const [disabled, setDisabled] = useState(false) 
   const classes = useStyles()
   const dispatch = useDispatch()
   const correctAnswerlol = question.answers.find(answer => answer.correct ==='true')
   shuffle(question.answers)
   
-const handleAnswer = (answer) => {
-  if (answer === correctAnswerlol.option) {
-    alert("You were right!")
-    dispatch(correctAnswer())
-  } else {
-    alert(`You were wrong! The correct answer was ${correctAnswerlol.option}`)
-    dispatch(incorrectAnswer())
+  const handleAnswer = (answer) => {
+    setDisabled(true)
+    if (answer === correctAnswerlol.option) {
+      dispatch(correctAnswer())
+    } else {
+      dispatch(incorrectAnswer())
+    }
   }
-}
 
   return (
     <div>
@@ -33,7 +33,9 @@ const handleAnswer = (answer) => {
             key={answer.option}
             size="large"
             color="primary"
-            variant="contained">
+            variant="contained"
+            disabled={disabled}
+            >
               {answer.option}
           </Button>
         ))}

@@ -31,3 +31,18 @@ export const nextQuestion = question => {
     question
   }
 }
+
+export const giveAnswer = answer => {
+  return {
+    type: 'GIVE_ANSWER',
+    answer
+  }
+}
+
+export const revealAnswer = answer => {
+  console.log(answer)
+  return {
+    type: 'REVEAL_ANSWER',
+    answer
+  }
+}

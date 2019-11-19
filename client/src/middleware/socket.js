@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { setUsers, setQuestion, gameStarted } from '../actions/actions'
+import { setUsers, setQuestion, gameStarted, giveAnswer } from '../actions/actions'
 
 const socketMiddleware = state => {  
   let socket
@@ -21,7 +21,29 @@ const socketMiddleware = state => {
       state.dispatch(gameStarted())
     })
 
+    socket.on('answer', answer => {
+      console.log('answer socket received!!')
+      state.dispatch(giveAnswer(answer))
+    })
+
     switch(action.type) {
+
+      case 'CORRECT_ANSWER': {
+        socket.emit('correct answer')
+        break
+      }
+
+      case 'REVEAL_ANSWER': {
+        console.log('answerReveal')
+        console.log(action.answer)
+        socket.emit('reveal answer', action.answer)
+        break
+      }
+
+      case 'INCORRECT_ANSWER': {
+        socket.emit('incorrect answer')
+        break
+      }
       
       case "NEW_USER": {
         socket.emit('new user', action.user)

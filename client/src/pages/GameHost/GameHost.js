@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { nextQuestion, startGame as startGameAction } from '../../actions/actions'
+import { nextQuestion, startGame as startGameAction, revealAnswer } from '../../actions/actions'
 import Question from './Question/Question'
 import NavBar from '../../components/NavBar/NavBar'
 import { Typography, Button } from '@material-ui/core'
@@ -10,7 +10,18 @@ import Scoreboard from '../../components/Scoreboard/Scoreboard'
 
 const GameHost = () => {
 
-  const [questions, setQuestions] = useState('')
+  const [questions, setQuestions] = useState([
+    {
+      answers: [
+        {
+          correct: null,
+          option: null
+        }
+      ]
+    }
+  ])
+  const [correctAnswer, setCorrectAnswer] = useState('')
+  const [usersWhoHaveAnswered, setUsersWhoHaveAnswered] = useState(0)
   const { currentQuestion, room, users } = useSelector(state => state.game)
 
   const classes = useStyles()
@@ -18,6 +29,37 @@ const GameHost = () => {
   const quizId = query.get('id')
   const dispatch = useDispatch()
   const [ gameStarted, setGameStarted ] = useState(false)
+
+  useEffect(() => {
+
+    const fetchQuiz = async () => {
+      const res = await fetch(`http://localhost:8000/quizzes/${quizId}`)
+      const data = await res.json()
+      setQuestions(data)
+    }
+
+    fetchQuiz()
+
+  }, [dispatch, quizId])
+
+  useEffect(() => {
+    console.log(users)
+    setUsersWhoHaveAnswered(users.reduce((total, adder) => {
+      if(adder.answered) {
+        return total + 1
+      }
+      return total
+    }, 0))
+  }, [users])
+
+  useEffect(() => {
+    // const correct = questions[currentQuestion].answers.find(answer => answer.correct === "true")
+    // if(correct) {
+    //   console.log(correct.option)
+    //   setCorrectAnswer(correct.option)
+    // }
+  }, [currentQuestion, questions])
+  
   // const [ showCancel, setShowCancel ] = useState(false)
   // const [ countdown, setCountdown ] = useState(3)
   // const [ countdownStarted, setCountdownStarted ] = useState(false)
@@ -51,21 +93,12 @@ const GameHost = () => {
   // }
 
   const nextQuestionButton = () => {
-    console.log('hey there lol')
     dispatch(nextQuestion(questions[currentQuestion]))
   }
-  
-  useEffect(() => {
 
-    const fetchQuiz = async () => {
-      const res = await fetch(`http://localhost:8000/quizzes/${quizId}`)
-      const data = await res.json()
-      setQuestions(data)
-    }
-
-    fetchQuiz()
-
-  }, [dispatch, quizId])
+  const showAnswer = () => {
+    dispatch(revealAnswer(correctAnswer.option))
+  }
 
   return (
     <div className="App">
@@ -109,9 +142,12 @@ const GameHost = () => {
         currentQuestion !== questions.length + 1 && (
           <div>
             <Question question={questions[currentQuestion - 1]}/>
-            <Typography variant="h4">0 / {users.length} have answered</Typography>
+            <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} have answered</Typography>
             <Button onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Next Question
+            </Button>
+            <Button onClick={showAnswer} className={classes.nextQuestion} size="large" color="primary" variant="contained">
+              Show Answer
             </Button>
           </div>
         ) 
