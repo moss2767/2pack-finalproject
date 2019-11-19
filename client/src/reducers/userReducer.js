@@ -1,5 +1,5 @@
 const initialState = {
-  name: "No Name",
+  name: "anonymous",
   points: 0
 }
 
