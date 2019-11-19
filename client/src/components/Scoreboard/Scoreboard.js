@@ -1,11 +1,14 @@
 import React from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import { makeStyles, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
+
+const useStyles = makeStyles(() => ({
+  points: {
+    textAlign: "center"
+  }
+}))
 
 const Scoreboard = (props) => {
+  const classes = useStyles()
   return (
     <Table aria-label="simple table">
       <TableHead>
@@ -18,11 +21,12 @@ const Scoreboard = (props) => {
         {props.players.map(player => (
           <TableRow key={player.name}>
             <TableCell component="th" scope="row">{player.name}</TableCell>
+            <TableCell className={classes.points} component="th" scope="row">{player.points}</TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
-  );
+  )
 }
 
 export default Scoreboard
