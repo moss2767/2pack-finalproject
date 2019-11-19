@@ -10,13 +10,13 @@ const GamePlayer = () => {
   const classes = useStyles()
   let history = useHistory()
   const { gameStarted, question, questions } = useSelector(state => state.game)
+  const { name, points } = useSelector(state => state.user)
 
   useEffect(() => {
     if(questions.length > 0) {
       history.push('/result-player')
-      
     }
-  }, [questions])
+  }, [history, questions])
 
   return (
     <div className={classes.wrapper}>
@@ -24,23 +24,19 @@ const GamePlayer = () => {
       {!gameStarted && (
         <Typography className={classes.header} variant="h4">
           Waiting for host...
-        </Typography> 
+        </Typography>
       )}
 
       { gameStarted && (
           <div>
+          <Typography>
+            {name}: {points} points
+          </Typography>
           <Question question={question}/>
           </div>
         ) 
       }
 
-      {/* { !gameStarted && showCancel && (
-        <div>
-          <Typography className={classes.header} variant="h4">
-           {countdown}...
-          </Typography>
-        </div>
-      )} */}
     </div>
   )
 }
