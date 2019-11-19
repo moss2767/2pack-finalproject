@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 import './Quizzes.css'
 import { useDispatch } from 'react-redux'
 import { createGame } from '../../actions/actions'
+const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const useStyles = makeStyles(() => ({
   header: {
@@ -23,7 +24,7 @@ const Quizzes = () => {
 
   useEffect( () => {
     const test = async () => {
-      const res = await fetch('http://localhost:8000/quizzes')
+      const res = await fetch(`${url}/quizzes`)
       const data = await res.json()
       setQuizzes(data)
     }
@@ -32,7 +33,7 @@ const Quizzes = () => {
 
   const startGame = async (id) => {
     const code = Math.floor(1000 + Math.random() * 9000).toString()
-    const res = await fetch('http://localhost:8000/create-game', {
+    const res = await fetch(`${url}/create-game`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -63,7 +64,7 @@ const Quizzes = () => {
             <QuizCard key={quiz.id}
               {...{
               header: quiz.name,
-              text: "Questions about callbacks",
+              text: quiz.description,
               startGame: () => { startGame(quiz.id) }
             }}/>
           ))}

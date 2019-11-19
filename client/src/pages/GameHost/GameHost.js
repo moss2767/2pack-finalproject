@@ -8,6 +8,7 @@ import { Typography, Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { useStyles } from './Style'
 import Scoreboard from '../../components/Scoreboard/Scoreboard'
+const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const GameHost = () => {
 
@@ -36,7 +37,7 @@ const GameHost = () => {
   useEffect(() => {
 
     const fetchQuiz = async () => {
-      const res = await fetch(`http://localhost:8000/quizzes/${quizId}`)
+      const res = await fetch(`${url}/quizzes/${quizId}`)
       const data = await res.json()
       setQuestions(data)
     }

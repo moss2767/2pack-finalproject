@@ -3,6 +3,7 @@ import NavBar from '../../components/NavBar/NavBar'
 import { Container, TextField, Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { useStyles } from './SignUpStyle'
+const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const SignUp = () => {
 
@@ -17,7 +18,7 @@ const SignUp = () => {
     if(password !== "2pack") {
       return alert("Wrong password!")
     }
-    const res = await fetch('http://localhost:8000/login')
+    const res = await fetch(`${url}/login`)
     const data = await res.json()
     if(data.approved) {
       history.push('/quizzes')

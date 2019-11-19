@@ -5,6 +5,7 @@ import { Container, TextField, Button, makeStyles } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
 import './Home.css'
 import { joinGame } from '../../actions/actions'
+const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -29,7 +30,7 @@ const Home = () => {
 
   const play = async (event) => {
     event.preventDefault()
-    const res = await fetch('http://localhost:8000/list-of-rooms')
+    const res = await fetch(`${url}/list-of-rooms`)
     const data = await res.json()
     if(data.rooms.includes(code)) {
       dispatch(joinGame({name, code}))
