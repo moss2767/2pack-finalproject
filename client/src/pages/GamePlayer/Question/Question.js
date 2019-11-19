@@ -5,19 +5,20 @@ import useStyles from './Style'
 import { Button, Typography } from '@material-ui/core'
 
 const Question = ({question}) => {
-  const [disabled, setDisabled] = useState(false) 
   const classes = useStyles()
   const dispatch = useDispatch()
-  const correctAnswerlol = question.answers.find(answer => answer.correct ==='true')
-  shuffle(question.answers)
+
+  const [disabled, setDisabled] = useState(false)
+  const correct = question.answers.find(answer => answer.correct === 'true')
 
   useEffect(() => {
     setDisabled(false)
+    shuffle(question.answers)
   }, [question])
   
-  const handleAnswer = (answer) => {
+  const handleAnswer = answer => {
     setDisabled(true)
-    if (answer === correctAnswerlol.option) {
+    if (answer === correct.option) {
       dispatch(correctAnswer())
     } else {
       dispatch(incorrectAnswer())
@@ -48,12 +49,12 @@ const Question = ({question}) => {
   );
 }
 
-const shuffle = (array) => {
+const shuffle = array => {
   for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [array[i], array[j]] = [array[j], array[i]]
   }
-  return array;
+  return array
 }
  
-export default Question;
+export default Question

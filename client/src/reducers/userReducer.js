@@ -1,5 +1,5 @@
 const initialState = {
-  name: "anonymous",
+  name: "Anonymous",
   points: 0
 }
 
@@ -15,14 +15,14 @@ const userReducer = (state = initialState, action) => {
   case 'CORRECT_ANSWER':
       return { ...state, points: state.points + 1 }
 
-    case 'INCORRECT_ANSWER':
-      return { ...state }
+  case 'INCORRECT_ANSWER':
+    return { ...state }
     
-    case 'SET_NAME':
-      return {
-        ...state,
-        name: action.name
-      }
+  case 'SET_NAME':
+    return {
+      ...state,
+      name: action.name
+    }
 
     default:
       return state

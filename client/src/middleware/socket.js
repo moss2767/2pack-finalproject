@@ -1,11 +1,12 @@
 import io from 'socket.io-client'
 import { setUsers, setQuestion, gameStarted, giveAnswer, setAllQuestionsToPlayers } from '../actions/actions'
+const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const socketMiddleware = state => {  
   let socket
   return next => action => {
     if(!socket) {
-      socket = io('http://localhost:8000')
+      socket = io(url)
     }
 
     socket.on('users', data => {
