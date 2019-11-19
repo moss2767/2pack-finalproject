@@ -9,7 +9,8 @@ import Leaderboard from './pages/Leaderboard/Leaderboard'
 import SignUp from './pages/SignUp/SignUp'
 import About from './pages/About/About'
 import HostResult from './pages/Result/Host'
-import PlayerResult from './pages/Result/Player';
+import PlayerResult from './pages/Result/Player'
+import MiniGame from './pages/MiniGame/MiniGame'
 
 const App = () => {
  
@@ -48,6 +49,10 @@ const App = () => {
         
         <Route path="/result-player">
           <PlayerResult/>
+        </Route>
+
+        <Route path="/mini-game">
+          <MiniGame/>
         </Route>
 
         <Route path="/">
