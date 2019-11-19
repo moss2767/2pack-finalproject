@@ -4,6 +4,7 @@ import NavBar from '../../components/NavBar/NavBar'
 import { Avatar, Container, Typography } from '@material-ui/core'
 import useStyles from './Style'
 import Scoreboard from '../../components/Scoreboard/Scoreboard'
+const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const HostResult = () => {
   const classes = useStyles()
@@ -12,6 +13,24 @@ const HostResult = () => {
   const maxPoints = questions.length * users.length
   const scoredPoints = users.reduce((total, user) => total + user.points, 0)
   const percentage = Math.round(scoredPoints/maxPoints * 100)
+
+  const postLeaderboard = async () => {
+    const res = await fetch(`${url}/leaderboard`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      // OBS IT CANNOT BE HARD CODED ID 1 NEED TO GET THE QUIZ ID
+      body: JSON.stringify({id: "1", batch: "Fall 19 - Stockholm", percentage: "95"})
+    })
+    console.log(res)
+    const data = await res.json()
+    console.log(data)
+  }
+
+  postLeaderboard()
+
   return (
   <div>
     <NavBar />
