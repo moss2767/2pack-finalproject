@@ -57,9 +57,10 @@ io.on('connection', socket => {
     socket.admin = true
     socket.join(room)
 
-    socket.on('question', question => {
+    socket.on('next question', question => {
       resetToNotAnswered(room)
       getUsersInRoom(room)
+      emitUsers(room)
       socket.to(room).emit('new question', question)
     })
 
@@ -74,8 +75,12 @@ io.on('connection', socket => {
     })
 
     socket.on('reveal answer', answer => {
-      console.log('asdasdas', answer)
+      console.log('revealed answer: ', answer)
       socket.to(room).emit('answer', answer)
+    })
+
+    socket.on('send questions', questions => {
+      socket.to(room).emit('all questions', questions)
     })
   })
 

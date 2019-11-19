@@ -8,8 +8,10 @@ import Quizzes from './pages/Quizzes/Quizzes'
 import Leaderboard from './pages/Leaderboard/Leaderboard'
 import SignUp from './pages/SignUp/SignUp'
 import About from './pages/About/About'
+import HostResult from './pages/Result/Host'
+import PlayerResult from './pages/Result/Player';
 
-function App() {
+const App = () => {
  
   return (
 
@@ -40,13 +42,22 @@ function App() {
           <About/>
         </Route>
 
+        <Route path="/result">
+          <HostResult/>
+        </Route>
+        
+        <Route path="/result-player">
+          <PlayerResult/>
+        </Route>
+
         <Route path="/">
           <Home/>
         </Route>
 
       </Switch>
     </Router>
-  );
+
+  )
 }
 
 export default App;

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { nextQuestion, startGame as startGameAction, revealAnswer } from '../../actions/actions'
+import { nextQuestion, startGame as startGameAction, revealAnswer, sendQuestionsToServer } from '../../actions/actions'
 import Question from './Question/Question'
 import NavBar from '../../components/NavBar/NavBar'
 import { Typography, Button } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 import { useStyles } from './Style'
 import Scoreboard from '../../components/Scoreboard/Scoreboard'
 
 const GameHost = () => {
+
+  let history = useHistory()
 
   const [questions, setQuestions] = useState([
     {
@@ -96,6 +99,14 @@ const GameHost = () => {
     dispatch(nextQuestion(questions[currentQuestion]))
   }
 
+  const showResultsButton = () => {
+    dispatch(sendQuestionsToServer(questions))
+    history.push({
+      pathname: '/result',
+      state: { questions }
+    })
+  }
+
   const showAnswer = () => {
     dispatch(revealAnswer(correctAnswer.option))
   }
@@ -143,17 +154,22 @@ const GameHost = () => {
           <div>
             <Question question={questions[currentQuestion - 1]}/>
             <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} have answered</Typography>
-            <Button onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
-              Next Question
-            </Button>
+            {currentQuestion === questions.length && (
+              <Button onClick={showResultsButton} className={classes.nextQuestion} size="large" color="primary" variant="contained"> 
+              Show Results
+              </Button>
+             )}
+            {currentQuestion !== questions.length && (
+              <Button onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
+                Next Question
+              </Button>
+            )}
             <Button onClick={showAnswer} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Show Answer
             </Button>
           </div>
         ) 
       )}
-
-
     </div>
   );
 }

@@ -12,7 +12,8 @@ const initialState = {
     ]
   },
   gameStarted: false,
-  answer: null
+  answer: null,
+  questions: []
 }
 
 const hostReducer = (state = initialState, action) => {
@@ -42,6 +43,12 @@ const hostReducer = (state = initialState, action) => {
         question: action.question
       }
     
+    case 'SEND_QUESTIONS_TO_SERVER':
+      return {...state, questions: action.questions}
+
+    case 'SET_ALL_QUESTIONS_TO_PLAYERS':
+      return {...state, questions: action.questions}
+      
     default:
       return state
   }

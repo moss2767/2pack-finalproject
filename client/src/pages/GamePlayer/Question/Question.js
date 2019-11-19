@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { correctAnswer, incorrectAnswer } from '../../../actions/actions'
 import useStyles from './Style'
@@ -10,6 +10,10 @@ const Question = ({question}) => {
   const dispatch = useDispatch()
   const correctAnswerlol = question.answers.find(answer => answer.correct ==='true')
   shuffle(question.answers)
+
+  useEffect(() => {
+    setDisabled(false)
+  }, [question])
   
   const handleAnswer = (answer) => {
     setDisabled(true)
