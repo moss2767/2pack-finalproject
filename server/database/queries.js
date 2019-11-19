@@ -2,9 +2,11 @@ import pg from 'pg'
 import dotenv from'dotenv'
 dotenv.config()
 
+const hostName = process.env.NODE_ENV === 'dev' ? process.env.DB_HOST : `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` 
+
 const pool = new pg.Pool({
   user: process.env.DB_USER,
-  host: process.env.DB_HOST,
+  host: hostName,
   database: process.env.DB_NAME,
   password: process.env.DB_PASS,
   port: process.env.DB_PORT
