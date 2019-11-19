@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node -r esm server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "nodemon -e js -x npm start"
+    "watch": "NODE_ENV=dev nodemon -e js -x npm start"
   },
   "author": "",
   "license": "ISC",
