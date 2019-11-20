@@ -8,7 +8,7 @@ const socketMiddleware = state => {
   if(!socket) {
     socket = io(url)
   }
-  
+
   socket.on('users', data => {
     state.dispatch(setUsers(data))
   })
@@ -23,8 +23,7 @@ const socketMiddleware = state => {
   })
 
   socket.on('answer', answer => {
-    console.log(answer)
-    console.log('answer socket received!!')
+    // console.log('answer socket received!!', answer)
     state.dispatch(showAnswerToPlayer(answer))
   })
 

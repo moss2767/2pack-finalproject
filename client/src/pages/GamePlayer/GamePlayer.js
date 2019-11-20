@@ -9,14 +9,14 @@ import NavBar from '../../components/NavBar/NavBar'
 const GamePlayer = () => {
   const classes = useStyles()
   let history = useHistory()
-  const { gameStarted, question, questions } = useSelector(state => state.game)
+  const { gameStarted, question, quiz } = useSelector(state => state.game)
   const { name, points } = useSelector(state => state.user)
 
   useEffect(() => {
-    if(questions.length > 0) {
+    if(quiz.questions[0].question !== null) {
       history.push('/result-player')
     }
-  }, [history, questions])
+  }, [history, quiz])
 
   return (
     <div className={classes.wrapper}>
