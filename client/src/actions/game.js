@@ -34,15 +34,21 @@ export const nextQuestion = question => {
   }
 }
 
-export const giveAnswer = answer => {
+export const sendQuestionToPlayers = question => {
   return {
-    type: 'GIVE_ANSWER',
+    type: 'SEND_QUESTION_TO_PLAYERS',
+    question
+  }
+}
+
+export const showAnswerToPlayer = answer => {
+  return {
+    type: 'SHOW_ANSWER_TO_PLAYER',
     answer
   }
 }
 
 export const revealAnswer = answer => {
-  console.log(answer)
   return {
     type: 'REVEAL_ANSWER',
     answer

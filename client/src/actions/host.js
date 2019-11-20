@@ -5,16 +5,16 @@ export const setUsers = users => {
   }
 }
 
-export const sendQuestionsToServer = questions => {
+export const sendQuestionsToServer = quiz => {
   return {
     type: 'SEND_QUESTIONS_TO_SERVER',
-    questions: questions
+    quiz: quiz
   }
 }
 
-export const setAllQuestionsToPlayers = questions => {
+export const setAllQuestionsToPlayers = quiz => {
   return {
     type: 'SET_ALL_QUESTIONS_TO_PLAYERS',
-    questions: questions
+    quiz: quiz
   }
 }
