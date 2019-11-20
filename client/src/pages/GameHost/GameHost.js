@@ -11,19 +11,11 @@ import Scoreboard from '../../components/Scoreboard/Scoreboard'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const GameHost = () => {
-
   let history = useHistory()
-
   const [questions, setQuestions] = useState([
-    {
-      answers: [
-        {
-          correct: null,
-          option: null
-        }
-      ]
-    }
+    { answers: [ { correct: null, option: null } ] }
   ])
+  
   const [correctAnswer, setCorrectAnswer] = useState('')
   const [usersWhoHaveAnswered, setUsersWhoHaveAnswered] = useState(0)
   const { currentQuestion, room, users } = useSelector(state => state.game)
@@ -102,10 +94,7 @@ const GameHost = () => {
 
   const showResultsButton = () => {
     dispatch(sendQuestionsToServer(questions))
-    history.push({
-      pathname: '/result',
-      state: { questions }
-    })
+    history.push('/result')
   }
 
   const showAnswer = () => {
