@@ -1,5 +1,6 @@
 import io from 'socket.io-client'
-import { setUsers, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers, CREATE_GAME } from '../actions/actions'
+import { setUsers, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers,
+  CREATE_GAME, START_GAME, JOIN_GAME, SEND_QUESTION_TO_PLAYERS } from '../actions/actions'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const socketMiddleware = state => {  
@@ -61,17 +62,17 @@ const socketMiddleware = state => {
         break
       }
 
-      case "START_GAME": {
+      case START_GAME: {
         socket.emit('start game')
         break
       }
 
-      case "JOIN_GAME": {
+      case JOIN_GAME: {
         socket.emit('join game', action)
         break
       }
 
-      case "SEND_QUESTION_TO_PLAYERS": {
+      case SEND_QUESTION_TO_PLAYERS: {
         socket.emit('send question to players', action.question)
         break
       }
