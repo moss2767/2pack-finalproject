@@ -57,7 +57,7 @@ io.on('connection', socket => {
     socket.admin = true
     socket.join(room)
 
-    socket.on('next question', question => {
+    socket.on('send question to players', question => {
       resetToNotAnswered(room)
       getUsersInRoom(room)
       emitUsers(room)
@@ -75,7 +75,7 @@ io.on('connection', socket => {
     })
 
     socket.on('reveal answer', answer => {
-      console.log('revealed answer: ', answer)
+      console.log('answer', answer)
       socket.to(room).emit('answer', answer)
     })
 
