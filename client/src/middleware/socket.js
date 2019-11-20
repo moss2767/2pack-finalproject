@@ -27,8 +27,8 @@ const socketMiddleware = state => {
     state.dispatch(showAnswerToPlayer(answer))
   })
 
-  socket.on('all questions', questions => {
-    state.dispatch(setAllQuestionsToPlayers(questions))
+  socket.on('all questions', quiz => {
+    state.dispatch(setAllQuestionsToPlayers(quiz))
   })
 
   return next => action => {
