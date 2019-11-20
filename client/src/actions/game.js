@@ -1,6 +1,8 @@
+export const CREATE_GAME = "CREATE_GAME"
+
 export const createGame = room => {
   return {
-    type: 'CREATE_GAME',
+    type: CREATE_GAME,
     room: room
   }
 }

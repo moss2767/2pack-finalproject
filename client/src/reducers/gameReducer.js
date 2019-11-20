@@ -1,6 +1,6 @@
 const initialState = {
   users: [],
-  currentQuestion: 0,
+  currentQuestion: 0, 
   room: null,
   question: {
     question: null,

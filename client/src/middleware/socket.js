@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { setUsers, setQuestion, gameStarted, giveAnswer, setAllQuestionsToPlayers } from '../actions/actions'
+import { setUsers, setQuestion, gameStarted, giveAnswer, setAllQuestionsToPlayers, CREATE_GAME } from '../actions/actions'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const socketMiddleware = state => {  
@@ -41,7 +41,7 @@ const socketMiddleware = state => {
       case 'REVEAL_ANSWER': {
         console.log('answerReveal')
         console.log(action.answer)
-        socket.emit('reveal answer', action.answer)
+         socket.emit('reveal answer', action.answer)
         break
       }
 
@@ -55,7 +55,7 @@ const socketMiddleware = state => {
         break
       }
 
-      case "CREATE_GAME": {
+      case CREATE_GAME: {
         socket.emit('join game as host', action.room)
         break
       }
