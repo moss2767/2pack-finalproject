@@ -77,7 +77,7 @@ const socketMiddleware = state => {
       }
 
       case "SEND_QUESTIONS_TO_SERVER": {
-        socket.emit('send questions', action.questions)
+        socket.emit('send questions', action.quiz)
         break
       }
 
