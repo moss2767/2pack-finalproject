@@ -1,35 +1,39 @@
 import io from 'socket.io-client'
-import { setUsers, setQuestion, gameStarted, giveAnswer, setAllQuestionsToPlayers, CREATE_GAME } from '../actions/actions'
+import { setUsers, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers, CREATE_GAME } from '../actions/actions'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const socketMiddleware = state => {  
-  let socket
+  let socket = null
+
+  if(!socket) {
+    socket = io(url)
+  }
+  
+  socket.on('users', data => {
+    state.dispatch(setUsers(data))
+  })
+
+  socket.on('new question', question => {
+    state.dispatch(setQuestion(question))
+    console.log("listening to question", question)
+  })
+
+  socket.on('game started', () => {
+    state.dispatch(gameStarted())
+  })
+
+  socket.on('answer', answer => {
+    console.log(answer)
+    console.log('answer socket received!!')
+    state.dispatch(showAnswerToPlayer(answer))
+  })
+
+  socket.on('all questions', questions => {
+    state.dispatch(setAllQuestionsToPlayers(questions))
+  })
+
   return next => action => {
-    if(!socket) {
-      socket = io(url)
-    }
 
-    socket.on('users', data => {
-      state.dispatch(setUsers(data))
-    })
-
-    socket.on('new question', question => {
-      state.dispatch(setQuestion(question))
-      console.log("listening to question", question)
-    })
-
-    socket.on('game started', () => {
-      state.dispatch(gameStarted())
-    })
-
-    socket.on('answer', answer => {
-      console.log('answer socket received!!')
-      state.dispatch(giveAnswer(answer))
-    })
-
-    socket.on('all questions', questions => {
-      state.dispatch(setAllQuestionsToPlayers(questions))
-    })
 
     switch(action.type) {
 
@@ -39,9 +43,7 @@ const socketMiddleware = state => {
       }
 
       case 'REVEAL_ANSWER': {
-        console.log('answerReveal')
-        console.log(action.answer)
-         socket.emit('reveal answer', action.answer)
+        socket.emit('reveal answer', action.answer)
         break
       }
 
@@ -70,8 +72,8 @@ const socketMiddleware = state => {
         break
       }
 
-      case "NEXT_QUESTION": {
-        socket.emit('next question', action.question)
+      case "SEND_QUESTION_TO_PLAYERS": {
+        socket.emit('send question to players', action.question)
         break
       }
 
