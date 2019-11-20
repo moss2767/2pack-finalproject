@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { nextQuestion, startGame as startGameAction, revealAnswer, sendQuestionsToServer } from '../../actions/actions'
+import { nextQuestion, startGame as startGameAction, revealAnswer, sendQuestionsToServer, sendQuestionToPlayers } from '../../actions/actions'
 import Question from './Question/Question'
 import NavBar from '../../components/NavBar/NavBar'
 import { Typography, Button } from '@material-ui/core'
@@ -12,9 +12,16 @@ const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-2590
 
 const GameHost = () => {
   let history = useHistory()
-  const [questions, setQuestions] = useState([
-    { answers: [ { correct: null, option: null } ] }
-  ])
+  const [quiz, setQuiz] = useState({
+    id: null,
+    name: null,
+    questions: [
+      { 
+        question: null,
+        answers: [ { correct: null, option: null } ]
+      }
+    ]
+  })
   
   const [correctAnswer, setCorrectAnswer] = useState('')
   const [usersWhoHaveAnswered, setUsersWhoHaveAnswered] = useState(0)
@@ -31,7 +38,7 @@ const GameHost = () => {
     const fetchQuiz = async () => {
       const res = await fetch(`${url}/quizzes/${quizId}`)
       const data = await res.json()
-      setQuestions(data)
+      setQuiz(data)
     }
 
     fetchQuiz()
@@ -46,15 +53,18 @@ const GameHost = () => {
       }
       return total
     }, 0))
+    if (usersWhoHaveAnswered === users.length) {
+      showAnswer()
+    }
   }, [users])
 
   useEffect(() => {
-    // const correct = questions[currentQuestion].answers.find(answer => answer.correct === "true")
-    // if(correct) {
-    //   console.log(correct.option)
-    //   setCorrectAnswer(correct.option)
-    // }
-  }, [currentQuestion, questions])
+    const correct = quiz.questions[currentQuestion].answers.find(answer => answer.correct === "true")
+    if(correct) {
+      console.log('correct option', correct.option)
+      setCorrectAnswer(correct.option)
+    }
+  }, [currentQuestion, quiz])
   
   // const [ showCancel, setShowCancel ] = useState(false)
   // const [ countdown, setCountdown ] = useState(3)
@@ -76,7 +86,7 @@ const GameHost = () => {
 
   const startGame = () => {
     setGameStarted(true)
-    dispatch(nextQuestion(questions[currentQuestion]))
+    dispatch(sendQuestionToPlayers(quiz.questions[currentQuestion]))
     dispatch(startGameAction())
     // setShowCancel(true)
     // setCountdownStarted(true)
@@ -89,16 +99,17 @@ const GameHost = () => {
   // }
 
   const nextQuestionButton = () => {
-    dispatch(nextQuestion(questions[currentQuestion]))
+    dispatch(nextQuestion())
+    dispatch(sendQuestionToPlayers(quiz.questions[currentQuestion+1]))
   }
 
   const showResultsButton = () => {
-    dispatch(sendQuestionsToServer(questions))
+    dispatch(sendQuestionsToServer(quiz))
     history.push('/result')
   }
 
   const showAnswer = () => {
-    dispatch(revealAnswer(correctAnswer.option))
+    dispatch(revealAnswer(correctAnswer))
   }
 
   return (
@@ -140,16 +151,15 @@ const GameHost = () => {
       )} */}
 
       { gameStarted && (
-        currentQuestion !== questions.length + 1 && (
           <div>
-            <Question question={questions[currentQuestion - 1]}/>
+            <Question question={quiz.questions[currentQuestion]}/>
             <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} have answered</Typography>
-            {currentQuestion === questions.length && (
+            {currentQuestion === quiz.questions.length - 1 && (
               <Button onClick={showResultsButton} className={classes.nextQuestion} size="large" color="primary" variant="contained"> 
               Show Results
               </Button>
              )}
-            {currentQuestion !== questions.length && (
+            {currentQuestion !== quiz.questions.length - 1 && (
               <Button onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
                 Next Question
               </Button>
@@ -158,7 +168,6 @@ const GameHost = () => {
               Show Answer
             </Button>
           </div>
-        ) 
       )}
     </div>
   );

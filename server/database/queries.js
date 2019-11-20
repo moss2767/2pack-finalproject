@@ -14,12 +14,25 @@ const pool = new pg.Pool({
 
 export const getQuiz = (req, res) => {
   const quizID = req.params.id
-  pool.query('SELECT * FROM questions WHERE quiz_id = $1', [quizID], (error, results) => {
+  const quiz = {}
+  pool.query('SELECT question, answers FROM questions WHERE quiz_id = $1', [quizID], (error, results) => {
     if (error) {
       console.log(error)
       return res.status(500).json(error)
     }
-    res.status(200).json(results.rows)
+    if(results.rows.length === 0) {
+      return res.status(404).json({message: "No quiz with that ID exists"})
+    }
+    quiz.questions = results.rows
+    pool.query('SELECT name FROM quizzes WHERE id = $1', [quizID], (error, results) => {
+      if(error) {
+        console.log(error)
+        return res.status(500).json(error)
+      }
+      quiz.name = results.rows[0].name
+      quiz.id = quizID
+      return res.status(200).json(quiz)
+    })
   })
 }
 

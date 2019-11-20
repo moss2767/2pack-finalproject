@@ -8,9 +8,9 @@ const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-2590
 
 const HostResult = () => {
   const classes = useStyles()
-  const { questions, users } = useSelector(state => state.game)
+  const { quiz, users } = useSelector(state => state.game)
   const sortedUsers = users.sort((a, b) => b.points - a.points)
-  const maxPoints = questions.length * users.length
+  const maxPoints = quiz.questions.length * users.length
   const scoredPoints = users.reduce((total, user) => total + user.points, 0)
   const percentage = Math.round(scoredPoints/maxPoints * 100)
 
@@ -22,13 +22,13 @@ const HostResult = () => {
         'Content-Type': 'application/json'
       },
       // OBS IT CANNOT BE HARD CODED ID 1 NEED TO GET THE QUIZ ID
-      body: JSON.stringify({id: "1", batch: "Fall 19 - Stockholm", percentage: "95"})
+      body: JSON.stringify({id: quiz.id, batch: "Fall 19 - Stockholm", percentage: percentage.toString()})
     })
-    console.log(res)
-    const data = await res.json()
-    console.log(data)
+    if (res.status === 201) {
+      alert("Score posted!")
+    }
   }
-
+  
   postLeaderboard()
 
   return (
