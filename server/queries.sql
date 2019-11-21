@@ -9,8 +9,6 @@ VALUES (
  ]'),
 (SELECT id from Quizzes WHERE name = 'Introductory JavaScript Quiz'))
 
-
-
 SELECT quizzes.id, quizzes.name, questions.question, questions.answers FROM questions
 INNER JOIN quizzes ON questions.quiz_id = quizzes.id
 WHERE questions.quiz_id = 1
