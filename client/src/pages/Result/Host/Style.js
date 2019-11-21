@@ -16,7 +16,11 @@ const useStyles = makeStyles(() => ({
   text: {
     width: '30rem',
     marginLeft: '1rem'
-  }
+  },
+  formControl: {
+    marginRight: "0.5rem",
+    minWidth: 200,
+  },
 }))
 
 export default useStyles

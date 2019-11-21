@@ -36,7 +36,7 @@ const NavBar = () => {
           <ListItemIcon>
             <FormatListNumberedIcon />
           </ListItemIcon>
-          <ListItemText primary='Leaderboard' />
+          <ListItemText primary='Leaderboards' />
         </ListItem>
       </List>
       <Divider />
