@@ -5,6 +5,7 @@ import { Container, TextField, Button, makeStyles } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
 import './Home.css'
 import { joinGame } from '../../actions/actions'
+import SimpleSnackbar from '../../components/SimpleSnackbar/SimpleSnackbar'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const useStyles = makeStyles(theme => ({
@@ -25,6 +26,8 @@ const Home = () => {
   const dispatch = useDispatch()
   let history = useHistory()
   const classes = useStyles()
+
+  const [showSnackbar, setShowSnackbar] = useState(false)
   const [name, setName] = useState('')
   const [code, setCode] = useState('')
 
@@ -36,16 +39,16 @@ const Home = () => {
       dispatch(joinGame({name, code}))
       history.push('/player')
     } else {
-      alert("Room doesn't exist!")
+      setShowSnackbar(true)
     }
   }
   
   return (
     <div>
       <NavBar />
+      <SimpleSnackbar open={showSnackbar} setOpen={setShowSnackbar} message={'Room doesn\'t exist!'}/>
       <Container>
-        <form className="form" noValidate autoComplete="off" onSubmit={play}>
-          
+        <form className="form" noValidate autoComplete="off" onSubmit={play}>          
           <TextField
             id="Name"
             className={classes.textField}
