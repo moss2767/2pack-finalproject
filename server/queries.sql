@@ -1,3 +1,4 @@
+/* eslint-disable */
 INSERT INTO Questions (question, answers, quiz_id)
 VALUES (
 'What is the correct syntax for referring to an external script called "xxx.js"?',
@@ -13,8 +14,14 @@ SELECT quizzes.id, quizzes.name, questions.question, questions.answers FROM ques
 INNER JOIN quizzes ON questions.quiz_id = quizzes.id
 WHERE questions.quiz_id = 1
 
-UPDATE leaderboards SET leaderboard_jsonb = leaderboard_jsonb || '{"country": "Egypt"}'
-where id = 1;
 
 update leaderboards set leaderboard_jsonb = leaderboard_jsonb - 1
 where id = 1;
+
+/* Inserting a new leaderboard */
+INSERT INTO leaderboards(quiz_id, leaderboard)
+VALUES (quiz_id, ('[]'));
+
+/* Updating a leaderboard with a new result */
+update leaderboards SET leaderboard = leaderboard || '{"course": "Fall 19 Stockholm", "percentage": "85"}'
+WHERE quiz_id = [insert quiz_id]

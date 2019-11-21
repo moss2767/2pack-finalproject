@@ -21,9 +21,9 @@ const Leaderboard = ({id}) => {
     const fetchLeaderboard = async () => {
       const res = await fetch(`${url}/leaderboard/${id}`)
       const data = await res.json()
-      const sortedLeaderboard = data[0].leaderboard.sort((a,b) => Number(b.percentage) - Number(a.percentage))
-      const filteredLeaderboard = sortedLeaderboard.filter(entry => !isNaN(Number(entry.percentage)))
-      setLeaderboard(filteredLeaderboard)
+      const filteredLeaderboard = data[0].leaderboard.filter(entry => !isNaN(Number(entry.percentage)))
+      const sortedLeaderboard = filteredLeaderboard.sort((a,b) => Number(b.percentage) - Number(a.percentage))
+      setLeaderboard(sortedLeaderboard)
     }
     fetchLeaderboard()
   }, [id])
@@ -37,8 +37,8 @@ const Leaderboard = ({id}) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {leaderboard.map(batch => (
-          <TableRow key={batch.course}>
+        {leaderboard.map((batch, index) => (
+          <TableRow key={index}>
             <TableCell component="th" scope="row">{batch.course}</TableCell>
             <TableCell className={classes.points} component="th" scope="row">{batch.percentage}%</TableCell>
           </TableRow>

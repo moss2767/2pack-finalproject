@@ -14,6 +14,7 @@ const SignUp = () => {
   
   const logIn = async (event) => {
     event.preventDefault()
+    console.log("We're gonna use username once we have figured out authentication:", username)
     if(password !== "2pack") {
       return alert("Wrong password!")
     }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
-import { useDispatch } from 'react-redux'
 import { Route, Switch, useHistory } from 'react-router-dom'
 import { Container, makeStyles, Typography } from '@material-ui/core'
 import QuizCard from '../../components/QuizCard/QuizCard'
@@ -25,11 +24,10 @@ const useStyles = makeStyles({
   }
 })
 
-const Leaderboards = ({ match }) => {
+const Leaderboards = () => {
   let history = useHistory()
 
   const classes = useStyles()
-  const dispatch = useDispatch()  
   const [quizzes, setQuizzes] = useState([])
 
   const showLeaderboard = (id) => {
@@ -37,12 +35,12 @@ const Leaderboards = ({ match }) => {
   }
 
   useEffect( () => {
-    const test = async () => {
+    const fetchQuizzes = async () => {
       const res = await fetch(`${url}/quizzes`)
       const data = await res.json()
       setQuizzes(data)
     }
-    test()
+    fetchQuizzes()
   }, [])
 
   return ( 
@@ -61,7 +59,7 @@ const Leaderboards = ({ match }) => {
               {...{
               header: quiz.name,
               text: quiz.description,
-              startGame: () => { showLeaderboard(quiz.id) }
+              function: () => { showLeaderboard(quiz.id) }
             }}/>
             ))}
       </div>

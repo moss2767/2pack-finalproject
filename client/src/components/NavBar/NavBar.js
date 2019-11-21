@@ -32,7 +32,7 @@ const NavBar = () => {
           </ListItemIcon>
           <ListItemText primary='Quizzes' />
         </ListItem>
-        <ListItem button onClick={() => history.push('/leaderboard')}>
+        <ListItem button onClick={() => history.push('/leaderboards')}>
           <ListItemIcon>
             <FormatListNumberedIcon />
           </ListItemIcon>

@@ -45,8 +45,10 @@ const GameHost = () => {
 
   }, [dispatch, quizId])
 
+  const showAnswer = () => dispatch(revealAnswer(correctAnswer))
+
   useEffect(() => {
-    console.log(users)
+
     setUsersWhoHaveAnswered(users.reduce((total, adder) => {
       if(adder.answered) {
         return total + 1
@@ -54,9 +56,9 @@ const GameHost = () => {
       return total
     }, 0))
     if (usersWhoHaveAnswered === users.length) {
-      showAnswer()
+      console.log("We should automatically show the answer to all players")
     }
-  }, [users])
+  }, [correctAnswer, dispatch, users, usersWhoHaveAnswered])
 
   useEffect(() => {
     const correct = quiz.questions[currentQuestion].answers.find(answer => answer.correct === "true")
@@ -106,10 +108,6 @@ const GameHost = () => {
   const showResultsButton = () => {
     dispatch(sendQuestionsToServer(quiz))
     history.push('/result')
-  }
-
-  const showAnswer = () => {
-    dispatch(revealAnswer(correctAnswer))
   }
 
   return (
