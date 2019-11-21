@@ -15,4 +15,8 @@ SELECT quizzes.id, quizzes.name, questions.question, questions.answers FROM ques
 INNER JOIN quizzes ON questions.quiz_id = quizzes.id
 WHERE questions.quiz_id = 1
 
+UPDATE leaderboards SET leaderboard_jsonb = leaderboard_jsonb || '{"country": "Egypt"}'
+where id = 1;
 
+update leaderboards set leaderboard_jsonb = leaderboard_jsonb - 1
+where id = 1;
