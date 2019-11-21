@@ -50,8 +50,7 @@ export const GetLeaderboard = (req, res) => {
   const quizId = req.params.id
   pool.query('SELECT * FROM leaderboards WHERE quiz_id = $1', [quizId], (error, results) => {
     if (error) {
-      console.log(error)
-      return res.status(500).json(error)
+      return res.status(500).json({ message: 'Error getting leaderboard', error: error })
     }
     res.status(200).json(results.rows)
   })

@@ -51,7 +51,7 @@ const Leaderboards = () => {
         Leaderboards
       </Typography>
       <Typography className={classes.text} variant="h6">
-        Select quiz you want to see the leaderboard from.
+        Select quiz you want to see the leaderboard from
       </Typography>
       <div className={classes.gamesContainer}>
           {quizzes.map(quiz => (
