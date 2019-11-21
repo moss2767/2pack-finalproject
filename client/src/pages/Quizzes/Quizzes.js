@@ -9,8 +9,10 @@ const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-2590
 
 const useStyles = makeStyles(() => ({
   header: {
-    fontWeight: "lighter",
-    margin: "1rem 0",
+    marginTop: "1rem",
+  },
+  subtitle: {
+    margin: "1rem 0"
   },
   gamesContainer: {
     display: "grid",
@@ -65,9 +67,12 @@ const Quizzes = () => {
     <div>
       <NavBar />
       <Container maxWidth="lg">
-        <Typography className={classes.header} variant="h4">
-          Salt Course quizzes
+        <Typography className={classes.header} variant="h2">
+          &lt;/salt&gt; quizzes
         </Typography>
+        <Typography className={classes.subtitle} variant="h6">
+        Select a quiz to host.
+      </Typography>
         <div className={classes.gamesContainer}>
           {quizzes.map(quiz => (
             <QuizCard key={quiz.id}

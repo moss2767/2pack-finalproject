@@ -65,13 +65,13 @@ const Home = () => {
             variant="outlined"/>
 
           <Button type="submit" color="primary" variant="contained" className={classes.button}>
-            Play!
+            Play
+          </Button>
+
+          <Button type="button" color="secondary" variant="contained" onClick={() => history.push('/quizzes')}>
+            Host a game
           </Button>
         </form>
-
-        <button onClick={() => history.push('/quizzes')}>
-          Host a game?
-        </button>
 
       </Container>  
     </div>

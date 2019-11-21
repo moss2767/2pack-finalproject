@@ -10,9 +10,8 @@ const useStyles = makeStyles({
   leaderboard: {
     marginTop: "1rem"
   },
-  text: {
-    marginTop: "1rem",
-    marginBottom: "1rem"
+  subtitle: {
+    margin: "1rem 0",
   },
   gamesContainer: {
     display: "grid",
@@ -50,7 +49,7 @@ const Leaderboards = () => {
       <Typography className={classes.leaderboard} variant="h2">
         Leaderboards
       </Typography>
-      <Typography className={classes.text} variant="h6">
+      <Typography className={classes.subtitle} variant="h6">
         Select quiz you want to see the leaderboard from.
       </Typography>
       <div className={classes.gamesContainer}>
