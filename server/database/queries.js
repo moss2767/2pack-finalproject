@@ -20,12 +20,12 @@ export const getQuiz = (req, res) => {
       console.log(error)
       return res.status(500).json(error)
     }
-    if(results.rows.length === 0) {
-      return res.status(404).json({message: "No quiz with that ID exists"})
+    if (results.rows.length === 0) {
+      return res.status(404).json({ message: 'No quiz with that ID exists' })
     }
     quiz.questions = results.rows
     pool.query('SELECT name FROM quizzes WHERE id = $1', [quizID], (error, results) => {
-      if(error) {
+      if (error) {
         console.log(error)
         return res.status(500).json(error)
       }
@@ -57,25 +57,46 @@ export const GetLeaderboard = (req, res) => {
   })
 }
 
-export const AddEntryToLeaderboard = (req, res) => {
-  const quizId = req.body.id
-  const batch = req.body.batch
-  const percentage = req.body.percentage
+export const AddOrUpdateLeaderboard = (req, res) => {
+  const { batch, percentage, quizId } = req.body
+
   if (!quizId || !batch || !percentage) {
-    return res.status(401).json({ message: 'Not all parameters' })
+    return res.status(400).json({ message: 'Error: Send in all required parameters' })
   }
+
   pool.query('SELECT leaderboard FROM leaderboards WHERE quiz_id = $1', [quizId], (error, results) => {
     if (error) {
-      console.log(error)
-      return res.status(500).json(error)
+      return res.status(500).json({ message: 'Error getting leaderboard', error: error })
     }
-    const newLeaderboard = [...results.rows[0].leaderboard, { course: batch, percentage: percentage }]
-    pool.query('UPDATE leaderboards SET leaderboard = $1', [JSON.stringify(newLeaderboard)], (error, results) => {
+
+    const leaderboard = [...results.rows[0].leaderboard]
+    const newLeaderboard = leaderboard.map(entry => (entry.course === batch && Number(percentage) > Number(entry.percentage)
+      ? { course: batch, percentage: percentage }
+      : entry
+    ))
+
+    pool.query('UPDATE leaderboards SET leaderboard = $1 WHERE quiz_id = $1', [JSON.stringify(newLeaderboard), quizId], (error, results) => {
       if (error) {
-        console.log('error updating', error)
-        return res.status(500).json(error)
+        return res.status(500).json({ message: 'Error updating leaderboard', error: error })
       }
+      console.log(results)
+      res.status(204).send()
     })
-    res.status(201).json()
   })
 }
+
+//   pool.query('SELECT leaderboard FROM leaderboards WHERE quiz_id = $1', [quizId], (error, results) => {
+//     if (error) {
+//       console.log(error)
+//       return res.status(500).json(error)
+//     }
+//     const newLeaderboard = [...results.rows[0].leaderboard, { course: batch, percentage: percentage }]
+//     pool.query('UPDATE leaderboards SET leaderboard = $1', [JSON.stringify(newLeaderboard)], (error, results) => {
+//       if (error) {
+//         console.log('error updating', error)
+//         return res.status(500).json(error)
+//       }
+//     })
+//     res.status(201).json()
+//   })
+// }
