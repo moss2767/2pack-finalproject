@@ -8,7 +8,7 @@ import Quizzes from './pages/Quizzes/Quizzes'
 import Leaderboards from './pages/Leaderboards/Leaderboards'
 import SignUp from './pages/SignUp/SignUp'
 import About from './pages/About/About'
-import HostResult from './pages/Result/Host'
+import HostResult from './pages/Result/Host/Host'
 import PlayerResult from './pages/Result/Player'
 import MiniGame from './pages/MiniGame/MiniGame'
 
