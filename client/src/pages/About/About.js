@@ -28,7 +28,7 @@ const About = () => {
     <Container>
       <Typography className={classes.about} variant="h2">About</Typography>
       <Typography variant="h6">
-        2Pack was arguable the greatest mob in <Link target="_blank" rel="noopener" href="https://www.study-at-salt.com/">{"</salt>"}</Link> history.
+        2Pack was arguably the greatest mob in <Link target="_blank" rel="noopener" href="https://www.study-at-salt.com/">{"</salt>"}</Link> history.
       </Typography>
       <Grid
       container
