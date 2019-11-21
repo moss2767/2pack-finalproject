@@ -3,7 +3,7 @@ import NavBar from '../../components/NavBar/NavBar'
 import { Container, TextField, Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { useStyles } from './SignUpStyle'
-import SimpleSnackbar from '../../components/SnackbarTest'
+import SimpleSnackbar from '../../components/SimpleSnackbar/SimpleSnackbar'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const SignUp = () => {
@@ -33,7 +33,7 @@ const SignUp = () => {
   return ( 
   <div>
     <NavBar />
-    <SimpleSnackbar open={open} setOpen={setOpen}/>
+    <SimpleSnackbar open={open} setOpen={setOpen} message={'Wrong Password'}/>
     <Container maxWidth="sm">
         <form className={classes.container} noValidate autoComplete="off" onSubmit={logIn}>
           <TextField

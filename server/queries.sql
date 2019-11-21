@@ -25,3 +25,9 @@ VALUES (quiz_id, ('[]'));
 /* Updating a leaderboard with a new result */
 update leaderboards SET leaderboard = leaderboard || '{"course": "Fall 19 Stockholm", "percentage": "85"}'
 WHERE quiz_id = [insert quiz_id]
+
+/* Creating a quiz and a leaderboard */
+INSERT INTO quizzes(name, description)
+VALUES ("Quiz Name", "Quiz Description");
+INSERT INTO leaderboards(quiz_id, leaderboard)
+VALUES("ID from quiz inserted above", ('[]'))

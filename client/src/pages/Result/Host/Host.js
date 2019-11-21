@@ -4,10 +4,13 @@ import NavBar from '../../../components/NavBar/NavBar'
 import { Avatar, Container, Typography, Table, TableCell, TableBody, TableRow, TableHead } from '@material-ui/core'
 import useStyles from './Style'
 import { Button, FormControl, MenuItem, Select, InputLabel } from '@material-ui/core'
+import SimpleSnackbar from '../../../components/SimpleSnackbar/SimpleSnackbar'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const HostResult = () => {
   const classes = useStyles()
+  const [open, setOpen] = useState(false)
+  const [snackMessage, setSnackMessage] = useState('')
   const [ batch, setBatch ] = useState('Fall 2019 - Stockholm')
   const { quiz, users } = useSelector(state => state.game)
   const maxPoints = quiz.questions.length * users.length
@@ -43,16 +46,19 @@ const HostResult = () => {
       })
 
       if(res.status === 400) {
-        alert("Score not posted. You probably don't have a Quiz ID")
+        setOpen(true)
+        setSnackMessage('Score not posted! You probably don\'t have a quiz ID')
       }
       if (res.status === 204) {
-        alert("Score posted!")
+        setOpen(true)
+        setSnackMessage('Score posted!')
       }
   }
   
   return (
   <div>
     <NavBar />
+    <SimpleSnackbar open={open} setOpen={setOpen} message={snackMessage}/>
     <Container>
     <Typography className={classes.result} variant="h2">
       Result
