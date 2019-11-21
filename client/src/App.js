@@ -5,7 +5,7 @@ import Home from './pages/Home/Home'
 import GameHost from './pages/GameHost/GameHost'
 import GamePlayer from './pages/GamePlayer/GamePlayer'
 import Quizzes from './pages/Quizzes/Quizzes'
-import Leaderboard from './pages/Leaderboard/Leaderboard'
+import Leaderboards from './pages/Leaderboards/Leaderboards'
 import SignUp from './pages/SignUp/SignUp'
 import About from './pages/About/About'
 import HostResult from './pages/Result/Host'
@@ -35,8 +35,8 @@ const App = () => {
           <GamePlayer/>
         </Route>
 
-        <Route path="/leaderboard">
-          <Leaderboard/>
+        <Route path="/leaderboards">
+          <Leaderboards/>
         </Route>
 
         <Route path="/about">
