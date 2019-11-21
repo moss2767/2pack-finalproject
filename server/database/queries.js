@@ -60,6 +60,10 @@ export const GetLeaderboard = (req, res) => {
 export const AddOrUpdateLeaderboard = (req, res) => {
   const { batch, percentage, quizId } = req.body
 
+  if (typeof percentage !== 'number') {
+    return res.status(400).json({ message: 'Percentage needs to be a number' })
+  }
+
   if (!quizId || !batch || !percentage) {
     return res.status(400).json({ message: 'Error: Send in all required parameters' })
   }
@@ -74,11 +78,11 @@ export const AddOrUpdateLeaderboard = (req, res) => {
     }
 
     const leaderboard = [...results.rows[0].leaderboard]
-    const indexBatch = leaderboard.findIndex(entry => entry.course === batch)
+    const indexBatch = leaderboard.findIndex(entry => entry.batch === batch)
 
     if (indexBatch === -1) {
-      leaderboard.push({ course: batch, percentage: percentage })
-    } else if (Number(leaderboard[indexBatch].percentage) < Number(percentage)) {
+      leaderboard.push({ batch: batch, percentage: percentage })
+    } else if (leaderboard[indexBatch].percentage < percentage) {
       leaderboard[indexBatch].percentage = percentage
     }
 
