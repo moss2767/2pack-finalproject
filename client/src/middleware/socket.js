@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import { setUsers, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers,
-  CREATE_GAME, START_GAME, JOIN_GAME, SEND_QUESTION_TO_PLAYERS } from '../actions/actions'
+  CREATE_GAME, START_GAME, JOIN_GAME, SEND_QUESTION_TO_PLAYERS, SEND_QUESTIONS_TO_SERVER, CORRECT_ANSWER, INCORRECT_ANSWER, REVEAL_ANSWER } from '../actions/actions'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const socketMiddleware = state => {  
@@ -37,23 +37,18 @@ const socketMiddleware = state => {
 
     switch(action.type) {
 
-      case 'CORRECT_ANSWER': {
+      case CORRECT_ANSWER: {
         socket.emit('correct answer')
         break
       }
 
-      case 'REVEAL_ANSWER': {
+      case REVEAL_ANSWER: {
         socket.emit('reveal answer', action.answer)
         break
       }
 
-      case 'INCORRECT_ANSWER': {
+      case INCORRECT_ANSWER: {
         socket.emit('incorrect answer')
-        break
-      }
-      
-      case "NEW_USER": {
-        socket.emit('new user', action.user)
         break
       }
 
@@ -77,7 +72,7 @@ const socketMiddleware = state => {
         break
       }
 
-      case "SEND_QUESTIONS_TO_SERVER": {
+      case SEND_QUESTIONS_TO_SERVER: {
         socket.emit('send questions', action.quiz)
         break
       }
