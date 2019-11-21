@@ -39,6 +39,7 @@ const resetToNotAnswered = room => {
   })
 }
 
+// We should use io.sockets.adapter.rooms instead and filter it
 const rooms = []
 app.set('rooms', rooms)
 
@@ -93,17 +94,17 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    // Refactor this one - close all sockets connected to room
     if (socket.host) {
-      console.log('Host disconnected, room closing...')
+      console.log(`Host in room ${socket.room} disconnected, room closing...`)
       const roomIndex = rooms.indexOf(socket.room)
       rooms.splice(roomIndex, 1)
-      console.log(rooms)
 
       socket.to(socket.room).emit('room closing')
-
-      const usersInRoom = emitUsers(socket.room)
-      console.log('usersInRoom', usersInRoom)
+      const clients = Object.keys(io.sockets.adapter.rooms[socket.room].sockets)
+      const sockets = clients.map(client => io.sockets.connected[client])
+      sockets.forEach(socket => {
+        socket.leave(socket.room)
+      })
     }
 
     if (socket.player) {
