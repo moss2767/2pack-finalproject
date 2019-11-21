@@ -69,34 +69,21 @@ export const AddOrUpdateLeaderboard = (req, res) => {
       return res.status(500).json({ message: 'Error getting leaderboard', error: error })
     }
 
+    if (results.rows.length === 0) {
+      return res.status(404).json({ message: 'No leaderboard with that ID found' })
+    }
+
     const leaderboard = [...results.rows[0].leaderboard]
     const newLeaderboard = leaderboard.map(entry => (entry.course === batch && Number(percentage) > Number(entry.percentage)
       ? { course: batch, percentage: percentage }
       : entry
     ))
 
-    pool.query('UPDATE leaderboards SET leaderboard = $1 WHERE quiz_id = $1', [JSON.stringify(newLeaderboard), quizId], (error, results) => {
+    pool.query('UPDATE leaderboards SET leaderboard = $1 WHERE quiz_id = $2', [JSON.stringify(newLeaderboard), quizId], (error, results) => {
       if (error) {
         return res.status(500).json({ message: 'Error updating leaderboard', error: error })
       }
-      console.log(results)
-      res.status(204).send()
+      res.status(200).send()
     })
   })
 }
-
-//   pool.query('SELECT leaderboard FROM leaderboards WHERE quiz_id = $1', [quizId], (error, results) => {
-//     if (error) {
-//       console.log(error)
-//       return res.status(500).json(error)
-//     }
-//     const newLeaderboard = [...results.rows[0].leaderboard, { course: batch, percentage: percentage }]
-//     pool.query('UPDATE leaderboards SET leaderboard = $1', [JSON.stringify(newLeaderboard)], (error, results) => {
-//       if (error) {
-//         console.log('error updating', error)
-//         return res.status(500).json(error)
-//       }
-//     })
-//     res.status(201).json()
-//   })
-// }
