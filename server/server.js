@@ -5,11 +5,9 @@ import http from 'http'
 import socket from 'socket.io'
 
 import leaderboard from './routes/leaderboard'
-import questions from './routes/questions'
 import createGame from './routes/createGame'
 import login from './routes/login'
 import quizzes from './routes/quizzes'
-import joinGame from './routes/joinGame'
 import listOfRooms from './routes/listOfRooms'
 
 const app = express()
@@ -21,11 +19,9 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.use('/leaderboard', leaderboard)
-app.use('/questions', questions)
 app.use('/create-game', createGame)
 app.use('/login', login)
 app.use('/quizzes', quizzes)
-app.use('/join-game', joinGame)
 app.use('/list-of-rooms', listOfRooms)
 
 const getUsersInRoom = room => {
@@ -51,32 +47,24 @@ const emitUsers = room => {
 }
 
 io.on('connection', socket => {
-  console.log('Someone connected!')
+  console.log(`Socket ID ${socket.id} connected`)
 
   socket.on('join game as host', room => {
     socket.room = room
-    socket.admin = true
+    socket.host = true
     socket.join(room)
-
-    socket.on('send question to players', question => {
-      resetToNotAnswered(room)
-      getUsersInRoom(room)
-      emitUsers(room)
-      socket.to(room).emit('new question', question)
-    })
 
     socket.on('start game', () => {
       socket.to(room).emit('game started')
     })
 
-    socket.on('disconnect', () => {
-      const roomIndex = rooms.indexOf(room)
-      rooms.splice(roomIndex, 1)
-      socket.emit('game over')
+    socket.on('send question to players', question => {
+      resetToNotAnswered(room)
+      emitUsers(room)
+      socket.to(room).emit('new question', question)
     })
 
     socket.on('reveal answer', answer => {
-      console.log('answer', answer)
       socket.to(room).emit('answer', answer)
     })
 
@@ -87,6 +75,7 @@ io.on('connection', socket => {
 
   socket.on('join game', action => {
     socket.room = action.room
+    socket.player = true
     socket.join(action.room)
     socket.user = { id: socket.id, name: action.name, points: 0, answered: false }
     emitUsers(action.room)
@@ -104,13 +93,22 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    if (socket.admin) {
-      console.log('Host disconnected, room closed!')
-      socket.to(socket.room).emit('room closed')
+    // Refactor this one - close all sockets connected to room
+    if (socket.host) {
+      console.log('Host disconnected, room closing...')
+      const roomIndex = rooms.indexOf(socket.room)
+      rooms.splice(roomIndex, 1)
+      console.log(rooms)
+
+      socket.to(socket.room).emit('room closing')
+
       const usersInRoom = emitUsers(socket.room)
       console.log('usersInRoom', usersInRoom)
     }
-    console.log('User disconnected!')
+
+    if (socket.player) {
+      emitUsers(socket.room)
+    }
   })
 })
 

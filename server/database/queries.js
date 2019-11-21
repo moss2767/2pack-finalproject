@@ -17,7 +17,6 @@ export const getQuiz = (req, res) => {
   const quiz = {}
   pool.query('SELECT question, answers FROM questions WHERE quiz_id = $1', [quizID], (error, results) => {
     if (error) {
-      console.log(error)
       return res.status(500).json(error)
     }
     if (results.rows.length === 0) {
@@ -26,8 +25,7 @@ export const getQuiz = (req, res) => {
     quiz.questions = results.rows
     pool.query('SELECT name FROM quizzes WHERE id = $1', [quizID], (error, results) => {
       if (error) {
-        console.log(error)
-        return res.status(500).json(error)
+        return res.status(500).json({ message: `Error getting quiz with id ${quizID}`, error: error })
       }
       quiz.name = results.rows[0].name
       quiz.id = quizID
@@ -36,11 +34,10 @@ export const getQuiz = (req, res) => {
   })
 }
 
-export const getAllQuizzes = (req, res) => {
+export const getAllQuizzes = (_req, res) => {
   pool.query('SELECT * FROM quizzes', (error, results) => {
     if (error) {
-      console.log(error)
-      return res.status(500).json(error)
+      return res.status(500).json({ message: 'Error getting quizzes', error: error })
     }
     res.status(200).json(results.rows)
   })
@@ -67,29 +64,31 @@ export const AddOrUpdateLeaderboard = (req, res) => {
     return res.status(400).json({ message: 'Error: Send in all required parameters' })
   }
 
-  pool.query('SELECT leaderboard FROM leaderboards WHERE quiz_id = $1', [quizId], (error, results) => {
-    if (error) {
-      return res.status(500).json({ message: 'Error getting leaderboard', error: error })
-    }
-
-    if (results.rows.length === 0) {
-      return res.status(404).json({ message: 'No leaderboard with that ID found' })
-    }
-
-    const leaderboard = [...results.rows[0].leaderboard]
-    const indexBatch = leaderboard.findIndex(entry => entry.batch === batch)
-
-    if (indexBatch === -1) {
-      leaderboard.push({ batch: batch, percentage: percentage })
-    } else if (leaderboard[indexBatch].percentage < percentage) {
-      leaderboard[indexBatch].percentage = percentage
-    }
-
-    pool.query('UPDATE leaderboards SET leaderboard = $1 WHERE quiz_id = $2', [JSON.stringify(leaderboard), quizId], (error, _results) => {
+  pool.query('SELECT leaderboard FROM leaderboards WHERE quiz_id = $1',
+    [quizId], (error, results) => {
       if (error) {
-        return res.status(500).json({ message: 'Error updating leaderboard', error: error })
+        return res.status(500).json({ message: 'Error getting leaderboard', error: error })
       }
-      res.status(204).send()
+
+      if (results.rows.length === 0) {
+        return res.status(404).json({ message: 'No leaderboard with that ID found' })
+      }
+
+      const leaderboard = [...results.rows[0].leaderboard]
+      const indexBatch = leaderboard.findIndex(entry => entry.batch === batch)
+
+      if (indexBatch === -1) {
+        leaderboard.push({ batch: batch, percentage: percentage })
+      } else if (leaderboard[indexBatch].percentage < percentage) {
+        leaderboard[indexBatch].percentage = percentage
+      }
+
+      pool.query('UPDATE leaderboards SET leaderboard = $1 WHERE quiz_id = $2',
+        [JSON.stringify(leaderboard), quizId], (error, _results) => {
+          if (error) {
+            return res.status(500).json({ message: 'Error updating leaderboard', error: error })
+          }
+          res.status(204).send()
+        })
     })
-  })
 }
