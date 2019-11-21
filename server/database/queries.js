@@ -20,12 +20,12 @@ export const getQuiz = (req, res) => {
       console.log(error)
       return res.status(500).json(error)
     }
-    if(results.rows.length === 0) {
-      return res.status(404).json({message: "No quiz with that ID exists"})
+    if (results.rows.length === 0) {
+      return res.status(404).json({ message: 'No quiz with that ID exists' })
     }
     quiz.questions = results.rows
     pool.query('SELECT name FROM quizzes WHERE id = $1', [quizID], (error, results) => {
-      if(error) {
+      if (error) {
         console.log(error)
         return res.status(500).json(error)
       }
