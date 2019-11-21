@@ -1,11 +1,10 @@
 import io from 'socket.io-client'
-import { setUsers, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers,
+import { setUsers, closeRoom, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers,
   CREATE_GAME, START_GAME, JOIN_GAME, SEND_QUESTION_TO_PLAYERS, SEND_QUESTIONS_TO_SERVER, CORRECT_ANSWER, INCORRECT_ANSWER, REVEAL_ANSWER } from '../actions/actions'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const socketMiddleware = state => {  
   let socket = null
-
   if(!socket) {
     socket = io(url)
   }
@@ -30,6 +29,11 @@ const socketMiddleware = state => {
 
   socket.on('all questions', quiz => {
     state.dispatch(setAllQuestionsToPlayers(quiz))
+  })
+
+  socket.on('room closed', () => {
+    state.dispatch(closeRoom())
+    // SEND USER BACK TO STARTING PAGE HERE 
   })
 
   return next => action => {

@@ -54,6 +54,7 @@ io.on('connection', socket => {
   console.log('Someone connected!')
 
   socket.on('join game as host', room => {
+    socket.room = room
     socket.admin = true
     socket.join(room)
 
@@ -103,6 +104,12 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
+    if (socket.admin) {
+      console.log('Host disconnected, room closed!')
+      socket.to(socket.room).emit('room closed')
+      const usersInRoom = emitUsers(socket.room)
+      console.log('usersInRoom', usersInRoom)
+    }
     console.log('User disconnected!')
   })
 })
