@@ -74,16 +74,19 @@ export const AddOrUpdateLeaderboard = (req, res) => {
     }
 
     const leaderboard = [...results.rows[0].leaderboard]
-    const newLeaderboard = leaderboard.map(entry => (entry.course === batch && Number(percentage) > Number(entry.percentage)
-      ? { course: batch, percentage: percentage }
-      : entry
-    ))
+    const indexBatch = leaderboard.findIndex(entry => entry.course === batch)
 
-    pool.query('UPDATE leaderboards SET leaderboard = $1 WHERE quiz_id = $2', [JSON.stringify(newLeaderboard), quizId], (error, results) => {
+    if (indexBatch === -1) {
+      leaderboard.push({ course: batch, percentage: percentage })
+    } else if (Number(leaderboard[indexBatch].percentage) < Number(percentage)) {
+      leaderboard[indexBatch].percentage = percentage
+    }
+
+    pool.query('UPDATE leaderboards SET leaderboard = $1 WHERE quiz_id = $2', [JSON.stringify(leaderboard), quizId], (error, _results) => {
       if (error) {
         return res.status(500).json({ message: 'Error updating leaderboard', error: error })
       }
-      res.status(200).send()
+      res.status(204).send()
     })
   })
 }
