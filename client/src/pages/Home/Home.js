@@ -1,44 +1,40 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { Container, TextField, Button, makeStyles } from '@material-ui/core'
-import NavBar from '../../components/NavBar/NavBar'
-import './Home.css'
 import { joinGame } from '../../actions/actions'
+import { useDispatch } from 'react-redux'
+import useStyles from './Style'
+import classNames from 'classnames'
+
+import { Button, Container, TextField } from '@material-ui/core'
+import NavBar from '../../components/NavBar/NavBar'
 import SimpleSnackbar from '../../components/SimpleSnackbar/SimpleSnackbar'
+
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-}))
-
 const Home = () => {
+  const classes = useStyles()
   const dispatch = useDispatch()
   let history = useHistory()
-  const classes = useStyles()
 
   const [showSnackbar, setShowSnackbar] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('Room doesn\'t exist!')
   const [name, setName] = useState('')
   const [code, setCode] = useState('')
 
-  const play = async (event) => {
+  const play = async event => {
     event.preventDefault()
-    const res = await fetch(`${url}/list-of-rooms`)
-    const data = await res.json()
-    if(data.rooms.includes(code)) {
-      dispatch(joinGame({name, code}))
-      history.push('/player')
-    } else {
+    try {
+      const res = await fetch(`${url}/list-of-rooms`)
+      const data = await res.json()
+      if(data.rooms.includes(code)) {
+        dispatch(joinGame({name, code}))
+        history.push('/player')
+      } else {
+        setSnackbarMessage('Incorrect room code')
+        setShowSnackbar(true)
+      }
+    } catch(err) {
+      setSnackbarMessage("Server error - Can't get available rooms")
       setShowSnackbar(true)
     }
   }
@@ -46,39 +42,47 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-      <SimpleSnackbar open={showSnackbar} setOpen={setShowSnackbar} message={'Room doesn\'t exist!'}/>
-      <Container>
-        <form className="form" noValidate autoComplete="off" onSubmit={play}>          
+      <SimpleSnackbar open={showSnackbar} setOpen={setShowSnackbar} message={snackbarMessage}/>
+      <Container className={classes.container}>
+
+        <form className={classes.form} noValidate autoComplete="off" onSubmit={play}>          
           <TextField
             id="Name"
-            className={classes.textField}
             label="Name"
+            className={classNames(classes.TextField, classes.FirstTextField)}
             margin="normal"
-            required
             onChange={(event) => setName(event.target.value)}
             variant="outlined"/>
 
           <TextField
             id="Code"
-            className={classes.textField}
             label="Code"
+            className={classes.TextField}
             margin="normal"
-            required
             onChange={(event) => setCode(event.target.value)}
             variant="outlined"/>
 
-          <Button type="submit" color="primary" variant="contained" className={classes.button}>
+          <Button
+            type="submit"
+            color="primary"
+            variant="contained"
+            className={classes.button}>
             Play
-          </Button>
-
-          <Button type="button" color="secondary" variant="contained" onClick={() => history.push('/quizzes')}>
-            Host a game
           </Button>
         </form>
 
-      </Container>  
+        <Button
+            type="button"
+            color="secondary"
+            variant="contained"
+            className={classNames(classes.button, classes.host)}
+            onClick={() => history.push('/quizzes')}>
+            Host a game
+          </Button>
+
+      </Container>
     </div>
   )
 }
 
-export default Home;
+export default Home
