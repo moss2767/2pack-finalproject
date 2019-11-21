@@ -74,7 +74,7 @@ const Quizzes = () => {
               {...{
               header: quiz.name,
               text: quiz.description,
-              startGame: () => { startGame(quiz.id) }
+              function: () => { startGame(quiz.id) }
             }}/>
           ))}
           

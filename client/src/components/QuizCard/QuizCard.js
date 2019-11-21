@@ -16,7 +16,7 @@ const QuizCard = (props) => {
   const classes = useStyles()
   return (
     <Card>
-      <CardActionArea onClick={props.startGame}>
+      <CardActionArea onClick={props.function}>
         <CardMedia
           className={classes.media}
           image={beach}
