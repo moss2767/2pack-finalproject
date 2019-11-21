@@ -3,12 +3,14 @@ import NavBar from '../../components/NavBar/NavBar'
 import { Container, TextField, Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { useStyles } from './SignUpStyle'
+import SimpleSnackbar from '../../components/SnackbarTest'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const SignUp = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [open, setOpen] = useState(false)
   const classes = useStyles()
   let history = useHistory()
   
@@ -16,7 +18,7 @@ const SignUp = () => {
     event.preventDefault()
     console.log("We're gonna use username once we have figured out authentication:", username)
     if(password !== "2pack") {
-      return alert("Wrong password!")
+      return setOpen(true)
     }
     const res = await fetch(`${url}/login`)
     const data = await res.json()
@@ -31,6 +33,7 @@ const SignUp = () => {
   return ( 
   <div>
     <NavBar />
+    <SimpleSnackbar open={open} setOpen={setOpen}/>
     <Container maxWidth="sm">
         <form className={classes.container} noValidate autoComplete="off" onSubmit={logIn}>
           <TextField
