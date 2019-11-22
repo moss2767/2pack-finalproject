@@ -1,27 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import { Route, Switch, useHistory } from 'react-router-dom'
-import { Container, makeStyles, Typography } from '@material-ui/core'
+import { Container, Typography } from '@material-ui/core'
+import useStyles from './Style'
 import QuizCard from '../../components/QuizCard/QuizCard'
 import Leaderboard from '../../components/Leaderboard/Leaderboard'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
-
-const useStyles = makeStyles({
-  leaderboard: {
-    marginTop: "1rem"
-  },
-  subtitle: {
-    margin: "1rem 0",
-  },
-  gamesContainer: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gridGap: "1rem",
-  },
-  container: {
-    marginBottom: "2rem"
-  }
-})
 
 const Leaderboards = () => {
   let history = useHistory()
