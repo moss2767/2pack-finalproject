@@ -20,7 +20,10 @@ const useStyles = makeStyles(theme => ({
   },
   host: {
     margin: 'auto',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    height: '3.5rem',
+    minWidth: '14rem'
   },
   form: {
     alignItems: 'center',

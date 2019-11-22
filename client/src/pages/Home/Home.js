@@ -49,7 +49,7 @@ const Home = () => {
           <TextField
             id="Name"
             label="Name"
-            className={classNames(classes.TextField, classes.FirstTextField)}
+            className={classes.FirstTextField}
             margin="normal"
             onChange={(event) => setName(event.target.value)}
             variant="outlined"/>
@@ -76,7 +76,7 @@ const Home = () => {
           type="button"
           color="secondary"
           variant="contained"
-          className={classNames(classes.button, classes.host)}
+          className={classes.host}
           onClick={() => history.push('/quizzes')}>
             Host a game
         </Button>
