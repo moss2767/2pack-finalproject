@@ -2,22 +2,22 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
   menuButton: {
-    marginRight: 2,
+    marginRight: 2
   },
   title: {
     '&:hover': {
-      cursor: 'pointer',
+      cursor: 'pointer'
     }
   },
   rightSide: {
-    marginLeft: "auto",
+    marginLeft: 'auto'
   },
   list: {
-    width: 250,
+    width: 250
   },
   fullList: {
-    width: 'auto',
-  },
+    width: 'auto'
+  }
 }))
 
 export default useStyles

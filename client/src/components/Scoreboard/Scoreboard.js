@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 import { makeStyles, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
   points: {
-    textAlign: "center"
+    textAlign: 'center'
   }
 }))
 

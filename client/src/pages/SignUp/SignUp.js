@@ -7,34 +7,32 @@ import SimpleSnackbar from '../../components/SimpleSnackbar/SimpleSnackbar'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const SignUp = () => {
-
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [open, setOpen] = useState(false)
   const classes = useStyles()
-  let history = useHistory()
-  
+  const history = useHistory()
+
   const logIn = async (event) => {
     event.preventDefault()
     console.log("We're gonna use username once we have figured out authentication:", username)
-    if(password !== "2pack") {
+    if (password !== '2pack') {
       return setOpen(true)
     }
     const res = await fetch(`${url}/login`)
     const data = await res.json()
-    if(data.approved) {
+    if (data.approved) {
       history.push('/quizzes')
-    }
-    else {
-      alert("Wrong password!")
+    } else {
+      alert('Wrong password!')
     }
   }
 
-  return ( 
-  <div>
-    <NavBar />
-    <SimpleSnackbar open={open} setOpen={setOpen} message={'Wrong Password'}/>
-    <Container maxWidth="sm">
+  return (
+    <div>
+      <NavBar />
+      <SimpleSnackbar open={open} setOpen={setOpen} message={'Wrong Password'}/>
+      <Container maxWidth="sm">
         <form className={classes.container} noValidate autoComplete="off" onSubmit={logIn}>
           <TextField
             id="outlined-basic"
@@ -58,8 +56,8 @@ const SignUp = () => {
           </Button>
         </form>
       </Container>
-  </div>
+    </div>
   )
 }
- 
-export default SignUp;
+
+export default SignUp

@@ -9,7 +9,7 @@ import Leaderboards from './pages/Leaderboards/Leaderboards'
 import SignUp from './pages/SignUp/SignUp'
 import About from './pages/About/About'
 import HostResult from './pages/Result/Host/Host'
-import PlayerResult from './pages/Result/Player'
+import PlayerResult from './pages/Result/Player/Player'
 import MiniGame from './pages/MiniGame/MiniGame'
 import Profile from './components/Profile'
 

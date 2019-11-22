@@ -14,19 +14,19 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   button: {
-    height: "3.5rem",
+    height: '3.5rem',
     margin: theme.spacing(1),
-    minWidth: "14rem"
+    minWidth: '14rem'
   },
   host: {
-    margin: "auto",
+    margin: 'auto',
     marginTop: theme.spacing(1)
   },
   form: {
-    alignItems: "center",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center"
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
   }
 }))
 
