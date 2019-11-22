@@ -1,6 +1,7 @@
 
 import React, { Fragment } from 'react'
 import { useAuth0 } from '../react-auth0-spa'
+import NavBar from './NavBar/NavBar'
 
 const Profile = () => {
   const { loading, user } = useAuth0()
@@ -11,11 +12,12 @@ const Profile = () => {
 
   return (
     <Fragment>
+      <NavBar />
       <img src={user.picture} alt="Profile" />
 
       <h2>{user.name}</h2>
       <p>{user.email}</p>
-      <code>{JSON.stringify(user, null, 2)}</code>
+      {/* <code>{JSON.stringify(user, null, 2)}</code> */}
     </Fragment>
   )
 }

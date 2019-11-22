@@ -12,11 +12,10 @@ import HostResult from './pages/Result/Host/Host'
 import PlayerResult from './pages/Result/Player'
 import MiniGame from './pages/MiniGame/MiniGame'
 import Profile from './components/Profile'
-import history from './utils/history'
 
 const App = () => {
   return (
-    <Router history={history}>
+    <Router>
       <Switch>
 
         <Route path="/quizzes">
