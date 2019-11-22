@@ -31,7 +31,8 @@ const socketMiddleware = state => {
     state.dispatch(setAllQuestionsToPlayers(quiz))
   })
 
-  socket.on('room closed', () => {
+  socket.on('room closing', () => {
+    console.log("Room closing!")
     state.dispatch(closeRoom())
     // SEND USER BACK TO STARTING PAGE HERE 
   })
