@@ -9,31 +9,31 @@ const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-2590
 
 const useStyles = makeStyles(() => ({
   header: {
-    marginTop: "1rem",
+    marginTop: '1rem'
   },
   subtitle: {
-    margin: "1rem 0"
+    margin: '1rem 0'
   },
   gamesContainer: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gridGap: "1rem",
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gridGap: '1rem'
   },
   connectedPlayersHeader: {
-    marginBottom: "0",
+    marginBottom: '0'
   },
   wrapperCountdown: {
-    display: "flex",
-    justifyContent: "center",
-    margin: "1rem 0",
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '1rem 0'
   }
 }))
 
 const Quizzes = () => {
-  const dispatch = useDispatch()  
+  const dispatch = useDispatch()
   const [quizzes, setQuizzes] = useState([])
 
-  useEffect( () => {
+  useEffect(() => {
     const test = async () => {
       const res = await fetch(`${url}/quizzes`)
       const data = await res.json()
@@ -47,10 +47,11 @@ const Quizzes = () => {
     const res = await fetch(`${url}/create-game`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({room: code}) })
+      body: JSON.stringify({ room: code })
+    })
     const data = await res.json()
     if (data.room) {
       dispatch(createGame(data.room))
@@ -59,8 +60,8 @@ const Quizzes = () => {
       alert('Room already exists. Try again!')
     }
   }
-  
-  let history = useHistory()
+
+  const history = useHistory()
   const classes = useStyles()
 
   return (
@@ -72,22 +73,21 @@ const Quizzes = () => {
         </Typography>
         <Typography className={classes.subtitle} variant="h6">
         Select a quiz to host.
-      </Typography>
+        </Typography>
         <div className={classes.gamesContainer}>
           {quizzes.map(quiz => (
             <QuizCard key={quiz.id}
               {...{
-              header: quiz.name,
-              text: quiz.description,
-              function: () => { startGame(quiz.id) }
-            }}/>
+                header: quiz.name,
+                text: quiz.description,
+                function: () => { startGame(quiz.id) }
+              }}/>
           ))}
-          
-         
+
         </div>
       </Container>
     </div>
-  );
+  )
 }
 
-export default Quizzes;
+export default Quizzes
