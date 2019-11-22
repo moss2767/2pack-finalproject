@@ -1,11 +1,13 @@
 import io from 'socket.io-client'
-import { setUsers, closeRoom, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers,
-  CREATE_GAME, START_GAME, JOIN_GAME, SEND_QUESTION_TO_PLAYERS, SEND_QUESTIONS_TO_SERVER, CORRECT_ANSWER, INCORRECT_ANSWER, REVEAL_ANSWER } from '../actions/actions'
+import {
+  setUsers, closeRoom, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers,
+  CREATE_GAME, START_GAME, JOIN_GAME, SEND_QUESTION_TO_PLAYERS, SEND_QUESTIONS_TO_SERVER, CORRECT_ANSWER, INCORRECT_ANSWER, REVEAL_ANSWER
+} from '../actions/actions'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
-const socketMiddleware = state => {  
+const socketMiddleware = state => {
   let socket = null
-  if(!socket) {
+  if (!socket) {
     socket = io(url)
   }
 
@@ -15,7 +17,7 @@ const socketMiddleware = state => {
 
   socket.on('new question', question => {
     state.dispatch(setQuestion(question))
-    console.log("listening to question", question)
+    console.log('listening to question', question)
   })
 
   socket.on('game started', () => {
@@ -32,16 +34,13 @@ const socketMiddleware = state => {
   })
 
   socket.on('room closing', () => {
-    console.log("Room closing!")
+    console.log('Room closing!')
     state.dispatch(closeRoom())
-    // SEND USER BACK TO STARTING PAGE HERE 
+    // SEND USER BACK TO STARTING PAGE HERE
   })
 
   return next => action => {
-
-
-    switch(action.type) {
-
+    switch (action.type) {
       case CORRECT_ANSWER: {
         socket.emit('correct answer')
         break

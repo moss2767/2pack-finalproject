@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     marginTop: '1rem'
   },
   image: {
-    height: '40vh'
+    paddingTop: '56.25%'
   },
   root: {
     flexGrow: 1

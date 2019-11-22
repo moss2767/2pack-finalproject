@@ -22,8 +22,7 @@ export const setAllQuestionsToPlayers = quiz => {
   }
 }
 
-
-// Re-using SET_USERS action type with empty error 
+// Re-using SET_USERS action type with empty error
 export const closeRoom = () => {
   return {
     type: 'SET_USERS',

@@ -2,9 +2,9 @@ import React from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import { Card, CardContent, CardMedia, Container, Grid, Link, Typography } from '@material-ui/core'
 
-import axel from '../../assets/axel.jpg'
-import sasha from '../../assets/sasha.jpg'
-import victor from '../../assets/victor.jpg'
+import axel from '../../assets/axel_cropped.jpg'
+import sasha from '../../assets/sasha_cropped.jpg'
+import victor from '../../assets/victor_cropped.jpg'
 import per from '../../assets/per.jpg'
 import useStyles from './Style'
 

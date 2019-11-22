@@ -9,7 +9,7 @@ import useStyles from './Style'
 
 const NavBar = () => {
   const classes = useStyles()
-  let history = useHistory()
+  const history = useHistory()
   const [drawer, setDrawer] = useState(false)
 
   const toggleDrawer = open => event => {
@@ -49,7 +49,7 @@ const NavBar = () => {
         </ListItem>
       </List>
     </div>
-  );
+  )
 
   return (
     <AppBar position="static">

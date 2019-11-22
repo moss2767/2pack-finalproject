@@ -1,12 +1,12 @@
-import React from 'react';
-import { Button, Typography } from '@material-ui/core';
+import React from 'react'
+import { Button, Typography } from '@material-ui/core'
 import useStyles from './Style'
 
-const Question = ({question}) => {
+const Question = ({ question }) => {
   const classes = useStyles()
   // const correctAnswer = question.answers.find(answer => answer.correct ==='true')
   shuffle(question.answers)
-  
+
   return (
     <div>
       <Typography className={classes.question} variant="h4">
@@ -18,15 +18,15 @@ const Question = ({question}) => {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 const shuffle = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]
   }
-  return array;
+  return array
 }
- 
-export default Question;
+
+export default Question

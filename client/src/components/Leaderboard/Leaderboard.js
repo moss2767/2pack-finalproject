@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { makeStyles, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const useStyles = makeStyles(() => ({
   points: {
-    textAlign: "right"
+    textAlign: 'right'
   },
   noLeaderboard: {
-    marginTop: "2rem"
+    marginTop: '2rem'
   }
 }))
 
-const Leaderboard = ({id}) => {
+const Leaderboard = ({ id }) => {
   const classes = useStyles()
-  const [leaderboard, setLeaderboard] = useState([ { course: null, percentage: null } ])
+  const [leaderboard, setLeaderboard] = useState([{ course: null, percentage: null }])
   const [noLeaderboard, setNoLeaderboard] = useState(false)
 
   useEffect(() => {
@@ -21,8 +21,8 @@ const Leaderboard = ({id}) => {
       const res = await fetch(`${url}/leaderboard/${id}`)
       const data = await res.json()
       const filteredLeaderboard = data[0].leaderboard.filter(entry => !isNaN(Number(entry.percentage)))
-      const sortedLeaderboard = filteredLeaderboard.sort((a,b) => Number(b.percentage) - Number(a.percentage))
-      if(sortedLeaderboard.length === 0) {
+      const sortedLeaderboard = filteredLeaderboard.sort((a, b) => Number(b.percentage) - Number(a.percentage))
+      if (sortedLeaderboard.length === 0) {
         setNoLeaderboard(true)
       }
       setLeaderboard(sortedLeaderboard)
