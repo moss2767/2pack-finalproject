@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import React from 'react'
+import './App.css'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import GameHost from './pages/GameHost/GameHost'
 import GamePlayer from './pages/GamePlayer/GamePlayer'
@@ -13,7 +13,6 @@ import PlayerResult from './pages/Result/Player'
 import MiniGame from './pages/MiniGame/MiniGame'
 
 const App = () => {
- 
   return (
 
     <Router>
@@ -30,7 +29,7 @@ const App = () => {
         <Route path="/play">
           <GameHost/>
         </Route>
-        
+
         <Route path="/player">
           <GamePlayer/>
         </Route>
@@ -46,7 +45,7 @@ const App = () => {
         <Route path="/result">
           <HostResult/>
         </Route>
-        
+
         <Route path="/result-player">
           <PlayerResult/>
         </Route>
