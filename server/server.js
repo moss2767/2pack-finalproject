@@ -107,7 +107,7 @@ io.on('connection', socket => {
           socket.leave(socket.room)
         })
       } catch (err) {
-        console.log('Error - Probably no one else in the room:', err)
+        return console.log('Error - Probably no one else in the room:', err)
       }
     }
 
