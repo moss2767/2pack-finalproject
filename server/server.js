@@ -100,11 +100,15 @@ io.on('connection', socket => {
       rooms.splice(roomIndex, 1)
 
       socket.to(socket.room).emit('room closing')
-      const clients = Object.keys(io.sockets.adapter.rooms[socket.room].sockets)
-      const sockets = clients.map(client => io.sockets.connected[client])
-      sockets.forEach(socket => {
-        socket.leave(socket.room)
-      })
+      try {
+        const clients = Object.keys(io.sockets.adapter.rooms[socket.room].sockets)
+        const sockets = clients.map(client => io.sockets.connected[client])
+        sockets.forEach(socket => {
+          socket.leave(socket.room)
+        })
+      } catch (err) {
+        console.log('Error - Probably no one else in the room:', err)
+      }
     }
 
     if (socket.player) {
