@@ -11,11 +11,12 @@ import About from './pages/About/About'
 import HostResult from './pages/Result/Host/Host'
 import PlayerResult from './pages/Result/Player'
 import MiniGame from './pages/MiniGame/MiniGame'
+import Profile from './components/Profile'
+import history from './utils/history'
 
 const App = () => {
   return (
-
-    <Router>
+    <Router history={history}>
       <Switch>
 
         <Route path="/quizzes">
@@ -52,6 +53,10 @@ const App = () => {
 
         <Route path="/mini-game">
           <MiniGame/>
+        </Route>
+
+        <Route path="/profile">
+          <Profile/>
         </Route>
 
         <Route path="/">
