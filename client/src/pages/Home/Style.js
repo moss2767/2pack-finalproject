@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
     minWidth: '14rem'
   },
   host: {
-    margin: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
     height: '3.5rem',
