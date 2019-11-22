@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from '../../components/NavBar/NavBar'
-import { Card, CardContent, CardMedia } from '@material-ui/core'
-import { Container, Grid, Link, Typography } from '@material-ui/core'
+import { Card, CardContent, CardMedia, Container, Grid, Link, Typography } from '@material-ui/core'
+
 import axel from '../../assets/axel.jpg'
 import sasha from '../../assets/sasha.jpg'
 import victor from '../../assets/victor.jpg'
@@ -15,18 +15,18 @@ const About = () => {
     { name: 'Sasha "2pac" Murray', image: sasha },
     { name: 'Axel "Snoop Lion" Eriksson', image: axel }
   ]
-  
+
   return (
     <div>
       <NavBar />
       <Container maxWidth="xl" className={classes.container}>
         <Typography className={classes.about} variant="h2">About</Typography>
         <Typography className={classes.text} variant="h6">
-          2Pack Quiz was our final project at <Link target="_blank" rel="noopener" href="https://www.study-at-salt.com/">{"</salt>"}</Link> done by the team/mob 2Pack
+          2Pack Quiz was our final project at <Link target="_blank" rel="noopener" href="https://www.study-at-salt.com/">{'</salt>'}</Link> done by the team/mob 2Pack
         </Typography>
 
         <Grid className={classes.root} container direction="row" justify="center" alignItems="center" spacing={2}>
-          
+
           {members.map(member => (
             <Grid key={member.name} item xs={12} sm={4}>
               <Card>
@@ -49,9 +49,9 @@ const About = () => {
         <Typography className={classes.text} variant="h6">
           Honorable Members
         </Typography>
-        
+
         <Grid container direction="row" alignItems="center" spacing={2} >
-          
+
           <Grid item xs={12} sm={4}>
             <Card>
               <CardMedia
@@ -66,12 +66,12 @@ const About = () => {
               </CardContent>
             </Card>
           </Grid>
-          
+
         </Grid>
 
       </Container>
     </div>
   )
 }
- 
+
 export default About

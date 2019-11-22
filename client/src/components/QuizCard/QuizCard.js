@@ -8,8 +8,8 @@ import beach from '../../assets/beach.jpg'
 
 const useStyles = makeStyles({
   media: {
-    height: "25vh",
-  },
+    height: '25vh'
+  }
 })
 
 const QuizCard = (props) => {

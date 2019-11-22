@@ -1,33 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
-import { Typography, makeStyles, Container } from '@material-ui/core'
+import { Typography, Container } from '@material-ui/core'
 import QuizCard from '../../components/QuizCard/QuizCard'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { createGame } from '../../actions/actions'
+import useStyles from './Style'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
-
-const useStyles = makeStyles(() => ({
-  header: {
-    marginTop: '1rem'
-  },
-  subtitle: {
-    margin: '1rem 0'
-  },
-  gamesContainer: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gridGap: '1rem'
-  },
-  connectedPlayersHeader: {
-    marginBottom: '0'
-  },
-  wrapperCountdown: {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '1rem 0'
-  }
-}))
 
 const Quizzes = () => {
   const dispatch = useDispatch()
