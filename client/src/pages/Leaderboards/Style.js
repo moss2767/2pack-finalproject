@@ -2,18 +2,18 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles({
   leaderboard: {
-    marginTop: "1rem"
+    marginTop: '1rem'
   },
   subtitle: {
-    margin: "1rem 0",
+    margin: '1rem 0'
   },
   gamesContainer: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gridGap: "1rem",
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gridGap: '1rem'
   },
   container: {
-    marginBottom: "2rem"
+    marginBottom: '2rem'
   }
 })
 
