@@ -11,10 +11,10 @@ import About from './pages/About/About'
 import HostResult from './pages/Result/Host/Host'
 import PlayerResult from './pages/Result/Player/Player'
 import MiniGame from './pages/MiniGame/MiniGame'
+import Profile from './components/Profile'
 
 const App = () => {
   return (
-
     <Router>
       <Switch>
 
@@ -52,6 +52,10 @@ const App = () => {
 
         <Route path="/mini-game">
           <MiniGame/>
+        </Route>
+
+        <Route path="/profile">
+          <Profile/>
         </Route>
 
         <Route path="/">

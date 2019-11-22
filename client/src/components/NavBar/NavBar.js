@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import { AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
+import { useAuth0 } from '../../react-auth0-spa'
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import GamesIcon from '@material-ui/icons/Games'
 import InfoIcon from '@material-ui/icons/Info'
+import HomeIcon from '@material-ui/icons/Home'
 import MenuIcon from '@material-ui/icons/Menu'
 import useStyles from './Style'
 
 const NavBar = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
   const classes = useStyles()
   const history = useHistory()
   const [drawer, setDrawer] = useState(false)
@@ -26,6 +30,12 @@ const NavBar = () => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}>
       <List>
+        <ListItem button onClick={() => history.push('/')}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary='Home' />
+        </ListItem>
         <ListItem button onClick={() => history.push('/quizzes')}>
           <ListItemIcon>
             <GamesIcon />
@@ -41,6 +51,12 @@ const NavBar = () => {
       </List>
       <Divider />
       <List>
+        {isAuthenticated && (<ListItem button onClick={() => history.push('/profile')}>
+          <ListItemIcon>
+            <AccountBoxIcon />
+          </ListItemIcon>
+          <ListItemText primary='Profile' />
+        </ListItem>)}
         <ListItem button onClick={() => history.push('/about')}>
           <ListItemIcon>
             <InfoIcon />
@@ -60,7 +76,24 @@ const NavBar = () => {
         <Typography onClick={() => history.push('/')} variant="h6" className={classes.title}>
           2Pack Quiz
         </Typography>
-        <Button className={classes.rightSide} onClick={() => history.push('/signup')} color="inherit">Sign Up</Button>
+        {/* <Button className={classes.rightSide} onClick={() => history.push('/signup')} color="inherit">Sign Up</Button> */}
+        {!isAuthenticated && (
+          <Button className={classes.rightSide} onClick={() => loginWithRedirect({})}>Log in</Button>
+        )}
+
+        {isAuthenticated &&
+          <Button className={classes.rightSide} onClick={() => logout()}>Log out</Button>
+        }
+
+        {/* {isAuthenticated &&
+        (
+          <span>
+            <Link to="/">Home</Link>&nbsp;
+            <Link to="/profile">Profile</Link>
+          </span>
+        )
+        } */}
+
       </Toolbar>
       <Drawer open={drawer} onClose={toggleDrawer(false)}>
         {sideList()}
