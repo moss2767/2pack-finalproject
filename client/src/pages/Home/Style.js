@@ -22,9 +22,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    height: '3.5rem',
-    minWidth: '14rem'
+    marginBottom: theme.spacing(1)
   },
   form: {
     alignItems: 'center',

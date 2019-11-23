@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar'
 import { Container, TextField, Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-import { useStyles } from './SignUpStyle'
+import { useStyles } from './Style'
 import SimpleSnackbar from '../../components/SimpleSnackbar/SimpleSnackbar'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 

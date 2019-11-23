@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { joinGame } from '../../actions/actions'
 import { useDispatch } from 'react-redux'
-import useStyles from './Style'
-import classNames from 'classnames'
 
 import { Button, Container, TextField } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
 import SimpleSnackbar from '../../components/SimpleSnackbar/SimpleSnackbar'
+
+import classNames from 'classnames'
+import useStyles from './Style'
 
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
@@ -76,7 +77,7 @@ const Home = () => {
           type="button"
           color="secondary"
           variant="contained"
-          className={classes.host}
+          className={classNames(classes.button, classes.host)}
           onClick={() => history.push('/quizzes')}>
             Host a game
         </Button>
