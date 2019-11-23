@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { nextQuestion, startGame as startGameAction, revealAnswer, sendQuestionsToServer, sendQuestionToPlayers } from '../../actions/actions'
+import { nextQuestion, startGame, revealAnswer, sendQuestionsToServer, sendQuestionToPlayers } from '../../actions/actions'
 
 import { Button, Container, Typography } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
@@ -12,47 +12,33 @@ import useStyles from './Style'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const GameHost = () => {
-  const history = useHistory()
-  const [quiz, setQuiz] = useState({
-    id: null,
-    name: null,
-    questions: [
-      {
-        question: null,
-        answers: [{ correct: null, option: null }]
-      }
-    ]
-  })
-
-  const [correctAnswer, setCorrectAnswer] = useState('')
-  const [usersWhoHaveAnswered, setUsersWhoHaveAnswered] = useState(0)
-  const { currentQuestion, room, users } = useSelector(state => state.game)
-
   const classes = useStyles()
-  const query = new URLSearchParams(useLocation().search)
-  const quizId = query.get('id')
   const dispatch = useDispatch()
+  const history = useHistory()
+
+  const { currentQuestion, room, users } = useSelector(state => state.game)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [questionToPlayers, setQuestionToPlayers] = useState({ question: null, options: [] })
+  const [correctAnswer, setCorrectAnswer] = useState('')
   const [gameStarted, setGameStarted] = useState(false)
+  const [quiz, setQuiz] = useState({ id: null, name: null, questions: [{ question: null, answers: [{ correct: null, option: null }] }] })
+  const [usersWhoHaveAnswered, setUsersWhoHaveAnswered] = useState(0)
+
+  const quizId = new URLSearchParams(useLocation().search).get('id')
+  if (quizId === null) {
+    history.push('/')
+  }
 
   useEffect(() => {
-    const fetchQuiz = async () => {
+    (async () => {
       const res = await fetch(`${url}/quizzes/${quizId}`)
       const data = await res.json()
       setQuiz(data)
-    }
-
-    fetchQuiz()
+    })()
   }, [dispatch, quizId])
 
-  const showAnswer = () => dispatch(revealAnswer(correctAnswer))
-
   useEffect(() => {
-    setUsersWhoHaveAnswered(users.reduce((total, adder) => {
-      if (adder.answered) {
-        return total + 1
-      }
-      return total
-    }, 0))
+    setUsersWhoHaveAnswered(users.reduce((total, adder) => adder.answered ? total + 1 : total, 0))
     if (usersWhoHaveAnswered === users.length) {
       console.log('We should automatically show the answer to all players')
     }
@@ -61,20 +47,20 @@ const GameHost = () => {
   useEffect(() => {
     const correct = quiz.questions[currentQuestion].answers.find(answer => answer.correct === 'true')
     if (correct) {
-      console.log('correct option', correct.option)
       setCorrectAnswer(correct.option)
     }
+    setQuestionToPlayers({
+      question: quiz.questions[currentQuestion].question,
+      options: quiz.questions[currentQuestion].answers.map(answer => answer.option)
+    })
   }, [currentQuestion, quiz])
 
-  const startGame = () => {
-    setGameStarted(true)
-    dispatch(sendQuestionToPlayers(quiz.questions[currentQuestion]))
-    dispatch(startGameAction())
-  }
+  const showAnswer = () => dispatch(revealAnswer(correctAnswer))
 
   const nextQuestionButton = () => {
     dispatch(nextQuestion())
-    dispatch(sendQuestionToPlayers(quiz.questions[currentQuestion + 1]))
+    console.log(questionToPlayers)
+    dispatch(sendQuestionToPlayers(questionToPlayers))
   }
 
   const showResultsButton = () => {
@@ -96,7 +82,17 @@ const GameHost = () => {
             Room code: {room}
             </Typography>
 
-            <Button id="startGame" type="button" onClick={startGame} color="primary" variant="contained" className={classes.button}>
+            <Button
+              id="startGame"
+              type="button"
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={() => {
+                setGameStarted(true)
+                dispatch(sendQuestionToPlayers(questionToPlayers))
+                dispatch(startGame(quiz.questions.length, currentQuestionIndex))
+              }}>
             Start Game
             </Button>
 
@@ -129,7 +125,6 @@ const GameHost = () => {
             <Button onClick={showAnswer} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Show Answer
             </Button>
-
           </div>
         )}
 

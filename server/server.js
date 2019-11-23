@@ -58,8 +58,8 @@ io.on('connection', socket => {
     socket.host = true
     socket.join(room)
 
-    socket.on('start game', () => {
-      socket.to(room).emit('game started')
+    socket.on('start game', ({ numberOfQuestions, currentQuestionIndex }) => {
+      socket.to(room).emit('game started', { numberOfQuestions, currentQuestionIndex })
     })
 
     socket.on('send question to players', question => {

@@ -16,6 +16,8 @@ const initialState = {
     ]
   },
   gameStarted: false,
+  numberOfQuestions: null,
+  currentQuestionIndex: null,
   answer: null,
   quiz: {
     id: null,
@@ -49,7 +51,7 @@ const gameReducer = (state = initialState, action) => {
       return { ...state, room: action.room }
 
     case GAME_STARTED:
-      return { ...state, gameStarted: true }
+      return { ...state, gameStarted: true, numberOfQuestions: action.numberOfQuestions, currentQuestionIndex: action.currentQuestionIndex }
 
     case SHOW_ANSWER_TO_PLAYER:
       return { ...state, answer: action.answer }

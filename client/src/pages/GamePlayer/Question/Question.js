@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { correctAnswer, incorrectAnswer } from '../../../actions/actions'
-import useStyles from './Style'
+
 import { Button, Typography } from '@material-ui/core'
+import useStyles from './Style'
 
 const Question = ({ question }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
   const [disabled, setDisabled] = useState(false)
-  const correct = question.answers.find(answer => answer.correct === 'true')
+  // const correct = question.answers.find(answer => answer.correct === 'true')
 
   useEffect(() => {
     setDisabled(false)
-    shuffle(question.answers)
+    shuffle(question.options)
   }, [question])
 
   const handleAnswer = answer => {
     setDisabled(true)
-    if (answer === correct.option) {
-      dispatch(correctAnswer())
-    } else {
-      dispatch(incorrectAnswer())
-    }
+    console.log(answer)
+    // if (answer === correct.option) {
+    //   dispatch(correctAnswer())
+    // } else {
+    //   dispatch(incorrectAnswer())
+    // }
   }
 
   return (
@@ -31,17 +33,17 @@ const Question = ({ question }) => {
         {question.question}
       </Typography>
       <div className={classes.answer}>
-        { question.answers.map(answer => (
+        { question.options.map(option => (
           <Button
-            onClick={() => handleAnswer(answer.option)}
+            onClick={() => handleAnswer(option)}
             className={classes.answer}
-            key={answer.option}
+            key={option}
             size="large"
             color="primary"
             variant="contained"
             disabled={disabled}
           >
-            {answer.option}
+            {option}
           </Button>
         ))}
       </div>

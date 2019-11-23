@@ -17,15 +17,13 @@ const socketMiddleware = state => {
 
   socket.on('new question', question => {
     state.dispatch(setQuestion(question))
-    console.log('listening to question', question)
   })
 
-  socket.on('game started', () => {
-    state.dispatch(gameStarted())
+  socket.on('game started', ({ currentQuestionIndex, numberOfQuestions }) => {
+    state.dispatch(gameStarted({ currentQuestionIndex, numberOfQuestions }))
   })
 
   socket.on('answer', answer => {
-    // console.log('answer socket received!!', answer)
     state.dispatch(showAnswerToPlayer(answer))
   })
 
@@ -62,7 +60,7 @@ const socketMiddleware = state => {
       }
 
       case START_GAME: {
-        socket.emit('start game')
+        socket.emit('start game', { numberOfQuestions: action.numberOfQuestions, currentQuestionIndex: action.currentQuestionIndex })
         break
       }
 

@@ -12,12 +12,16 @@ export const createGame = room => ({
   room: room
 })
 
-export const startGame = () => ({
-  type: START_GAME
+export const startGame = (numberOfQuestions, currentQuestionIndex) => ({
+  type: START_GAME,
+  numberOfQuestions: numberOfQuestions,
+  currentQuestionIndex: currentQuestionIndex
 })
 
-export const gameStarted = () => ({
-  type: GAME_STARTED
+export const gameStarted = ({ numberOfQuestions, currentQuestionIndex }) => ({
+  type: GAME_STARTED,
+  numberOfQuestions,
+  currentQuestionIndex
 })
 
 export const joinGame = data => ({
