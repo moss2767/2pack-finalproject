@@ -25,10 +25,13 @@ app.use('/quizzes', quizzes)
 app.use('/list-of-rooms', listOfRooms)
 
 const getUsersInRoom = room => {
-  const clients = Object.keys(io.sockets.adapter.rooms[room].sockets)
-  const sockets = clients.map(client => io.sockets.connected[client])
-  const users = sockets.filter(socket => socket.user).map(socket => socket.user)
-  return users
+  if (io.sockets.adapter.rooms[room] !== undefined) {
+    const clients = Object.keys(io.sockets.adapter.rooms[room].sockets)
+    const sockets = clients.map(client => io.sockets.connected[client])
+    const users = sockets.filter(socket => socket.user).map(socket => socket.user)
+    return users
+  }
+  return [{ id: null, name: null, points: null, answered: null }]
 }
 
 const resetToNotAnswered = room => {
@@ -100,14 +103,13 @@ io.on('connection', socket => {
       rooms.splice(roomIndex, 1)
 
       socket.to(socket.room).emit('room closing')
-      try {
+
+      if (io.sockets.adapter.rooms[socket.room] !== undefined) {
         const clients = Object.keys(io.sockets.adapter.rooms[socket.room].sockets)
         const sockets = clients.map(client => io.sockets.connected[client])
         sockets.forEach(socket => {
           socket.leave(socket.room)
         })
-      } catch (err) {
-        return console.log('Error - Probably no one else in the room:', err)
       }
     }
 

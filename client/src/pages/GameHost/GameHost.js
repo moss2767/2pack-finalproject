@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { nextQuestion, startGame as startGameAction, revealAnswer, sendQuestionsToServer, sendQuestionToPlayers } from '../../actions/actions'
-import Question from './Question/Question'
-import NavBar from '../../components/NavBar/NavBar'
-import { Typography, Button } from '@material-ui/core'
 
-import { useStyles } from './Style'
+import { Button, Container, Typography } from '@material-ui/core'
+import NavBar from '../../components/NavBar/NavBar'
+import Question from './Question/Question'
 import Scoreboard from '../../components/Scoreboard/Scoreboard'
+import useStyles from './Style'
+
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const GameHost = () => {
@@ -65,37 +66,11 @@ const GameHost = () => {
     }
   }, [currentQuestion, quiz])
 
-  // const [ showCancel, setShowCancel ] = useState(false)
-  // const [ countdown, setCountdown ] = useState(3)
-  // const [ countdownStarted, setCountdownStarted ] = useState(false)
-
-  // useEffect(() => {
-  //   if(!countdown) {
-  //     setGameStarted(true)
-  //     setCountdownStarted(false)
-  //   }
-  //   let intervalId
-  //   if(countdownStarted) {
-  //     intervalId = setInterval(() => {
-  //       setCountdown(countdown - 1)
-  //     }, 1000)
-  //   }
-  //   return () => clearInterval(intervalId)
-  // }, [countdown, countdownStarted, dispatch])
-
   const startGame = () => {
     setGameStarted(true)
     dispatch(sendQuestionToPlayers(quiz.questions[currentQuestion]))
     dispatch(startGameAction())
-    // setShowCancel(true)
-    // setCountdownStarted(true)
   }
-
-  // const cancelGame = () => {
-  //   setShowCancel(false)
-  //   setGameStarted(false)
-  //   setCountdownStarted(false)
-  // }
 
   const nextQuestionButton = () => {
     dispatch(nextQuestion())
@@ -110,60 +85,53 @@ const GameHost = () => {
   return (
     <div className="App">
       <NavBar />
+      <Container maxWidth="xl">
 
-      { !gameStarted && (
-        <div>
-          <Typography className={classes.header} variant="h4">
+        { !gameStarted && (
+          <div>
+            <Typography className={classes.header} variant="h2">
             Waiting for players to join...
-          </Typography>
-          <Typography className={classes.header} variant="h4">
+            </Typography>
+            <Typography className={classes.header} variant="h4">
             Room code: {room}
-          </Typography>
-          <Button id="startGame" type="button" onClick={startGame} color="primary" variant="contained" className={classes.button}>
+            </Typography>
+
+            <Button id="startGame" type="button" onClick={startGame} color="primary" variant="contained" className={classes.button}>
             Start Game
-          </Button>
+            </Button>
 
-          <Typography className={classes.header} variant="h4">
+            <Typography className={classes.header} variant="h4">
           Connected Players
-          </Typography>
+            </Typography>
 
-          <Scoreboard {...{
-            players: users
-          }}/>
+            <Scoreboard {...{
+              players: users
+            }}/>
 
-        </div>
-      )}
+          </div>
+        )}
 
-      {/* { !gameStarted && showCancel && (
-        <div>
-          <Typography className={classes.header} variant="h4">
-           {countdown}...
-          </Typography>
-          <Button type="button" onClick={cancelGame} color="primary" variant="contained" className={classes.button}>
-            Cancel
-          </Button>
-        </div>
-      )} */}
-
-      { gameStarted && (
-        <div>
-          <Question question={quiz.questions[currentQuestion]}/>
-          <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} have answered</Typography>
-          {currentQuestion === quiz.questions.length - 1 && (
-            <Button id="showResults" onClick={showResultsButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
+        { gameStarted && (
+          <div>
+            <Question question={quiz.questions[currentQuestion]}/>
+            <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} have answered</Typography>
+            {currentQuestion === quiz.questions.length - 1 && (
+              <Button id="showResults" onClick={showResultsButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Show Results
-            </Button>
-          )}
-          {currentQuestion !== quiz.questions.length - 1 && (
-            <Button id="nextQuestion" onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
+              </Button>
+            )}
+            {currentQuestion !== quiz.questions.length - 1 && (
+              <Button id="nextQuestion" onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
                 Next Question
-            </Button>
-          )}
-          <Button onClick={showAnswer} className={classes.nextQuestion} size="large" color="primary" variant="contained">
+              </Button>
+            )}
+            <Button onClick={showAnswer} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Show Answer
-          </Button>
-        </div>
-      )}
+            </Button>
+          </div>
+        )}
+
+      </Container>
     </div>
   )
 }

@@ -51,7 +51,7 @@ const Quizzes = () => {
           &lt;/salt&gt; quizzes
         </Typography>
         <Typography className={classes.subtitle} variant="h6">
-        Select a quiz to host.
+        Select a quiz to host
         </Typography>
         <div className={classes.gamesContainer}>
           {quizzes.map(quiz => (

@@ -4,7 +4,6 @@ import useStyles from './Style'
 
 const Question = ({ question }) => {
   const classes = useStyles()
-  // const correctAnswer = question.answers.find(answer => answer.correct ==='true')
   shuffle(question.answers)
 
   return (

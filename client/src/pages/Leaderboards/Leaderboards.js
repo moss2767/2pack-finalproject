@@ -30,12 +30,22 @@ const Leaderboards = () => {
     <div>
       <NavBar />
       <Container className={classes.container}>
+
         <Typography className={classes.leaderboard} variant="h2">
         Leaderboards
         </Typography>
         <Typography className={classes.subtitle} variant="h6">
-        Select quiz you want to see the leaderboard from.
+        Select quiz you want to see the leaderboard from
         </Typography>
+
+        <Switch>
+          {quizzes.map(quiz => (
+            <Route key={quiz.id} path={`/leaderboards/${quiz.id}`}>
+              <Leaderboard id={quiz.id}/>
+            </Route>
+          ))}
+        </Switch>
+
         <div className={classes.gamesContainer}>
           {quizzes.map(quiz => (
             <QuizCard key={quiz.id}
@@ -46,14 +56,6 @@ const Leaderboards = () => {
               }}/>
           ))}
         </div>
-
-        <Switch>
-          {quizzes.map(quiz => (
-            <Route key={quiz.id} path={`/leaderboards/${quiz.id}`}>
-              <Leaderboard id={quiz.id}/>
-            </Route>
-          ))}
-        </Switch>
 
       </Container>
     </div>

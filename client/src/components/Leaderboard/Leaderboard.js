@@ -8,6 +8,9 @@ const useStyles = makeStyles(() => ({
   },
   noLeaderboard: {
     marginTop: '2rem'
+  },
+  leaderboard: {
+    marginBottom: '2rem'
   }
 }))
 
@@ -31,7 +34,7 @@ const Leaderboard = ({ id }) => {
   }, [id])
 
   return (
-    <div>
+    <div className={classes.leaderboard}>
       {noLeaderboard && (
         <Typography className={classes.noLeaderboard} variant="h4">No Leaderboard!</Typography>
       )}

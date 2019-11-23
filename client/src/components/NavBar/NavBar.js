@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { useAuth0 } from '../../react-auth0-spa'
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
+
+import { AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from '@material-ui/core'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
 import GamesIcon from '@material-ui/icons/Games'
-import InfoIcon from '@material-ui/icons/Info'
 import HomeIcon from '@material-ui/icons/Home'
+import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
 import useStyles from './Style'
 
@@ -76,23 +77,14 @@ const NavBar = () => {
         <Typography onClick={() => history.push('/')} variant="h6" className={classes.title}>
           2Pack Quiz
         </Typography>
-        {/* <Button className={classes.rightSide} onClick={() => history.push('/signup')} color="inherit">Sign Up</Button> */}
+
         {!isAuthenticated && (
-          <Button className={classes.rightSide} onClick={() => loginWithRedirect({})}>Log in</Button>
+          <Button className={classes.rightSide} color="inherit" onClick={() => loginWithRedirect({})}>Log in</Button>
         )}
 
         {isAuthenticated &&
-          <Button className={classes.rightSide} onClick={() => logout()}>Log out</Button>
+          <Button className={classes.rightSide} color="inherit" onClick={() => logout()}>Log out</Button>
         }
-
-        {/* {isAuthenticated &&
-        (
-          <span>
-            <Link to="/">Home</Link>&nbsp;
-            <Link to="/profile">Profile</Link>
-          </span>
-        )
-        } */}
 
       </Toolbar>
       <Drawer open={drawer} onClose={toggleDrawer(false)}>
