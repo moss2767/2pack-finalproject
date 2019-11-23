@@ -114,6 +114,7 @@ const GameHost = () => {
         { gameStarted && (
           <div>
             <Question question={quiz.questions[currentQuestion]}/>
+
             <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} have answered</Typography>
             {currentQuestion === quiz.questions.length - 1 && (
               <Button id="showResults" onClick={showResultsButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
@@ -128,6 +129,7 @@ const GameHost = () => {
             <Button onClick={showAnswer} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Show Answer
             </Button>
+
           </div>
         )}
 

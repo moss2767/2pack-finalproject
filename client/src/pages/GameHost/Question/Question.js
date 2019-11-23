@@ -1,31 +1,40 @@
 import React from 'react'
-import { Button, Typography } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@material-ui/core'
 import useStyles from './Style'
 
 const Question = ({ question }) => {
   const classes = useStyles()
-  shuffle(question.answers)
+  shuffleOptions(question)
 
   return (
-    <div>
-      <Typography className={classes.question} variant="h4">
-        {question.question}
-      </Typography>
-      <div className={classes.answer}>
+    <>
+      <Paper className={classes.paperQuestion}>
+        <Typography variant="h4">
+          {question.question}
+        </Typography>
+      </Paper>
+
+      <Grid container spacing={2}>
         { question.answers.map(answer => (
-          <Button className={classes.answer} key={answer.option} size="large" color="primary" variant="contained">{answer.option}</Button>
+          <Grid key={answer.option} item xs={12} sm={6}>
+            <Paper className={classes.paperAnswer}>
+              <Typography className={classes.answer} variant="h5">
+                {answer.option.toUpperCase()}
+              </Typography>
+            </Paper>
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </>
   )
 }
 
-const shuffle = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
+const shuffleOptions = question => {
+  for (let i = question.answers.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]
+    [question.answers[i], question.answers[j]] = [question.answers[j], question.answers[i]]
   }
-  return array
+  return question
 }
 
 export default Question
