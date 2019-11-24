@@ -1,4 +1,4 @@
-import { JOIN_GAME, SEND_ANSWER, SHOW_ANSWER_TO_PLAYER } from '../actions/actions'
+import { JOIN_GAME, SEND_ANSWER_TO_PLAYERS, SEND_ANSWER_TO_SERVER } from '../actions/actions'
 
 const initialState = {
   name: 'Anonymous',
@@ -14,13 +14,13 @@ const userReducer = (state = initialState, action) => {
         name: action.name
       }
 
-    case SEND_ANSWER:
+    case SEND_ANSWER_TO_SERVER:
       return {
         ...state,
         answer: action.answer
       }
 
-    case SHOW_ANSWER_TO_PLAYER:
+    case SEND_ANSWER_TO_PLAYERS:
       return {
         ...state,
         points: state.answer === action.answer ? state.points + 1 : state.points

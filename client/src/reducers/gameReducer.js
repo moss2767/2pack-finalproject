@@ -1,6 +1,13 @@
-import { SET_USERS, SET_ALL_QUESTIONS_TO_PLAYERS, SEND_QUESTIONS_TO_SERVER } from '../actions/host'
-import { SET_QUESTION } from '../actions/question'
-import { SHOW_ANSWER_TO_PLAYER, GAME_STARTED, JOIN_GAME, CREATE_GAME } from '../actions/game'
+import {
+  CREATE_GAME,
+  JOIN_GAME,
+  SEND_ANSWER_TO_PLAYERS,
+  SEND_QUESTIONS_TO_SERVER,
+  SEND_START_GAME_TO_PLAYERS,
+  SET_ALL_QUESTIONS_TO_PLAYERS,
+  SEND_QUESTION_TO_PLAYERS,
+  SET_USERS
+} from '../actions/actions'
 
 const initialState = {
   users: [],
@@ -41,14 +48,13 @@ const gameReducer = (state = initialState, action) => {
     case JOIN_GAME:
       return { ...state, room: action.room }
 
-    case GAME_STARTED:
+    case SEND_START_GAME_TO_PLAYERS:
       return { ...state, gameStarted: true, numberOfQuestions: action.numberOfQuestions }
 
-    case SHOW_ANSWER_TO_PLAYER:
+    case SEND_ANSWER_TO_PLAYERS:
       return { ...state, answer: action.answer }
 
-    case SET_QUESTION:
-      console.log(action)
+    case SEND_QUESTION_TO_PLAYERS:
       return { ...state, question: action.question, currentQuestionIndex: action.currentQuestionIndex, answer: null }
 
     case SEND_QUESTIONS_TO_SERVER:

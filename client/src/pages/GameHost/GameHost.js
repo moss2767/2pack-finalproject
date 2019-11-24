@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { startGame, sendQuestionsToServer, sendQuestionToPlayers, sendAnswerToPlayers } from '../../actions/actions'
+import { sendStartGameToServer, sendQuestionToServer, sendQuestionsToServer, tellServerToSendAnswer } from '../../actions/actions'
 
 import { Button, Container, Typography } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
@@ -44,7 +44,7 @@ const GameHost = () => {
 
   const nextQuestionButton = () => {
     setCurrentQuestionIndex(value => {
-      dispatch(sendQuestionToPlayers(quiz.questions[currentQuestionIndex + 1], value + 1))
+      dispatch(sendQuestionToServer(quiz.questions[currentQuestionIndex + 1], value + 1))
       return value + 1
     })
   }
@@ -76,8 +76,8 @@ const GameHost = () => {
               className={classes.button}
               onClick={() => {
                 setGameStarted(true)
-                dispatch(startGame(quiz.questions.length))
-                dispatch(sendQuestionToPlayers(quiz.questions[currentQuestionIndex], currentQuestionIndex))
+                dispatch(sendStartGameToServer(quiz.questions.length))
+                dispatch(sendQuestionToServer(quiz.questions[currentQuestionIndex], currentQuestionIndex))
               }}>
             Start Game
             </Button>
@@ -109,7 +109,7 @@ const GameHost = () => {
               </Button>
             )}
             <Button
-              onClick={() => dispatch(sendAnswerToPlayers(quiz.questions[currentQuestionIndex].answers.find(answer => answer.correct === true)))}
+              onClick={() => dispatch(tellServerToSendAnswer(quiz.questions[currentQuestionIndex].answers.find(answer => answer.correct === true)))}
               className={classes.nextQuestion}
               size="large"
               color="primary"

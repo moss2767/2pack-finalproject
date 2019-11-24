@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { sendAnswer } from '../../../actions/actions'
+import { sendAnswerToServer } from '../../../actions/actions'
 
 import { Button, Grid, Paper, Typography } from '@material-ui/core'
 import useStyles from './Style'
@@ -22,7 +22,7 @@ const Question = ({ question }) => {
   const handleAnswer = answer => {
     setDisabled(true)
     setChosenAnswer(answer)
-    dispatch(sendAnswer(answer))
+    dispatch(sendAnswerToServer(answer))
   }
 
   return (
