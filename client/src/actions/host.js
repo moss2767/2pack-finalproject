@@ -1,6 +1,7 @@
 export const SET_USERS = 'SET_USERS'
 export const SEND_QUESTIONS_TO_SERVER = 'SEND_QUESTIONS_TO_SERVER'
 export const SET_ALL_QUESTIONS_TO_PLAYERS = 'SET_ALL_QUESTIONS_TO_PLAYERS'
+
 export const setUsers = users => {
   return {
     type: SET_USERS,
