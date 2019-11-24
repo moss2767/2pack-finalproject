@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Typography } from '@material-ui/core'
-import Question from './Question/Question'
 import { useHistory } from 'react-router-dom'
-import { useStyles } from './Style'
+
+import { Container, Typography } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
+import Question from './Question/Question'
+import { useStyles } from './Style'
 
 const GamePlayer = () => {
   const classes = useStyles()
@@ -21,22 +22,23 @@ const GamePlayer = () => {
   return (
     <div className={classes.wrapper}>
       <NavBar />
-      {!gameStarted && (
-        <Typography className={classes.header} variant="h4">
+      <Container maxWidth="xl">
+        {!gameStarted && (
+          <Typography className={classes.header} variant="h4">
           Waiting for host...
-        </Typography>
-      )}
-
-      { gameStarted && (
-        <div>
-          <Typography>
-            {name}: {points} points
           </Typography>
-          <Question question={question}/>
-        </div>
-      )
-      }
+        )}
 
+        { gameStarted && (
+          <div>
+            <Typography>
+              {name}: {points} points
+            </Typography>
+            <Question question={question}/>
+          </div>
+        )
+        }
+      </Container>
     </div>
   )
 }

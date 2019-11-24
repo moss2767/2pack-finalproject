@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { nextQuestion, startGame, revealAnswer, sendQuestionsToServer, sendQuestionToPlayers } from '../../actions/actions'
+import { startGame, sendQuestionsToServer, sendQuestionToPlayers, sendAnswerToPlayers } from '../../actions/actions'
 
 import { Button, Container, Typography } from '@material-ui/core'
 import NavBar from '../../components/NavBar/NavBar'
@@ -16,10 +16,8 @@ const GameHost = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const { currentQuestion, room, users } = useSelector(state => state.game)
+  const { room, users } = useSelector(state => state.game)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [questionToPlayers, setQuestionToPlayers] = useState({ question: null, options: [] })
-  const [correctAnswer, setCorrectAnswer] = useState('')
   const [gameStarted, setGameStarted] = useState(false)
   const [quiz, setQuiz] = useState({ id: null, name: null, questions: [{ question: null, answers: [{ correct: null, option: null }] }] })
   const [usersWhoHaveAnswered, setUsersWhoHaveAnswered] = useState(0)
@@ -35,32 +33,20 @@ const GameHost = () => {
       const data = await res.json()
       setQuiz(data)
     })()
-  }, [dispatch, quizId])
+  }, [quizId])
 
   useEffect(() => {
     setUsersWhoHaveAnswered(users.reduce((total, adder) => adder.answered ? total + 1 : total, 0))
     if (usersWhoHaveAnswered === users.length) {
       console.log('We should automatically show the answer to all players')
     }
-  }, [correctAnswer, dispatch, users, usersWhoHaveAnswered])
-
-  useEffect(() => {
-    const correct = quiz.questions[currentQuestion].answers.find(answer => answer.correct === 'true')
-    if (correct) {
-      setCorrectAnswer(correct.option)
-    }
-    setQuestionToPlayers({
-      question: quiz.questions[currentQuestion].question,
-      options: quiz.questions[currentQuestion].answers.map(answer => answer.option)
-    })
-  }, [currentQuestion, quiz])
-
-  const showAnswer = () => dispatch(revealAnswer(correctAnswer))
+  }, [dispatch, users, usersWhoHaveAnswered])
 
   const nextQuestionButton = () => {
-    dispatch(nextQuestion())
-    console.log(questionToPlayers)
-    dispatch(sendQuestionToPlayers(questionToPlayers))
+    setCurrentQuestionIndex(value => {
+      dispatch(sendQuestionToPlayers(quiz.questions[currentQuestionIndex + 1], value + 1))
+      return value + 1
+    })
   }
 
   const showResultsButton = () => {
@@ -90,8 +76,8 @@ const GameHost = () => {
               className={classes.button}
               onClick={() => {
                 setGameStarted(true)
-                dispatch(sendQuestionToPlayers(questionToPlayers))
-                dispatch(startGame(quiz.questions.length, currentQuestionIndex))
+                dispatch(startGame(quiz.questions.length))
+                dispatch(sendQuestionToPlayers(quiz.questions[currentQuestionIndex], currentQuestionIndex))
               }}>
             Start Game
             </Button>
@@ -109,20 +95,25 @@ const GameHost = () => {
 
         { gameStarted && (
           <div>
-            <Question question={quiz.questions[currentQuestion]}/>
+            <Question question={quiz.questions[currentQuestionIndex]}/>
 
             <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} have answered</Typography>
-            {currentQuestion === quiz.questions.length - 1 && (
+            {currentQuestionIndex === quiz.questions.length - 1 && (
               <Button id="showResults" onClick={showResultsButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Show Results
               </Button>
             )}
-            {currentQuestion !== quiz.questions.length - 1 && (
+            {currentQuestionIndex !== quiz.questions.length - 1 && (
               <Button id="nextQuestion" onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
                 Next Question
               </Button>
             )}
-            <Button onClick={showAnswer} className={classes.nextQuestion} size="large" color="primary" variant="contained">
+            <Button
+              onClick={() => dispatch(sendAnswerToPlayers(quiz.questions[currentQuestionIndex].answers.find(answer => answer.correct === true)))}
+              className={classes.nextQuestion}
+              size="large"
+              color="primary"
+              variant="contained">
               Show Answer
             </Button>
           </div>

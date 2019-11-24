@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import {
   setUsers, closeRoom, setQuestion, gameStarted, showAnswerToPlayer, setAllQuestionsToPlayers,
-  CREATE_GAME, START_GAME, JOIN_GAME, SEND_QUESTION_TO_PLAYERS, SEND_QUESTIONS_TO_SERVER, CORRECT_ANSWER, INCORRECT_ANSWER, REVEAL_ANSWER
+  CREATE_GAME, START_GAME, JOIN_GAME, SEND_ANSWER, SEND_QUESTION_TO_PLAYERS, SEND_QUESTIONS_TO_SERVER, SEND_ANSWER_TO_PLAYERS
 } from '../actions/actions'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
@@ -15,12 +15,12 @@ const socketMiddleware = state => {
     state.dispatch(setUsers(data))
   })
 
-  socket.on('new question', question => {
-    state.dispatch(setQuestion(question))
+  socket.on('new question', ({ questionWithoutAnswer, currentQuestionIndex }) => {
+    state.dispatch(setQuestion(questionWithoutAnswer, currentQuestionIndex))
   })
 
-  socket.on('game started', ({ currentQuestionIndex, numberOfQuestions }) => {
-    state.dispatch(gameStarted({ currentQuestionIndex, numberOfQuestions }))
+  socket.on('game started', numberOfQuestions => {
+    state.dispatch(gameStarted(numberOfQuestions))
   })
 
   socket.on('answer', answer => {
@@ -39,28 +39,8 @@ const socketMiddleware = state => {
 
   return next => action => {
     switch (action.type) {
-      case CORRECT_ANSWER: {
-        socket.emit('correct answer')
-        break
-      }
-
-      case REVEAL_ANSWER: {
-        socket.emit('reveal answer', action.answer)
-        break
-      }
-
-      case INCORRECT_ANSWER: {
-        socket.emit('incorrect answer')
-        break
-      }
-
       case CREATE_GAME: {
         socket.emit('join game as host', action.room)
-        break
-      }
-
-      case START_GAME: {
-        socket.emit('start game', { numberOfQuestions: action.numberOfQuestions, currentQuestionIndex: action.currentQuestionIndex })
         break
       }
 
@@ -69,8 +49,23 @@ const socketMiddleware = state => {
         break
       }
 
+      case START_GAME: {
+        socket.emit('start game', action.numberOfQuestions)
+        break
+      }
+
       case SEND_QUESTION_TO_PLAYERS: {
-        socket.emit('send question to players', action.question)
+        socket.emit('send question to players', { question: action.question, currentQuestionIndex: action.currentQuestionIndex })
+        break
+      }
+
+      case SEND_ANSWER: {
+        socket.emit('answer from player', action.answer)
+        break
+      }
+
+      case SEND_ANSWER_TO_PLAYERS: {
+        socket.emit('send answer to players')
         break
       }
 

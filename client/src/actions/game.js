@@ -2,26 +2,23 @@ export const CREATE_GAME = 'CREATE_GAME'
 export const START_GAME = 'START_GAME'
 export const GAME_STARTED = 'GAME_STARTED'
 export const JOIN_GAME = 'JOIN_GAME'
-export const NEXT_QUESTION = 'NEXT_QUESTION'
 export const SEND_QUESTION_TO_PLAYERS = 'SEND_QUESTIONS_TO_PLAYERS'
 export const SHOW_ANSWER_TO_PLAYER = 'SHOW_ANSWER_TO_PLAYER'
-export const REVEAL_ANSWER = 'REVEAL_ANSWER'
+export const SEND_ANSWER_TO_PLAYERS = 'SEND_ANSWER_TO_PLAYERS'
 
 export const createGame = room => ({
   type: CREATE_GAME,
   room: room
 })
 
-export const startGame = (numberOfQuestions, currentQuestionIndex) => ({
+export const startGame = numberOfQuestions => ({
   type: START_GAME,
-  numberOfQuestions: numberOfQuestions,
-  currentQuestionIndex: currentQuestionIndex
+  numberOfQuestions: numberOfQuestions
 })
 
-export const gameStarted = ({ numberOfQuestions, currentQuestionIndex }) => ({
+export const gameStarted = numberOfQuestions => ({
   type: GAME_STARTED,
-  numberOfQuestions,
-  currentQuestionIndex
+  numberOfQuestions
 })
 
 export const joinGame = data => ({
@@ -30,14 +27,10 @@ export const joinGame = data => ({
   name: data.name
 })
 
-export const nextQuestion = question => ({
-  type: NEXT_QUESTION,
-  question
-})
-
-export const sendQuestionToPlayers = question => ({
+export const sendQuestionToPlayers = (question, currentQuestionIndex) => ({
   type: SEND_QUESTION_TO_PLAYERS,
-  question
+  question,
+  currentQuestionIndex
 })
 
 export const showAnswerToPlayer = answer => ({
@@ -45,7 +38,6 @@ export const showAnswerToPlayer = answer => ({
   answer
 })
 
-export const revealAnswer = answer => ({
-  type: REVEAL_ANSWER,
-  answer
+export const sendAnswerToPlayers = () => ({
+  type: SEND_ANSWER_TO_PLAYERS
 })

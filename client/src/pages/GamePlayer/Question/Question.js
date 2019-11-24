@@ -1,53 +1,66 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { correctAnswer, incorrectAnswer } from '../../../actions/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { sendAnswer } from '../../../actions/actions'
 
-import { Button, Typography } from '@material-ui/core'
+import { Button, Grid, Paper, Typography } from '@material-ui/core'
 import useStyles from './Style'
 
 const Question = ({ question }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
+  const { answer, currentQuestionIndex, numberOfQuestions } = useSelector(state => state.game)
+  const [chosenAnswer, setChosenAnswer] = useState(null)
   const [disabled, setDisabled] = useState(false)
-  // const correct = question.answers.find(answer => answer.correct === 'true')
 
   useEffect(() => {
     setDisabled(false)
+    setChosenAnswer(null)
     shuffle(question.options)
   }, [question])
 
   const handleAnswer = answer => {
     setDisabled(true)
-    console.log(answer)
-    // if (answer === correct.option) {
-    //   dispatch(correctAnswer())
-    // } else {
-    //   dispatch(incorrectAnswer())
-    // }
+    setChosenAnswer(answer)
+    dispatch(sendAnswer(answer))
   }
 
   return (
-    <div>
-      <Typography className={classes.question} variant="h4">
-        {question.question}
-      </Typography>
-      <div className={classes.answer}>
+    <>
+      <Paper className={classes.paperQuestion}>
+        <Typography variant="h4">
+          Question {currentQuestionIndex + 1} out of { numberOfQuestions}
+        </Typography>
+        <Typography variant="h4">
+          {question.question}
+        </Typography>
+      </Paper>
+
+      <Grid container spacing={2}>
         { question.options.map(option => (
-          <Button
-            onClick={() => handleAnswer(option)}
-            className={classes.answer}
-            key={option}
-            size="large"
-            color="primary"
-            variant="contained"
-            disabled={disabled}
-          >
-            {option}
-          </Button>
+          <Grid key={option} item xs={12} sm={6}>
+            <Button
+              onClick={() => handleAnswer(option)}
+              className={classes.option}
+              size="large"
+              color="primary"
+              variant="contained"
+              disabled={disabled}>
+              {option}
+            </Button>
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+      {answer && (
+        <div>The answer is {answer}</div>
+      )}
+      {chosenAnswer === answer && chosenAnswer !== null && answer !== null && (
+        <div>You answered correct and will get one point!</div>
+      )}
+      {chosenAnswer !== answer && chosenAnswer !== null && answer !== null && (
+        <div>You answered incorrect!</div>
+      )}
+    </>
   )
 }
 

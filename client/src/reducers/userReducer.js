@@ -1,8 +1,8 @@
-import { JOIN_GAME } from '../actions/game'
-import { CORRECT_ANSWER, INCORRECT_ANSWER } from '../actions/question'
+import { JOIN_GAME, SEND_ANSWER, SHOW_ANSWER_TO_PLAYER } from '../actions/actions'
 
 const initialState = {
   name: 'Anonymous',
+  answer: null,
   points: 0
 }
 
@@ -14,11 +14,17 @@ const userReducer = (state = initialState, action) => {
         name: action.name
       }
 
-    case CORRECT_ANSWER:
-      return { ...state, points: state.points + 1 }
+    case SEND_ANSWER:
+      return {
+        ...state,
+        answer: action.answer
+      }
 
-    case INCORRECT_ANSWER:
-      return { ...state }
+    case SHOW_ANSWER_TO_PLAYER:
+      return {
+        ...state,
+        points: state.answer === action.answer ? state.points + 1 : state.points
+      }
 
     default:
       return state

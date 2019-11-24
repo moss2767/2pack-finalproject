@@ -1,15 +1,19 @@
 import { makeStyles } from '@material-ui/core'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   question: {
     margin: '2rem'
   },
-  answer: {
-    margin: '2rem'
+  option: {
+    width: '100%'
   },
   answerWrapper: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  paperQuestion: {
+    margin: '1rem',
+    padding: theme.spacing(3, 2)
   }
 }))
 

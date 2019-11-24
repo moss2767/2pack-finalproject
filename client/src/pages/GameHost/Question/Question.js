@@ -19,7 +19,7 @@ const Question = ({ question }) => {
           <Grid key={answer.option} item xs={12} sm={6}>
             <Paper className={classes.paperAnswer}>
               <Typography className={classes.answer} variant="h5">
-                {answer.option.toUpperCase()}
+                {answer.option}
               </Typography>
             </Paper>
           </Grid>

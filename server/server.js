@@ -58,18 +58,23 @@ io.on('connection', socket => {
     socket.host = true
     socket.join(room)
 
-    socket.on('start game', ({ numberOfQuestions, currentQuestionIndex }) => {
-      socket.to(room).emit('game started', { numberOfQuestions, currentQuestionIndex })
+    socket.on('start game', numberOfQuestions => {
+      socket.to(room).emit('game started', numberOfQuestions)
     })
 
-    socket.on('send question to players', question => {
+    socket.on('send question to players', ({ question, currentQuestionIndex }) => {
       resetToNotAnswered(room)
       emitUsers(room)
-      socket.to(room).emit('new question', question)
+      io.sockets.adapter.rooms[socket.room].answer = question.answers.find(answer => answer.correct === true).option
+      const questionWithoutAnswer = {
+        question: question.question,
+        options: question.answers.map(answer => answer.option)
+      }
+      socket.to(room).emit('new question', { questionWithoutAnswer, currentQuestionIndex })
     })
 
-    socket.on('reveal answer', answer => {
-      socket.to(room).emit('answer', answer)
+    socket.on('send answer to players', () => {
+      socket.to(room).emit('answer', io.sockets.adapter.rooms[socket.room].answer)
     })
 
     socket.on('send questions', questions => {
@@ -84,19 +89,17 @@ io.on('connection', socket => {
     socket.user = { id: socket.id, name: action.name, points: 0, answered: false }
     emitUsers(action.room)
 
-    socket.on('correct answer', () => {
-      socket.user.points = socket.user.points += 1
+    socket.on('answer from player', answer => {
       socket.user.answered = true
-      emitUsers(socket.room)
-    })
-
-    socket.on('incorrect answer', () => {
-      socket.user.answered = true
+      if (io.sockets.adapter.rooms[socket.room].answer === answer) {
+        socket.user.points += 1
+      }
       emitUsers(socket.room)
     })
   })
 
   socket.on('disconnect', () => {
+    console.log(`Socket ID ${socket.id} disconnected`)
     if (socket.host) {
       console.log(`Host in room ${socket.room} disconnected, room closing...`)
       const roomIndex = rooms.indexOf(socket.room)
