@@ -9,7 +9,8 @@ export const checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: 'https://dev-8pdh2pwa.auth0.com/.well-known/jwks.json'
   }),
-  audience: 'Ta9KLKQMNBiR36bdttXae6wJKQzrhOtS',
-  issuer: 'https://dev-8pdh2pwa.auth0.com',
+  audience: 'https://salt-2pack',
+  // audience: 'Ta9KLKQMNBiR36bdttXae6wJKQzrhOtS',
+  // issuer: 'https://dev-8pdh2pwa.auth0.com',
   algorithms: ['RS256']
 })

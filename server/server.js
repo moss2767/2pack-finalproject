@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import express from 'express'
 import http from 'http'
 import socket from 'socket.io'
+import { checkJwt } from './middleware/auth'
 
 import leaderboard from './routes/leaderboard'
 import createGame from './routes/createGame'
@@ -45,6 +46,12 @@ const resetToNotAnswered = room => {
 // We should use io.sockets.adapter.rooms instead and filter it
 const rooms = []
 app.set('rooms', rooms)
+
+app.get('/api/external', checkJwt, (req, res) => {
+  res.send({
+    msg: 'Your Access Token was successfully validated!'
+  })
+})
 
 const emitUsers = room => {
   io.to(room).emit('users', getUsersInRoom(room))

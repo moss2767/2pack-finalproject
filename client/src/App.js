@@ -4,6 +4,7 @@ import About from './pages/About/About'
 import GameHost from './pages/GameHost/GameHost'
 import GamePlayer from './pages/GamePlayer/GamePlayer'
 import Home from './pages/Home/Home'
+import TestAPI from './pages/TestAPI'
 import HostResult from './pages/Result/Host/Host'
 import PlayerResult from './pages/Result/Player/Player'
 import Leaderboards from './pages/Leaderboards/Leaderboards'
@@ -50,6 +51,10 @@ const App = () => {
 
         <Route path="/profile">
           <Profile/>
+        </Route>
+
+        <Route path="/external-api">
+          <TestAPI />
         </Route>
 
         <Route path="/">

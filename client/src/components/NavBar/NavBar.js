@@ -82,9 +82,12 @@ const NavBar = () => {
           <Button className={classes.rightSide} color="inherit" onClick={() => loginWithRedirect({})}>Log in</Button>
         )}
 
-        {isAuthenticated &&
-          <Button className={classes.rightSide} color="inherit" onClick={() => logout()}>Log out</Button>
-        }
+        {isAuthenticated && (
+          <div>
+            <Button className={classes.rightSide} color="inherit" onClick={() => logout()}>Log out</Button>
+            <Button className={classes.rightSide} color="inherit" onClick={() => history.push('/external-api')}>External API </Button>
+          </div>
+        )}
 
       </Toolbar>
       <Drawer open={drawer} onClose={toggleDrawer(false)}>
