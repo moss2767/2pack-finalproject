@@ -3,7 +3,7 @@ import { AddOrUpdateLeaderboard, GetLeaderboard } from '../database/queries'
 import { checkJwt } from '../middleware/auth'
 const router = express.Router()
 
-router.get('/:id', (req, res) => {
+router.get('/:id', checkJwt, (req, res) => {
   GetLeaderboard(req, res)
 })
 

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core'
+import { useAuth0 } from '../../react-auth0-spa'
+
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const useStyles = makeStyles(() => ({
@@ -18,20 +20,30 @@ const Leaderboard = ({ id }) => {
   const classes = useStyles()
   const [leaderboard, setLeaderboard] = useState([{ course: null, percentage: null }])
   const [noLeaderboard, setNoLeaderboard] = useState(false)
+  const { getTokenSilently } = useAuth0()
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
-      const res = await fetch(`${url}/leaderboard/${id}`)
-      const data = await res.json()
-      const filteredLeaderboard = data[0].leaderboard.filter(entry => !isNaN(Number(entry.percentage)))
-      const sortedLeaderboard = filteredLeaderboard.sort((a, b) => Number(b.percentage) - Number(a.percentage))
-      if (sortedLeaderboard.length === 0) {
-        setNoLeaderboard(true)
+      try {
+        const token = await getTokenSilently()
+        const res = await fetch(`${url}/leaderboard/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        const data = await res.json()
+        const filteredLeaderboard = data[0].leaderboard.filter(entry => !isNaN(Number(entry.percentage)))
+        const sortedLeaderboard = filteredLeaderboard.sort((a, b) => Number(b.percentage) - Number(a.percentage))
+        if (sortedLeaderboard.length === 0) {
+          setNoLeaderboard(true)
+        }
+        setLeaderboard(sortedLeaderboard)
+      } catch (error) {
+        console.log(error)
       }
-      setLeaderboard(sortedLeaderboard)
     }
     fetchLeaderboard()
-  }, [id])
+  }, [getTokenSilently, id])
 
   return (
     <div className={classes.leaderboard}>

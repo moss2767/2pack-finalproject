@@ -5,6 +5,7 @@ import { Container, Typography } from '@material-ui/core'
 import useStyles from './Style'
 import QuizCard from '../../components/QuizCard/QuizCard'
 import Leaderboard from '../../components/Leaderboard/Leaderboard'
+
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const Leaderboards = () => {
