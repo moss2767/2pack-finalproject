@@ -11,7 +11,8 @@ const userReducer = (state = initialState, action) => {
     case JOIN_GAME:
       return {
         ...state,
-        name: action.name
+        name: action.name,
+        points: 0
       }
 
     case SEND_ANSWER_TO_SERVER:
