@@ -4,7 +4,6 @@ import useStyles from './Style'
 
 const Question = ({ question }) => {
   const classes = useStyles()
-  shuffleOptions(question)
 
   return (
     <>
@@ -27,14 +26,6 @@ const Question = ({ question }) => {
       </Grid>
     </>
   )
-}
-
-const shuffleOptions = question => {
-  for (let i = question.answers.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [question.answers[i], question.answers[j]] = [question.answers[j], question.answers[i]]
-  }
-  return question
 }
 
 export default Question
