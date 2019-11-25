@@ -6,11 +6,12 @@
   "scripts": {
     "start": "node -r esm server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "NODE_ENV=dev nodemon -e js -x npm start"
+    "watch": "cross-env NODE_ENV=dev nodemon -e js -x npm start"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^6.0.3",
     "eslint": "^6.6.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
