@@ -19,6 +19,14 @@ const Question = ({ question }) => {
     shuffle(question.options)
   }, [question])
 
+  useEffect(() => {
+    if (answer) {
+      const correctLol = document.querySelector(`.${answer}`)
+      correctLol.classList.add(classes.correct)
+      console.log('inside our stupid janky useEffect hook that sucks')
+    }
+  }, [answer])
+
   const handleAnswer = answer => {
     setDisabled(true)
     setChosenAnswer(answer)
@@ -38,7 +46,7 @@ const Question = ({ question }) => {
 
       <Grid container spacing={2}>
         { question.options.map(option => (
-          <Grid key={option} item xs={12} sm={6}>
+          <Grid key={option} className={option} item xs={12} sm={6}>
             <Button
               onClick={() => handleAnswer(option)}
               className={classes.option}

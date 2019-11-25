@@ -7,6 +7,9 @@ const useStyles = makeStyles(theme => ({
   option: {
     width: '100%'
   },
+  correct: {
+    backgroundColor: 'rgba(0,255,0,0.5)'
+  },
   answerWrapper: {
     display: 'flex',
     flexDirection: 'column'
