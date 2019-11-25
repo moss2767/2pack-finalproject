@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import NavBar from '../../../components/NavBar/NavBar'
 import { Avatar, Container, Typography, Table, TableCell, TableBody, TableRow, TableHead, Button, FormControl, MenuItem, Select, InputLabel } from '@material-ui/core'
 import useStyles from './Style'
+import { useAuth0 } from '../../../react-auth0-spa'
 
 import SimpleSnackbar from '../../../components/SimpleSnackbar/SimpleSnackbar'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
@@ -14,6 +15,7 @@ const HostResult = () => {
   const [batch, setBatch] = useState('Fall 2019 - Stockholm')
   const { quiz, users } = useSelector(state => state.game)
   const maxPoints = quiz.questions.length * users.length
+  const { getTokenSilently } = useAuth0()
   const scoredPoints = users.reduce((total, user) => total + user.points, 0)
   let percentage = Math.round(scoredPoints / maxPoints * 100)
   if (isNaN(percentage)) {
@@ -24,22 +26,27 @@ const HostResult = () => {
 
   useEffect(() => {
     const getLeaderboard = async () => {
+      const token = await getTokenSilently()
       const res = await fetch(`${url}/leaderboard/${1}`, {
-        method: 'GET'
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
       const data = await res.json()
       setLeaderboard([...data[0].leaderboard, { batch: batch, percentage: percentage }])
     }
 
     getLeaderboard()
-  }, [batch, percentage, quiz.id])
+  }, [batch, getTokenSilently, percentage, quiz.id])
 
   const postLeaderboard = async () => {
+    const token = await getTokenSilently()
     const res = await fetch(`${url}/leaderboard`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({ quizId: quiz.id, batch: batch, percentage: percentage })
     })
