@@ -25,7 +25,7 @@ const Question = ({ question }) => {
       correctLol.classList.add(classes.correct)
       console.log('inside our stupid janky useEffect hook that sucks')
     }
-  }, [answer])
+  }, [answer, classes.correct])
 
   const handleAnswer = answer => {
     setDisabled(true)

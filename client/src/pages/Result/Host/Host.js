@@ -51,7 +51,14 @@ const HostResult = () => {
       body: JSON.stringify({ quizId: quiz.id, batch: batch, percentage: percentage })
     })
 
+    console.log(res)
+
     if (res.status === 400) {
+      const data = await res.json()
+      console.log(data)
+      console.log(quiz.id)
+      console.log(batch)
+      console.log(percentage)
       setOpen(true)
       setSnackMessage('Score not posted! You probably don\'t have a quiz ID')
     }
@@ -72,26 +79,26 @@ const HostResult = () => {
         <div className={classes.percentageAndTextWrapper}>
           <Avatar className={classes.percentage}>{percentage}%</Avatar>
           <Typography className={classes.text} variant="body1">
-            <b>Well done!</b><br></br>
-        You friends performed great.
+            As a team you score {scoredPoints} out of {maxPoints} - {percentage}%!
           </Typography>
         </div>
 
-        <FormControl className={classes.formControl}>
-          <InputLabel id="select-batch">Select batch</InputLabel>
-          <Select
-            labelId="select-batch"
-            id="select-batch"
-            value={batch}
-            onChange={(event) => setBatch(event.target.value)}
-          >
-            <MenuItem value={'Fall 2019 - Stockholm'}>Fall 2019 - Stockholm</MenuItem>
-            <MenuItem value={'Winter 2020 - Stockholm'}>Winter 2020 - Stockholm</MenuItem>
-            <MenuItem value={'Spring 2020 - Amsterdam'}>Spring 2020 - Amsterdam</MenuItem>
-          </Select>
-        </FormControl>
-
-        <Button color="primary" variant="contained" onClick={postLeaderboard}>Submit Score!</Button>
+        <div className={classes.submitWrapper}>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="select-batch">Select batch</InputLabel>
+            <Select
+              labelId="select-batch"
+              id="select-batch"
+              value={batch}
+              onChange={(event) => setBatch(event.target.value)}
+            >
+              <MenuItem value={'Fall 2019 - Stockholm'}>Fall 2019 - Stockholm</MenuItem>
+              <MenuItem value={'Winter 2020 - Stockholm'}>Winter 2020 - Stockholm</MenuItem>
+              <MenuItem value={'Spring 2020 - Amsterdam'}>Spring 2020 - Amsterdam</MenuItem>
+            </Select>
+          </FormControl>
+          <Button color="primary" variant="contained" onClick={postLeaderboard}>Submit Score!</Button>
+        </div>
 
         <Table aria-label="simple table">
           <TableHead>

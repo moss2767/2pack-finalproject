@@ -13,12 +13,13 @@ const Quizzes = () => {
   const [quizzes, setQuizzes] = useState([])
 
   useEffect(() => {
-    const test = async () => {
+    (async () => {
       const res = await fetch(`${url}/quizzes`)
+      console.log(res)
       const data = await res.json()
+      console.log(data)
       setQuizzes(data)
-    }
-    test()
+    })()
   }, [])
 
   const startGame = async id => {

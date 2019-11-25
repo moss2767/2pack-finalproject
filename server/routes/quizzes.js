@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAllQuizzes, getQuiz } from '../database/queries'
+import { createQuiz, getAllQuizzes, getQuiz } from '../database/queries'
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -8,6 +8,10 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   getQuiz(req, res)
+})
+
+router.post('/', (req, res) => {
+  createQuiz(req, res)
 })
 
 export default router

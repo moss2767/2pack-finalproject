@@ -12,6 +12,21 @@ const pool = new pg.Pool({
   port: process.env.DB_PORT
 })
 
+export const createQuiz = (req, res) => {
+  const name = req.body.name
+  const description = req.body.description
+  if (typeof name !== 'string' || typeof description !== 'string') {
+    return res.status(400).json({ message: 'Need to submit a string name and string description in the body' })
+  }
+
+  pool.query('INSERT INTO quizzes (name, description) VALUES ($1, $2)', [name, description], (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: 'Error inserting quiz', error: error })
+    }
+    res.status(201).json()
+  })
+}
+
 export const getQuiz = (req, res) => {
   const quizID = req.params.id
   const quiz = {}
@@ -56,11 +71,11 @@ export const GetLeaderboard = (req, res) => {
 export const AddOrUpdateLeaderboard = (req, res) => {
   const { batch, percentage, quizId } = req.body
 
-  if (typeof percentage !== 'number') {
-    return res.status(400).json({ message: 'Percentage needs to be a number' })
+  if (typeof percentage !== 'number' && percentage <= 0 && percentage >= 100) {
+    return res.status(400).json({ message: 'Percentage needs to be a number from 0 to 100' })
   }
 
-  if (!quizId || !batch || !percentage) {
+  if (!quizId || !batch) {
     return res.status(400).json({ message: 'Error: Send in all required parameters' })
   }
 
