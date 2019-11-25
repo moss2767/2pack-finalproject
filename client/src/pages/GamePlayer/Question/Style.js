@@ -8,7 +8,9 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   correct: {
-    backgroundColor: 'rgba(0,255,0,0.5)'
+    '& button': {
+      backgroundColor: 'green'
+    }
   },
   answerWrapper: {
     display: 'flex',
