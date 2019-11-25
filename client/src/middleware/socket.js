@@ -34,7 +34,8 @@ const socketMiddleware = state => {
   socket.on('room closing', () => {
     console.log('Room closing!')
     state.dispatch(closeRoom())
-    // SEND USER BACK TO STARTING PAGE HERE
+    window.location.href = '/'
+    // MAYBE AN INELEGANT SOLUTION, BUT IT WORKS SUCKIT
   })
 
   return next => action => {
