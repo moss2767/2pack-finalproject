@@ -47,12 +47,6 @@ const resetToNotAnswered = room => {
 const rooms = []
 app.set('rooms', rooms)
 
-app.get('/api/external', checkJwt, (req, res) => {
-  res.send({
-    msg: 'Your Access Token was successfully validated!'
-  })
-})
-
 const emitUsers = room => {
   io.to(room).emit('users', getUsersInRoom(room))
 }
