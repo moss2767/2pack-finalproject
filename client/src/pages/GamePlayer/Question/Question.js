@@ -21,7 +21,7 @@ const Question = ({ question }) => {
 
   useEffect(() => {
     if (answer) {
-      const correctLol = document.querySelector(`.lol${answer}`)
+      const correctLol = document.querySelector(`.option-${answer}`)
       correctLol.classList.add(classes.correct)
       console.log('inside our stupid janky useEffect hook that sucks')
     }
@@ -46,7 +46,7 @@ const Question = ({ question }) => {
 
       <Grid container spacing={2}>
         { question.options.map(option => (
-          <Grid key={option} className={`lol${option}`} item xs={12} sm={6}>
+          <Grid key={option} className={`option-${option}`} item xs={12} sm={6}>
             <Button
               onClick={() => handleAnswer(option)}
               className={classes.option}

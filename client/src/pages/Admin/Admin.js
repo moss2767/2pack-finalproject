@@ -7,7 +7,6 @@ import useStyles from './Style'
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
 
 const Admin = () => {
-  const classes = useStyles('')
   const { loading, user } = useAuth0()
   const classes = useStyles()
 
