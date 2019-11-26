@@ -114,7 +114,7 @@ const GameHost = () => {
             <Button
               onClick={showAnswerButton}
               className={classes.nextQuestion}
-              disabled={answer}
+              disabled={!!answer}
               size="large"
               color="primary"
               variant="contained">
