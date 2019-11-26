@@ -21,9 +21,12 @@ const Question = ({ question }) => {
 
   useEffect(() => {
     if (answer) {
-      const correctLol = document.querySelector(`.option-${answer}`)
-      correctLol.classList.add(classes.correct)
-      console.log('inside our stupid janky useEffect hook that sucks')
+      const correctOption = document.querySelector(`.option-${answer}`)
+      correctOption.classList.add(classes.correct)
+      if (chosenAnswer !== answer) {
+        const chosenOption = document.querySelector(`.option-${chosenAnswer}`)
+        chosenOption.classList.add(classes.incorrect)
+      }
     }
   }, [answer, classes.correct])
 
