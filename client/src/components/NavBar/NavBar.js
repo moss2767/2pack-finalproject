@@ -13,17 +13,18 @@ import MenuIcon from '@material-ui/icons/Menu'
 import useStyles from './Style'
 
 const NavBar = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0()
   const [isAdmin, setIsAdmin] = useState(false)
   const classes = useStyles()
   const history = useHistory()
   const [drawer, setDrawer] = useState(false)
-  const { user } = useAuth0()
   useEffect(() => {
-    if (user['https://salt-2pack'] === 'admin') {
-      setIsAdmin(true)
+    if (isAuthenticated) {
+      if (user['https://salt-2pack'] === 'admin') {
+        setIsAdmin(true)
+      }
     }
-  })
+  }, [user])
 
   const toggleDrawer = open => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -98,12 +99,6 @@ const NavBar = () => {
         {isAuthenticated && (
           <Button className={classes.rightSide} color="inherit" onClick={() => logout()}>Log out</Button>
         )}
-        {isAuthenticated && (
-          <div>
-            <Button className={classes.rightSide} color="inherit" onClick={() => history.push('/external-api')}>External API </Button>
-          </div>
-        )}
-
       </Toolbar>
       <Drawer open={drawer} onClose={toggleDrawer(false)}>
         {sideList()}
