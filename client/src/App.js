@@ -49,12 +49,12 @@ const App = () => {
           <MiniGame/>
         </Route>
 
-        <Route path="/profile">
-          <Profile/>
-        </Route>
-
         <Route path="/admin">
           <Admin/>
+        </Route>
+
+        <Route path="/profile">
+          <Profile/>
         </Route>
 
         <Route path="/">

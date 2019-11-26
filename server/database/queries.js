@@ -15,13 +15,33 @@ const pool = new pg.Pool({
 export const createQuiz = (req, res) => {
   const name = req.body.name
   const description = req.body.description
-  if (typeof name !== 'string' || typeof description !== 'string') {
-    return res.status(400).json({ message: 'Need to submit a string name and string description in the body' })
-  }
 
   pool.query('INSERT INTO quizzes (name, description) VALUES ($1, $2)', [name, description], (error, results) => {
     if (error) {
       return res.status(500).json({ message: 'Error inserting quiz', error: error })
+    }
+    res.status(201).json()
+  })
+}
+
+export const deleteQuiz = (req, res) => {
+  const id = req.body.id
+  pool.query('DELETE FROM quizzes WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: 'Error deleting quiz', error: error })
+    }
+    res.status(200).json()
+  })
+}
+
+export const addQuestion = (req, res) => {
+  const question = req.body.question
+  const answers = req.body.answers
+  const quizId = req.body.quizId
+
+  pool.query('INSERT INTO questions (question, answers, quiz_id) VALUES ($1, $2, $3)', [question, JSON.stringify(answers), quizId], (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: 'Error inserting question', error: error })
     }
     res.status(201).json()
   })

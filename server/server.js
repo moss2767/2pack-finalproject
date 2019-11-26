@@ -3,7 +3,6 @@ import bodyParser from 'body-parser'
 import express from 'express'
 import http from 'http'
 import socket from 'socket.io'
-import { checkJwt } from './middleware/auth'
 
 import leaderboard from './routes/leaderboard'
 import createGame from './routes/createGame'

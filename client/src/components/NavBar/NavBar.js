@@ -6,7 +6,7 @@ import { AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemIc
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
 import GamesIcon from '@material-ui/icons/Games'
-import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import NoteAddIcon from '@material-ui/icons/NoteAdd'
 import HomeIcon from '@material-ui/icons/Home'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -24,7 +24,7 @@ const NavBar = () => {
         setIsAdmin(true)
       }
     }
-  }, [user])
+  }, [isAuthenticated, user])
 
   const toggleDrawer = open => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
