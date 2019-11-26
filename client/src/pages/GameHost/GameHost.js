@@ -54,6 +54,11 @@ const GameHost = () => {
     history.push('/result')
   }
 
+  const showAnswerButton = () => {
+    const answerToSend = quiz.questions[currentQuestionIndex].answers.find(answer => answer.correct === true)
+    dispatch(tellServerToSendAnswer(answerToSend))
+  }
+
   return (
     <div className="App">
       <NavBar />
@@ -109,7 +114,7 @@ const GameHost = () => {
               </Button>
             )}
             <Button
-              onClick={() => dispatch(tellServerToSendAnswer(quiz.questions[currentQuestionIndex].answers.find(answer => answer.correct === true)))}
+              onClick={showAnswerButton}
               className={classes.nextQuestion}
               size="large"
               color="primary"
