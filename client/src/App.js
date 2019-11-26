@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import About from './pages/About/About'
+import Admin from './pages/Admin/Admin'
 import GameHost from './pages/GameHost/GameHost'
 import GamePlayer from './pages/GamePlayer/GamePlayer'
 import Home from './pages/Home/Home'
@@ -50,6 +51,10 @@ const App = () => {
         </Route>
 
         <Route path="/profile">
+          <Admin/>
+        </Route>
+
+        <Route path="/admin">
           <Profile/>
         </Route>
 

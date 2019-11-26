@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAuth0 } from '../../react-auth0-spa'
 
@@ -6,6 +6,7 @@ import { AppBar, Button, Divider, Drawer, IconButton, List, ListItem, ListItemIc
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
 import GamesIcon from '@material-ui/icons/Games'
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import HomeIcon from '@material-ui/icons/Home'
 import InfoIcon from '@material-ui/icons/Info'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -13,9 +14,16 @@ import useStyles from './Style'
 
 const NavBar = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
+  const [isAdmin, setIsAdmin] = useState(false)
   const classes = useStyles()
   const history = useHistory()
   const [drawer, setDrawer] = useState(false)
+  const { user } = useAuth0()
+  useEffect(() => {
+    if (user['https://salt-2pack'] === 'admin') {
+      setIsAdmin(true)
+    }
+  })
 
   const toggleDrawer = open => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -58,6 +66,12 @@ const NavBar = () => {
           </ListItemIcon>
           <ListItemText primary='Profile' />
         </ListItem>)}
+        {isAuthenticated && isAdmin && (<ListItem button onClick={() => history.push('/admin')}>
+          <ListItemIcon>
+            <NoteAddIcon />
+          </ListItemIcon>
+          <ListItemText primary='Admin / Add Quiz' />
+        </ListItem>)}
         <ListItem button onClick={() => history.push('/about')}>
           <ListItemIcon>
             <InfoIcon />
@@ -81,10 +95,11 @@ const NavBar = () => {
         {!isAuthenticated && (
           <Button className={classes.rightSide} color="inherit" onClick={() => loginWithRedirect({})}>Log in</Button>
         )}
-
+        {isAuthenticated && (
+          <Button className={classes.rightSide} color="inherit" onClick={() => logout()}>Log out</Button>
+        )}
         {isAuthenticated && (
           <div>
-            <Button className={classes.rightSide} color="inherit" onClick={() => logout()}>Log out</Button>
             <Button className={classes.rightSide} color="inherit" onClick={() => history.push('/external-api')}>External API </Button>
           </div>
         )}
