@@ -11,7 +11,6 @@ import Leaderboards from './pages/Leaderboards/Leaderboards'
 import MiniGame from './pages/MiniGame/MiniGame'
 import Profile from './pages/Profile/Profile'
 import Quizzes from './pages/Quizzes/Quizzes'
-import Admin from './pages/Admin/Admin'
 
 const App = () => {
   return (
@@ -56,10 +55,6 @@ const App = () => {
 
         <Route path="/profile">
           <Profile/>
-        </Route>
-
-        <Route path="/admin">
-          <Admin/>
         </Route>
 
         <Route path="/">
