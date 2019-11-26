@@ -27,7 +27,10 @@ const Home = () => {
     try {
       const res = await fetch(`${url}/list-of-rooms`)
       const data = await res.json()
-      if (data.rooms.includes(code)) {
+      if (name.trim() === '') {
+        setSnackbarMessage('Please input a name')
+        setShowSnackbar(true)
+      } else if (data.rooms.includes(code)) {
         dispatch(joinGame({ name, code }))
         history.push('/player')
       } else {
@@ -50,6 +53,7 @@ const Home = () => {
           <TextField
             id="Name"
             label="Name"
+            required
             className={classes.FirstTextField}
             margin="normal"
             onChange={(event) => setName(event.target.value)}
