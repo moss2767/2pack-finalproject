@@ -6,7 +6,8 @@ import {
   SEND_START_GAME_TO_PLAYERS,
   SET_ALL_QUESTIONS_TO_PLAYERS,
   SEND_QUESTION_TO_PLAYERS,
-  SET_USERS
+  SET_USERS,
+  TELL_SERVER_TO_SEND_ANSWER
 } from '../actions/actions'
 
 const initialState = {
@@ -63,6 +64,8 @@ const gameReducer = (state = initialState, action) => {
     case SET_ALL_QUESTIONS_TO_PLAYERS:
       return { ...state, quiz: action.quiz }
 
+    case TELL_SERVER_TO_SEND_ANSWER:
+      return { ...state, answer: action.answer}
     default:
       return state
   }

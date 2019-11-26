@@ -21,6 +21,7 @@ export const sendStartGameToServer = numberOfQuestions => ({
   numberOfQuestions: numberOfQuestions
 })
 
-export const tellServerToSendAnswer = () => ({
-  type: TELL_SERVER_TO_SEND_ANSWER
+export const tellServerToSendAnswer = answer => ({
+  type: TELL_SERVER_TO_SEND_ANSWER,
+  answer: answer
 })

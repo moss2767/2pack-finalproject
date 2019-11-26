@@ -10,6 +10,11 @@ const useStyles = makeStyles(theme => ({
     margin: '1rem',
     padding: theme.spacing(3, 2)
   },
+  correct: {
+    '& div': {
+      backgroundColor: 'green'
+    }
+  },
   answer: {
     color: 'white',
     textAlign: 'center'
