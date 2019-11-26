@@ -16,7 +16,7 @@ const GameHost = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const { room, users } = useSelector(state => state.game)
+  const { room, users, answer } = useSelector(state => state.game)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [gameStarted, setGameStarted] = useState(false)
   const [quiz, setQuiz] = useState({ id: null, name: null, questions: [{ question: null, answers: [{ correct: null, option: null }] }] })
@@ -91,9 +91,7 @@ const GameHost = () => {
           Connected Players
             </Typography>
 
-            <Scoreboard {...{
-              players: users
-            }}/>
+            <Scoreboard players={users}/>
 
           </div>
         )}
@@ -102,7 +100,7 @@ const GameHost = () => {
           <div>
             <Question question={quiz.questions[currentQuestionIndex]}/>
 
-            <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} have answered</Typography>
+            <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} {usersWhoHaveAnswered === 1 ? 'player has' : 'players have'} answered</Typography>
             {currentQuestionIndex === quiz.questions.length - 1 && (
               <Button id="showResults" onClick={showResultsButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Show Results
@@ -116,6 +114,7 @@ const GameHost = () => {
             <Button
               onClick={showAnswerButton}
               className={classes.nextQuestion}
+              disabled={answer}
               size="large"
               color="primary"
               variant="contained">

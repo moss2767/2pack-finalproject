@@ -2,6 +2,7 @@ import {
   CREATE_GAME,
   JOIN_GAME,
   SEND_ANSWER_TO_PLAYERS,
+  SEND_QUESTION_TO_SERVER,
   SEND_QUESTIONS_TO_SERVER,
   SEND_START_GAME_TO_PLAYERS,
   SET_ALL_QUESTIONS_TO_PLAYERS,
@@ -57,6 +58,9 @@ const gameReducer = (state = initialState, action) => {
 
     case SEND_QUESTION_TO_PLAYERS:
       return { ...state, question: action.question, currentQuestionIndex: action.currentQuestionIndex, answer: null }
+      
+    case SEND_QUESTION_TO_SERVER:
+      return { ...state, answer: null }
 
     case SEND_QUESTIONS_TO_SERVER:
       return { ...state, quiz: action.quiz }

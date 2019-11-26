@@ -14,14 +14,14 @@ const Scoreboard = (props) => {
       <TableHead>
         <TableRow>
           <TableCell>Name</TableCell>
-          <TableCell align="right">Score</TableCell>
+          {props.scores && <TableCell align="right">Score</TableCell>}
         </TableRow>
       </TableHead>
       <TableBody>
         {props.players.map(player => (
           <TableRow key={player.name}>
             <TableCell component="th" scope="row">{player.name}</TableCell>
-            <TableCell className={classes.points} component="th" scope="row">{player.points}</TableCell>
+            {props.scores && <TableCell className={classes.points} component="th" scope="row">{player.points}</TableCell>}
           </TableRow>
         ))}
       </TableBody>
