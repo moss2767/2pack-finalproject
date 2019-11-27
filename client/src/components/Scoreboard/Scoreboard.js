@@ -14,7 +14,7 @@ const Scoreboard = (props) => {
       <TableHead>
         <TableRow>
           <TableCell>Name</TableCell>
-          {props.scores && <TableCell align="right">Score</TableCell>}
+          {props.scores && <TableCell align="center">Score</TableCell>}
         </TableRow>
       </TableHead>
       <TableBody>
