@@ -74,7 +74,7 @@ const HostResult = () => {
       <SimpleSnackbar open={open} setOpen={setOpen} message={snackMessage}/>
       <Container>
         <Typography className={classes.result} variant="h2">
-      Result
+          Result
         </Typography>
         <div className={classes.percentageAndTextWrapper}>
           <Avatar className={classes.percentage}>{percentage}%</Avatar>
