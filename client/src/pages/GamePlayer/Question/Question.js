@@ -21,14 +21,14 @@ const Question = ({ question }) => {
 
   useEffect(() => {
     if (answer) {
-      const correctOption = document.querySelector(`.option-${answer}`)
+      const correctOption = document.querySelector(`.option-${answer.replace(/\W+/g, '')}`)
       correctOption.classList.add(classes.correct)
       if (chosenAnswer !== answer) {
-        const chosenOption = document.querySelector(`.option-${chosenAnswer}`)
+        const chosenOption = document.querySelector(`.option-${chosenAnswer.replace(/\W+/g, '')}`)
         chosenOption.classList.add(classes.incorrect)
       }
     }
-  }, [answer, classes.correct])
+  }, [answer, chosenAnswer, classes.correct, classes.incorrect])
 
   const handleAnswer = answer => {
     setDisabled(true)
@@ -49,7 +49,7 @@ const Question = ({ question }) => {
 
       <Grid container spacing={2}>
         { question.options.map(option => (
-          <Grid key={option} className={`option-${option}`} item xs={12} sm={6}>
+          <Grid key={option} className={`option-${option.replace(/\W+/g, '')}`} item xs={12} sm={6}>
             <Button
               onClick={() => handleAnswer(option)}
               className={classes.option}
