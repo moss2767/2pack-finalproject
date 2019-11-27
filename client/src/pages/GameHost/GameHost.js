@@ -101,17 +101,17 @@ const GameHost = () => {
             <Question question={quiz.questions[currentQuestionIndex]}/>
 
             <Typography variant="h4">{usersWhoHaveAnswered} / {users.length} {usersWhoHaveAnswered === 1 ? 'player has' : 'players have'} answered</Typography>
-            {currentQuestionIndex === quiz.questions.length - 1 && (
+            {currentQuestionIndex === quiz.questions.length - 1 && !!answer && (
               <Button id="showResults" onClick={showResultsButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
               Show Results
               </Button>
             )}
-            {currentQuestionIndex !== quiz.questions.length - 1 && (
+            {currentQuestionIndex !== quiz.questions.length - 1 && !!answer && (
               <Button id="nextQuestion" onClick={nextQuestionButton} className={classes.nextQuestion} size="large" color="primary" variant="contained">
                 Next Question
               </Button>
             )}
-            <Button
+            {!answer && (<Button
               onClick={showAnswerButton}
               className={classes.nextQuestion}
               disabled={!!answer}
@@ -119,7 +119,7 @@ const GameHost = () => {
               color="primary"
               variant="contained">
               Show Answer
-            </Button>
+            </Button>)}
           </div>
         )}
 
