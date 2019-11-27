@@ -79,7 +79,7 @@ const HostResult = () => {
         <div className={classes.percentageAndTextWrapper}>
           <Avatar className={classes.percentage}>{percentage}%</Avatar>
           <Typography className={classes.text} variant="body1">
-            As a team you score {scoredPoints} out of {maxPoints} - {percentage}%!
+            As a team you scored {scoredPoints} out of {maxPoints} - {percentage}%!
           </Typography>
         </div>
 
