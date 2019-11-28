@@ -39,8 +39,6 @@ const Admin = () => {
     }
   }
 
-
-
   return (
     <>
       <NavBar />
