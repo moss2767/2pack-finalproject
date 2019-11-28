@@ -113,7 +113,7 @@ const HostResult = () => {
                 <TableCell component="th" scope="row">
                   {entry.batch === batch ? <b>{entry.batch}</b> : entry.batch}
                 </TableCell>
-                <TableCell className={classes.points} component="th" scope="row">
+                <TableCell className={classes.points} component="th" scope="row" align="right">
                   {entry.batch === batch ? <b>{entry.percentage}%</b> : <span>{entry.percentage}%</span>}
                 </TableCell>
               </TableRow>
