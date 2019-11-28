@@ -8,7 +8,7 @@ const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-2590
 const socketMiddleware = state => {
   let socket = null
   if (!socket) {
-    socket = io(url)
+    socket = io(url, { transports: ['websocket'] })
   }
 
   socket.on('users', data => {
