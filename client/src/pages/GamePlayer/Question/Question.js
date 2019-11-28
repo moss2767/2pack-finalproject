@@ -23,7 +23,7 @@ const Question = ({ question }) => {
     if (answer) {
       const correctOption = document.querySelector(`.option-${answer.replace(/\W+/g, '')}`)
       correctOption.classList.add(classes.correct)
-      if (chosenAnswer !== answer) {
+      if (chosenAnswer !== answer && chosenAnswer !== null) {
         const chosenOption = document.querySelector(`.option-${chosenAnswer.replace(/\W+/g, '')}`)
         chosenOption.classList.add(classes.incorrect)
       }
@@ -67,6 +67,9 @@ const Question = ({ question }) => {
       )}
       {chosenAnswer !== answer && chosenAnswer !== null && answer !== null && (
         <Typography className={classes.answerPrompt}> Incorrect! </Typography>
+      )}
+      {chosenAnswer === null && answer !== null && (
+        <Typography className={classes.answerPrompt}> You ran out of time! </Typography>
       )}
     </>
   )
