@@ -38,6 +38,7 @@ const GameHost = () => {
   useEffect(() => {
     setUsersWhoHaveAnswered(users.reduce((total, adder) => adder.answered ? total + 1 : total, 0))
     if (usersWhoHaveAnswered === users.length) {
+      // showAnswerButton()
       console.log('We should automatically show the answer to all players')
     }
   }, [dispatch, users, usersWhoHaveAnswered])
