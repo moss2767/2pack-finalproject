@@ -23,7 +23,7 @@ const PlayerResult = () => {
         Result
       </Typography>
       <Typography className={classes.text} variant="body1">
-        {resultQuality ? "Congrats" : "You might want to revisit the topic of this quiz"} {name}, you scored {points}, out of a possible {maxPoints} - {percentageMaxPoints}%
+        {resultQuality ? "Congrats" : "You might want to revisit the topic of this quiz"} {name}, you scored {points} out of a possible {maxPoints} - {percentageMaxPoints}%
       </Typography>
 
       <LinearProgress className={classes.progressBar} variant="determinate" value={percentageMaxPoints} />

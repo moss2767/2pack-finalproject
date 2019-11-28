@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
   paperQuestion: {
     margin: "1rem",
     padding: theme.spacing(3, 2)
+  },
+  answerPrompt: {
+    marginTop: "1rem"
   }
 }));
 

@@ -13,7 +13,8 @@ const useStyles = makeStyles(() => ({
   },
   text: {
     width: '30rem',
-    marginLeft: '1rem'
+    marginLeft: '1rem',
+    marginTop: '2rem'
   },
   submitWrapper: {
     display: 'flex',

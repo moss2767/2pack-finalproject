@@ -62,14 +62,11 @@ const Question = ({ question }) => {
           </Grid>
         ))}
       </Grid>
-      {answer && (
-        <div>The answer is {answer}</div>
-      )}
       {chosenAnswer === answer && chosenAnswer !== null && answer !== null && (
-        <div>You answered correct and will get one point!</div>
+        <Typography className={classes.answerPrompt}> Correct! </Typography>
       )}
       {chosenAnswer !== answer && chosenAnswer !== null && answer !== null && (
-        <div>You answered incorrect!</div>
+        <Typography className={classes.answerPrompt}> Incorrect! </Typography>
       )}
     </>
   )
