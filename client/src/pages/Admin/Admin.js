@@ -4,7 +4,7 @@ import NavBar from '../../components/NavBar/NavBar'
 import { Button, Container, TextField, Typography } from '@material-ui/core'
 import useStyles from './Style'
 
-const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
+const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : 'http://localhost:8000'
 
 const Admin = () => {
   const { loading, user } = useAuth0()

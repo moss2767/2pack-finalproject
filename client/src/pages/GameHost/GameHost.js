@@ -9,7 +9,7 @@ import Question from './Question/Question'
 import Scoreboard from '../../components/Scoreboard/Scoreboard'
 import useStyles from './Style'
 
-const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
+const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : 'http://localhost:8000'
 
 const GameHost = () => {
   const classes = useStyles()

@@ -4,7 +4,7 @@ import { useAuth0 } from '../../react-auth0-spa'
 import SimpleSnackbar from '../SimpleSnackbar/SimpleSnackbar'
 import useStyles from './Style'
 
-const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
+const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : 'http://localhost:8000'
 
 const Leaderboard = ({ id }) => {
   const classes = useStyles()
