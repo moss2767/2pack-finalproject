@@ -33,7 +33,8 @@ const Profile = () => {
           <Typography className={classes.userInfo}> Account email: {user.email}</Typography>
           <Typography className={classes.userInfo}> Role: Administrator/Instructor</Typography>
           
-          <Scoreboard {...mockData} className={classes.quizTable}></Scoreboard>
+          <Typography className={classes.userInfo} variant="h6"> Quiz History:</Typography>
+          <Scoreboard {...mockData}></Scoreboard>
         </Fragment>
       )}
 
