@@ -2,7 +2,8 @@ import pg from 'pg'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const hostName = process.env.NODE_ENV === 'dev' ? process.env.DB_HOST : `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`
+// const hostName = process.env.NODE_ENV === 'dev' ? process.env.DB_HOST : `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`
+const hostName = process.env.DB_HOST
 
 const pool = new pg.Pool({
   user: process.env.DB_USER,
