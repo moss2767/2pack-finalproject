@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { makeStyles, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core'
 import { useAuth0 } from '../../react-auth0-spa'
 import SimpleSnackbar from '../SimpleSnackbar/SimpleSnackbar'
+import useStyles from './Style'
 
 const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
-
-const useStyles = makeStyles(() => ({
-  points: {
-    textAlign: 'right'
-  },
-  noLeaderboard: {
-    marginTop: '2rem'
-  },
-  leaderboard: {
-    marginBottom: '2rem'
-  }
-}))
 
 const Leaderboard = ({ id }) => {
   const classes = useStyles()
