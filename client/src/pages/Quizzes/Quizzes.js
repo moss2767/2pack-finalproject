@@ -17,6 +17,7 @@ const Quizzes = () => {
     (async () => {
       const res = await fetch(`${url}/quizzes`)
       const data = await res.json()
+      console.log('quiz', data)
       setQuizzes(data)
     })()
   }, [])

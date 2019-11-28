@@ -9,7 +9,8 @@ const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : 
 const socketMiddleware = state => {
   let socket = null
   if (!socket) {
-    socket = io(url, { transports: ['websocket'] })
+    socket = io(url)
+    // socket = io(url, { transports: ['websocket'] })
   }
 
   socket.on('users', data => {
