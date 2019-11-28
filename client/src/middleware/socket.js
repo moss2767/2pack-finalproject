@@ -3,7 +3,8 @@ import {
   setUsers, closeRoom, sendStartGameToPlayers, sendQuestionToPlayers, sendAnswerToPlayers, setAllQuestionsToPlayers,
   CREATE_GAME, SEND_START_GAME_TO_SERVER, JOIN_GAME, SEND_QUESTIONS_TO_SERVER, SEND_ANSWER_TO_SERVER, TELL_SERVER_TO_SEND_ANSWER, SEND_QUESTION_TO_SERVER
 } from '../actions/actions'
-const url = process.env.NODE_ENV === 'production' ? 'https://starry-expanse-259012.appspot.com' : 'http://localhost:8000'
+
+const url = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : 'http://localhost:8000'
 
 const socketMiddleware = state => {
   let socket = null
