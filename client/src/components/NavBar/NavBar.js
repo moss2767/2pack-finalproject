@@ -24,6 +24,7 @@ const NavBar = () => {
         setIsAdmin(true)
       }
     }
+    // eslint-disable-next-line
   }, [user])
 
   const toggleDrawer = open => event => {

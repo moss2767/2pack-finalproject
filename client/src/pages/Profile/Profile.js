@@ -13,7 +13,7 @@ const Profile = () => {
   }
 
   const mockData = {
-    players: [{ name: 'Quiz 1', points: "45%"}, {name: 'Quiz 2', points: "65%"}, {name: 'Quiz 3', points: "95%"}],
+    players: [{ name: 'Quiz 1', points: '45%' }, { name: 'Quiz 2', points: '65%' }, { name: 'Quiz 3', points: '95%' }],
     scores: 'something'
   }
 
@@ -32,7 +32,7 @@ const Profile = () => {
           <Typography className={classes.userInfo} >Username: {user.name}</Typography>
           <Typography className={classes.userInfo}> Account email: {user.email}</Typography>
           <Typography className={classes.userInfo}> Role: Administrator/Instructor</Typography>
-          
+
           <Typography className={classes.userInfo} variant="h6"> Quiz History:</Typography>
           <Scoreboard {...mockData}></Scoreboard>
         </Fragment>

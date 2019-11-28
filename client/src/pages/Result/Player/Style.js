@@ -9,9 +9,9 @@ const useStyles = makeStyles(() => ({
     marginLeft: '2rem'
   },
   progressBar: {
-    margin: "2rem 2rem",
-    height: "2rem",
-    borderRadius: ".5rem"
+    margin: '2rem 2rem',
+    height: '2rem',
+    borderRadius: '.5rem'
   }
 }))
 

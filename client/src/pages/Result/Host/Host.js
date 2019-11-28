@@ -51,8 +51,6 @@ const HostResult = () => {
       body: JSON.stringify({ quizId: quiz.id, batch: batch, percentage: percentage })
     })
 
-    console.log(res)
-
     if (res.status === 400) {
       const data = await res.json()
       console.log(data)

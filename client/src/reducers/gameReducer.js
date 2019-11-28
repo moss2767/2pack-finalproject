@@ -58,7 +58,7 @@ const gameReducer = (state = initialState, action) => {
 
     case SEND_QUESTION_TO_PLAYERS:
       return { ...state, question: action.question, currentQuestionIndex: action.currentQuestionIndex, answer: null }
-      
+
     case SEND_QUESTION_TO_SERVER:
       return { ...state, answer: null }
 
@@ -69,7 +69,7 @@ const gameReducer = (state = initialState, action) => {
       return { ...state, quiz: action.quiz }
 
     case TELL_SERVER_TO_SEND_ANSWER:
-      return { ...state, answer: action.answer}
+      return { ...state, answer: action.answer }
     default:
       return state
   }

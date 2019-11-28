@@ -15,9 +15,7 @@ const Quizzes = () => {
   useEffect(() => {
     (async () => {
       const res = await fetch(`${url}/quizzes`)
-      console.log(res)
       const data = await res.json()
-      console.log(data)
       setQuizzes(data)
     })()
   }, [])
