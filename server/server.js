@@ -85,6 +85,7 @@ io.on('connection', socket => {
   socket.on('join game', action => {
     socket.room = action.room
     socket.player = true
+    // if quiz in progress throw error or just dont join room 
     socket.join(action.room)
     socket.user = { id: socket.id, name: action.name, points: 0, answered: false }
     emitUsers(action.room)
