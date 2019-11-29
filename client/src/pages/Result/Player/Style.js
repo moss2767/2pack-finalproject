@@ -5,7 +5,7 @@ const useStyles = makeStyles(() => ({
     margin: '1rem 2rem'
   },
   text: {
-    width: '30rem',
+    width: '80%',
     marginLeft: '2rem'
   },
   progressBar: {
