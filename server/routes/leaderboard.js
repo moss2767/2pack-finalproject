@@ -1,6 +1,6 @@
 import express from 'express'
-import { AddOrUpdateLeaderboard, GetLeaderboard } from '../database/queries'
-import { checkJwt } from '../middleware/auth'
+import { AddOrUpdateLeaderboard, GetLeaderboard } from '../database/queries.js'
+import { checkJwt } from '../middleware/auth.js'
 const router = express.Router()
 
 router.get('/:id', checkJwt, (req, res) => {

@@ -4,11 +4,11 @@ import express from 'express'
 import http from 'http'
 import socket from 'socket.io'
 
-import leaderboard from './routes/leaderboard'
-import createGame from './routes/createGame'
-import login from './routes/login'
-import quizzes from './routes/quizzes'
-import listOfRooms from './routes/listOfRooms'
+import createGame from './routes/createGame.js'
+import leaderboard from './routes/leaderboard.js'
+import listOfRooms from './routes/listOfRooms.js'
+import login from './routes/login.js'
+import quizzes from './routes/quizzes.js'
 
 const app = express()
 const server = http.Server(app)

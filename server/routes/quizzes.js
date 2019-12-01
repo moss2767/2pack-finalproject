@@ -1,7 +1,7 @@
 import express from 'express'
-import { addQuestion, createQuiz, deleteQuiz, getAllQuizzes, getQuiz } from '../database/queries'
-import schemas from '../middleware/schemas'
-import SchemaValidator from '../middleware/SchemaValidator'
+import { addQuestion, createQuiz, deleteQuiz, getAllQuizzes, getQuiz } from '../database/queries.js'
+import schemas from '../middleware/schemas.js'
+import SchemaValidator from '../middleware/SchemaValidator.js'
 
 const router = express.Router()
 
