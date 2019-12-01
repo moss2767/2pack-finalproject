@@ -14,6 +14,9 @@ We built a platform to be used for upcoming </salt> courses where they can quick
 It's currently hosted at [https://salt-quiz.netlify.com/](https://salt-quiz.netlify.com/).
 
 ## Running locally
+Requirements:
+
+node 12.X+
 
 Client
 
