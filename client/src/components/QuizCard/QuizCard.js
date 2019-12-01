@@ -3,23 +3,22 @@ import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
-import { makeStyles, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import beach from '../../assets/beach.jpg'
-
-const useStyles = makeStyles({
-  media: {
-    height: '25vh'
-  }
-})
+import useStyles from './Style'
 
 const QuizCard = (props) => {
   const classes = useStyles()
+  let image = beach
+  if(props.photo) {
+    image = `data:image/png;base64,${props.photo}`
+  }
   return (
     <Card>
       <CardActionArea onClick={props.function}>
         <CardMedia
-          className={classes.media}
-          image={beach}
+          className={classes.image}
+          image={image}
           title={props.image}
         />
         <CardContent>

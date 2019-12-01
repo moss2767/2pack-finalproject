@@ -19,6 +19,9 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'center',
     margin: '1rem 0'
+  },
+  container: {
+    marginBottom: "2rem"
   }
 }))
 

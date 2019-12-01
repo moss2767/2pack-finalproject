@@ -17,7 +17,6 @@ const Quizzes = () => {
     (async () => {
       const res = await fetch(`${url}/quizzes`)
       const data = await res.json()
-      console.log('quiz', data)
       setQuizzes(data)
     })()
   }, [])
@@ -45,9 +44,9 @@ const Quizzes = () => {
   const classes = useStyles()
 
   return (
-    <div>
+    <>
       <NavBar />
-      <Container maxWidth="lg">
+      <Container className={classes.container} maxWidth="lg">
         <Typography className={classes.header} variant="h2">
           &lt;/salt&gt; quizzes
         </Typography>
@@ -60,13 +59,14 @@ const Quizzes = () => {
               {...{
                 header: quiz.name,
                 text: quiz.description,
+                photo: quiz.photo,
                 function: () => { startGame(quiz.id) }
               }}/>
           ))}
 
         </div>
       </Container>
-    </div>
+    </>
   )
 }
 

@@ -44,5 +44,8 @@ npm start
 - Auth0
 - PostgreSQL
 
+## Additional notes (internal dev)
+Use https://www.browserling.com/tools/image-to-base64 to convert images to base64 for inserting into database.
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
