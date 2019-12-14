@@ -20,7 +20,7 @@ const NavBar = () => {
   const [drawer, setDrawer] = useState(false)
   useEffect(() => {
     if (isAuthenticated) {
-      if (user['https://salt-2pack'] === 'admin') {
+      if (user['https://salt-quiz'] === 'admin') {
         setIsAdmin(true)
       }
     }
